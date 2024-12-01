@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG Sierpinski Triangle</title>
+	<style>
+		svg {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+
+<body>
+	<svg id="svgCanvas" width="12000" height="12000"></svg>
+	<script>
+		// 画谢尔宾斯基三角形（只画点），使用递归法
+		var svg = document.getElementById("svgCanvas");
+
+		// 创建一个命名空间URI
+		var NS = "http://www.w3.org/2000/svg";
+
+		// 等边三角形的顶点
+		var triangle = [
+			{ x: 6000, y: 0 },
+			{ x: 0, y: 12000 },
+			{ x: 12000, y: 12000 }
+		];
+
+		// 递归绘制谢尔宾斯基三角形
+		function drawTriangle(points, depth) {
+			if (depth === 0) {
+				// 绘制三角形
+				var polyline = document.createElementNS(NS, "polyline");
+				polyline.setAttribute("points", points.map(p => p.x + "," + p.y).join(" ") + " " + points[0].x + "," + points[0].y);
+				polyline.setAttribute("stroke", "black");
+				polyline.setAttribute("fill", "none");
+				svg.appendChild(polyline);
+			} else {
+				var p1 = {
+					x: (points[0].x + points[1].x) / 2,
+					y: (points[0].y + points[1].y) / 2
+
+				};
+				var p2 = {
+					x: (points[1].x + points[2].x) / 2,
+					y: (points[1].y + points[2].y) / 2
+				};
+				var p3 = {
+					x: (points[2].x + points[0].x) / 2,
+					y: (points[2].y + points[0].y) / 2
+				};
+				drawTriangle([points[0], p1, p3], depth - 1);
+				drawTriangle([p1, points[1], p2], depth - 1);
+				drawTriangle([p2, points[2], p3], depth - 1);
+			}
+		}
+
+		drawTriangle(triangle, 12);
+	</script>
+</body>
+
+</html>

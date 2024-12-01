@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		canvas {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+
+<body>
+	<canvas id="canvas" width="2400" height="2400"></canvas>
+	<script>
+		//画谢尔宾斯基三角形，使用递归法
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var width = canvas.width;
+		var height = canvas.height;
+		//等边三角形
+		var triangle = [
+			{
+				x: width / 2,
+				y: 0
+			},
+			{
+				x: 0,
+				y: height
+			},
+			{
+				x: width,
+				y: height
+			}
+		];
+		function drawTriangle(points, depth) {
+			if (depth == 0) {
+				ctx.beginPath();
+				ctx.moveTo(points[0].x, points[0].y);
+				ctx.lineTo(points[1].x, points[1].y);
+				ctx.lineTo(points[2].x, points[2].y);
+				ctx.closePath();
+				ctx.stroke();
+			} else {
+				var p1 = {
+					x: (points[0].x + points[1].x) / 2,
+					y: (points[0].y + points[1].y) / 2
+
+				};
+				var p2 = {
+					x: (points[1].x + points[2].x) / 2,
+					y: (points[1].y + points[2].y) / 2
+				};
+				var p3 = {
+					x: (points[2].x + points[0].x) / 2,
+					y: (points[2].y + points[0].y) / 2
+				};
+				drawTriangle([points[0], p1, p3], depth - 1);
+				drawTriangle([p1, points[1], p2], depth - 1);
+				drawTriangle([p2, points[2], p3], depth - 1);
+				// drawTriangle([p1, p2, p3], 0);
+			}
+			return;
+		}
+		drawTriangle(triangle, 9);
+	</script>
+</body>
+
+</html>

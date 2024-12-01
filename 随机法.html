@@ -1,0 +1,94 @@
+<!--随机法画谢尔宾斯基三角形-->
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		canvas {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+
+<body>
+	<canvas id="canvas" width="1200" height="1200"></canvas>
+	<script>
+		//画谢尔宾斯基三角形（只画点），使用随机法
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var width = canvas.width;
+		var height = canvas.height;
+		//等边三角形
+		var triangle = [
+			{
+				x: width / 2,
+				y: 0
+			},
+			{
+				x: 0,
+				y: height
+			},
+			{
+				x: width,
+				y: height
+			}
+		];
+		//画三角形
+		function drawTriangle() {
+			ctx.beginPath();
+			ctx.moveTo(triangle[0].x, triangle[0].y);
+			ctx.lineTo(triangle[1].x, triangle[1].y);
+			ctx.lineTo(triangle[2].x, triangle[2].y);
+			ctx.closePath();
+			ctx.stroke();
+		}
+		drawTriangle();
+		//随机点
+		var randomPoint = triangle[Math.floor(Math.random() * 3)];
+		//画点
+		function drawPoint(x, y) {
+			ctx.beginPath();
+			ctx.arc(x, y, 1, 0, Math.PI * 1);
+			ctx.fill();
+		}
+		//下一个点的坐标
+		function nextPoint(p1, p2) {
+			return {
+				//p1和h2的线段的中点
+				x: (p1.x + p2.x) / 2,
+				y: (p1.y + p2.y) / 2
+			};
+		}
+		/*//递归画点
+		function drawPointRecursion(level) {
+			if (level == 0) {
+				return;
+			}
+			drawPoint(randomPoint.x, randomPoint.y);
+			var point = triangle[Math.floor(Math.random() * 3)];
+			randomPoint = nextPoint(randomPoint, point);
+			drawPointRecursion(level - 1);
+		}
+		drawPointRecursion(1000);*/
+		/*//循环画点
+		setInterval(() => {
+		    drawPoint(randomPoint.x, randomPoint.y);
+			var point = triangle[Math.floor(Math.random() * 3)];
+			randomPoint = nextPoint(randomPoint, point);
+			drawPointRecursion(level - 1);
+		}, 1);*/
+		//js无限循环
+		(function draw() {
+			drawPoint(randomPoint.x, randomPoint.y);
+			var point = triangle[Math.floor(Math.random() * 3)];
+			randomPoint = nextPoint(randomPoint, point);
+			requestAnimationFrame(draw);
+		})();
+	</script>
+</body>
+
+</html>
