@@ -1,5 +1,5 @@
 <h1>Welcome</h1>
-<pre><code>#include<bits/stdc++.h>
+<pre><code class="language-cpp">#include<bits/stdc++.h>
 typedef int int32;
 #define int long long
 using namespace std;
