@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<meta charset="UTF-8">
+	<title>wbw121124's blog</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.18.1/styles/github.min.css">
+</head>
+
+<body>
+	<main id="blog-main"></main>
+	<!--marked+KaTeX+highlight-->
+	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/highlight.js@9.18.1/lib/highlight.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js"></script>
+	<script>
+		var url = new URL(top.location.href);
+		var params = new URLSearchParams(url.search);
+
+		// 获取单个参数url
+		var param1 = params.get('blog');
+
+		if (!param1) {
+			param1 = 'index.md';
+		}
+
+		//get博客内容
+		fetch('/md/' + param1)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok ' + response.statusText);
+				}
+				return response.text(); // 或者 response.json()，取决于响应的内容类型
+			})
+			.then(data => {
+				var md = data.text;
+				var html = marked(md);
+				document.getElementById('blog-main').innerHTML = html;
+				renderMathInElement(document.body, {
+					delimiters: [
+						{ left: '$$', right: '$$', display: true },
+						{ left: '$', right: '$', display: false },
+					],
+				});
+				hljs.highlightAll(); //高亮代码
+			})
+			.catch(error => {
+				console.error('There has been a problem with your fetch operation:', error);
+			});
+	</script>
+</body>
+
+</html>
