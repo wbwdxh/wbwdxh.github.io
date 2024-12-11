@@ -42,7 +42,13 @@
 						{ left: '$', right: '$', display: false },
 					],
 				});
-				hljs.highlightAll(); //高亮代码
+				const codeBlocks = document.querySelectorAll('#blog-main pre code');
+				 
+				  // 使用forEach遍历所有code元素
+				  codeBlocks.forEach((codeBlock) => {
+				    // 使用hljs库的highlight方法来渲染代码块
+				    hljs.highlightBlock(codeBlock);
+				  });//高亮代码
 			})
 			.catch(error => {
 				console.error('There has been a problem with your fetch operation:', error);
