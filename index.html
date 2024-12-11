@@ -33,7 +33,7 @@
 				return response.text(); // 或者 response.json()，取决于响应的内容类型
 			})
 			.then(data => {
-				var md = data.text;
+				var md = data;
 				var html = md;
 				document.getElementById('blog-main').innerHTML = html;
 				renderMathInElement(document.body, {
