@@ -47,6 +47,7 @@
 				 
 				  // 使用forEach遍历所有code元素
 				  codeBlocks.forEach((codeBlock) => {
+					codeBlock.innerText=codeBlock.innerHTML;
 				    // 使用hljs库的highlight方法来渲染代码块
 				    hljs.highlightBlock(codeBlock);
 				  });//高亮代码
