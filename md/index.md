@@ -25,3 +25,6 @@ signed main()
 			cout << i << ' ' << nbr[i][j].first << ' ' << nbr[i][j].second << '\n';
 	return 0;
 }</code></pre>
+<p>
+	$$x^2+y^2=z^2$$
+</p>
