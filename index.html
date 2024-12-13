@@ -14,7 +14,9 @@
 	<script src="./katex/katex.min.js"></script>
 	<script src="./katex/contrib/auto-render.min.js"></script>
 	<script src="./highlight/highlight.min.js"></script>
-	<script defer>
+	<script defer type="module">
+		import { marked } from 'marked.js';
+
 		var url = new URL(top.location.href);
 		var params = new URLSearchParams(url.search);
 
@@ -35,7 +37,7 @@
 			})
 			.then(data => {
 				var md = data;
-				var html = md;
+				var html = marked.parse(md);
 				document.getElementById('blog-main').innerHTML = html;
 				renderMathInElement(document.body, {
 					delimiters: [
