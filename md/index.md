@@ -1,29 +1,22 @@
 # Welcome
 ```cpp
-#include&lt;bits/stdc++.h&gt;
+#include<bits/stdc++.h>
 typedef int int32;
 #define int long long
 using namespace std;
-const int N = 1e3 + 5;
-int n, m;
-bool f;
-vector&lt;pair&lt;int, int&gt;&gt;nbr[N];
+const int N = 1e4 + 5;
+int n, ans;
+map<int, int>mp;
 signed main()
 {
 	ios::sync_with_stdio(0);
 	cin.tie(0), cout.tie(0);
-	cin &gt;&gt; n &gt;&gt; m &gt;&gt; f;
-	for (int i = 1; i &lt;= m; i++)
-	{
-		int x, y, z;
-		cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;
-		nbr[x].push_back({ y,z });
-		if (!f)
-			nbr[y].push_back({ x,z });
-	}
-	for (int i = 1; i &lt;= n; i++)
-		for (int j = nbr[i].size() - 1; j &gt;= 0; j--)
-			cout &lt;&lt; i &lt;&lt; ' ' &lt;&lt; nbr[i][j].first &lt;&lt; ' ' &lt;&lt; nbr[i][j].second &lt;&lt; '\n';
+	cin >> n;
+	for (int i = -n; i <= n; i++)
+		for (int j = -n; j <= n; j++)
+			if (n * n >= i * i + j * j)
+				ans += (int)sqrt(n * n - i * i - j * j) * 2 + 1;
+	cout << ans << '\n';
 	return 0;
 }
 ```
