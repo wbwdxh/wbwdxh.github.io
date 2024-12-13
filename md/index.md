@@ -27,4 +27,6 @@ signed main()
 }</code></pre>
 <p>
 	$$x^2+y^2=z^2$$
+	<br />
+	[README](?blog=README.md)
 </p>
