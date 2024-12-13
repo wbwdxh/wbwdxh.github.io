@@ -14,7 +14,9 @@
 	<script src="./katex/katex.min.js"></script>
 	<script src="./katex/contrib/auto-render.min.js"></script>
 	<script src="./highlight.js-11.10.0/src/highlight.js"></script>
-	<script defer>
+	<script defer type="module">
+		import hljs from './highlight.js-11.10.0/src/highlight.js';
+
 		var url = new URL(top.location.href);
 		var params = new URLSearchParams(url.search);
 
