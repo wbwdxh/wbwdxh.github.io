@@ -410,32 +410,31 @@
 						let x = codeElement;
 
 						// 使用 Clipboard.js 初始化复制功能
-						var clipboard = new ClipboardJS(button, {
+						let clipboard = new ClipboardJS(button, {
 							text: function (trigger) {
 								// 返回要复制的文本
 								return x.innerText.replace(/\n\n/g, "\n");
 							}
 						});
-					});
-					const clipboardJs = new ClipboardJS('.codecopy-btn');
-					// 可选：添加成功或失败的回调
-					clipboardJs.on('success', function (e) {
-						console.log('复制成功！', e);
-						// 可以在这里修改按钮的文本或样式来表示成功
-						e.clearSelection(); // 清除选区
-						e.trigger.textContent = '复制成功';
-						setTimeout(() => {
-							e.trigger.textContent = '复制';
-						}, 500);
-					});
 
-					clipboardJs.on('error', function (e) {
-						console.error('复制失败！', e);
-						// 可以在这里处理错误
-						e.trigger.textContent = '复制失败';
-						setTimeout(() => {
-							e.trigger.textContent = '复制';
-						}, 500);
+						clipboard.on('success', function (e) {
+							console.log('复制成功！', e);
+							// 可以在这里修改按钮的文本或样式来表示成功
+							e.clearSelection(); // 清除选区
+							e.trigger.textContent = '复制成功';
+							setTimeout(() => {
+								e.trigger.textContent = '复制';
+							}, 500);
+						});
+
+						clipboard.on('error', function (e) {
+							console.error('复制失败！', e);
+							// 可以在这里处理错误
+							e.trigger.textContent = '复制失败';
+							setTimeout(() => {
+								e.trigger.textContent = '复制';
+							}, 500);
+						});
 					});
 				}
 
