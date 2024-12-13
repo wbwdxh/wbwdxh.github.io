@@ -407,11 +407,13 @@
 						codeElement.before(div);
 						codeElement.parentElement.classList.add("hljs-prt");
 
+						let x = codeElement;
+
 						// 使用 Clipboard.js 初始化复制功能
 						var clipboard = new ClipboardJS(button, {
 							text: function (trigger) {
 								// 返回要复制的文本
-								return trigger.parentElement.nextElementSibling.innerText.replace(/\n\n/g, "\n");
+								return x.innerText.replace(/\n\n/g, "\n");
 							}
 						});
 					});
