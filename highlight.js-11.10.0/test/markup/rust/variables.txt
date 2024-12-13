@@ -1,4 +1,0 @@
-let foo;
-let mut bar;
-let _foo_bar;
-let r#foo;

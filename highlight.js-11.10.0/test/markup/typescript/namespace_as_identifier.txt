@@ -1,3 +1,0 @@
-            const message = 'foo';
-            const namespace = 'bar';
-            function baz() {}

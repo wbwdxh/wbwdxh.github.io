@@ -1,3 +1,0 @@
-- named entities: &amp;, &frac34;, &AElig;
-- decimal entities: &#65; &#164;
-- hexadecimal entities: &#xFFFD; &#x48;.

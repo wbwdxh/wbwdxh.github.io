@@ -1,5 +1,0 @@
-function visibleTodoFilter (state = 'watch', action) {}
-
-function visibleTodoFilter (state, action) {
-  // ...
-}
