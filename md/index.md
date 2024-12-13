@@ -1,5 +1,6 @@
-<h1>Welcome</h1>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+# Welcome
+```cpp
+#include&lt;bits/stdc++.h&gt;
 typedef int int32;
 #define int long long
 using namespace std;
@@ -24,9 +25,8 @@ signed main()
 		for (int j = nbr[i].size() - 1; j &gt;= 0; j--)
 			cout &lt;&lt; i &lt;&lt; ' ' &lt;&lt; nbr[i][j].first &lt;&lt; ' ' &lt;&lt; nbr[i][j].second &lt;&lt; '\n';
 	return 0;
-}</code></pre>
-<p>
-	$$x^2+y^2=z^2$$
-	<br />
-	[README](?blog=README.md)
-</p>
+}
+```
+$$x^2+y^2=z^2$$
+
+[README](/index.html?blog=README.md)
