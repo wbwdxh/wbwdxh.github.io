@@ -7,6 +7,54 @@
 	<link rel="stylesheet" href="./highlight/styles/github-dark.min.css">
 	<link rel="stylesheet" href="./katex/katex.min.css">
 	<style>
+		a.navbar-brand {
+			white-space: normal;
+			text-align: center;
+			word-break: break-all;
+		}
+
+		a {
+			color: #0077cc;
+		}
+
+		.btn-primary {
+			color: #fff;
+			background-color: #1b6ec2;
+			border-color: #1861ac;
+		}
+
+		.nav-pills .nav-link.active,
+		.nav-pills .show>.nav-link {
+			color: #fff;
+			background-color: #1b6ec2;
+			border-color: #1861ac;
+		}
+
+		.border-top {
+			border-top: 1px solid #e5e5e5;
+		}
+
+		.border-bottom {
+			border-bottom: 1px solid #e5e5e5;
+		}
+
+		.box-shadow {
+			box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+		}
+
+		button.accept-policy {
+			font-size: 1rem;
+			line-height: inherit;
+		}
+
+		.footer {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			white-space: nowrap;
+			line-height: 60px;
+		}
+
 		img {
 			max-width: 100%;
 		}
@@ -201,6 +249,7 @@
 		}
 
 		.hljs {
+			border-radius: 1em;
 			position: relative;
 			display: block;
 			overflow-x: hidden;
@@ -226,7 +275,62 @@
 			font-size: 16px;
 			line-height: 12px;
 			font-weight: 700;
-			border-radius: 1em;
+		}
+
+		html {
+			font-size: 14px;
+		}
+
+		@media (min-width: 768px) {
+			html {
+				font-size: 16px;
+			}
+		}
+
+		.btn:focus,
+		.btn:active:focus,
+		.btn-link.nav-link:focus,
+		.form-control:focus,
+		.form-check-input:focus {
+			box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+		}
+
+		html {
+			position: relative;
+			min-height: 100%;
+		}
+
+		body {
+			margin-bottom: 60px;
+		}
+
+		@media (max-height: 300px) {
+			header {
+				position: initial !important;
+			}
+		}
+
+		.container main a,
+		footer a,
+		.a a {
+			--background-primary: #1a1a1a;
+			--text-bright: #fff;
+			--bg-sub-accent-55: rgba(13, 185, 215, .55);
+			/*text-shadow: -1px -1px 2px var(--background-primary), -1px 1px 2px var(--background-primary), 1px -1px 2px var(--background-primary), 1px 1px 2px var(--background-primary);
+	-webkit-text-fill-color: var(--text-bright);*/
+			background-position: 0 100%;
+			background-repeat: repeat-x;
+			background-size: 5px 5px;
+			text-decoration: none;
+			transition: all .35s ease;
+			background-image: linear-gradient(to bottom, var(--bg-sub-accent-55) 0%, var(--bg-sub-accent-55) 100%);
+		}
+
+		.container main a:hover,
+		footer a:hover,
+		.a a:hover {
+			color: white;
+			background-size: 5px 50px;
 		}
 	</style>
 </head>
