@@ -29,9 +29,12 @@ code.hljs {
   text-decoration: underline
 }
 
-.hljs-built_in,
+.hljs-built_in {
+  color: #DCDCAA
+}
+
 .hljs-type {
-  color: #569CD6
+  color: #4EC9B0
 }
 
 .hljs-number {
@@ -56,7 +59,7 @@ code.hljs {
 .hljs-function,
 .hljs-params,
 .hljs-formula {
-  color: #9A9A9A
+  color: #9A9A9A;
 }
 
 .hljs-title {
