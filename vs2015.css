@@ -34,6 +34,10 @@ code.hljs {
 }
 
 .hljs-type {
+  color: #569CD6
+}
+
+.hljs-title.class_ {
   color: #4EC9B0
 }
 
