@@ -25,11 +25,6 @@ signed main()
 }
 ```
 
-```diff
-+ 114514
-- 1919810
-```
-
 $$x^2+y^2=z^2$$
 
 [README](/index.html?blog=README.md)
