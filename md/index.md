@@ -4,4 +4,4 @@
 - [平衡树](/index.html?blog=平衡树.md)
 - [连通性问题](/index.html?blog=连通性问题.md)
 - [README](/index.html?blog=README.md)
-- [Anout](/index.html?blog=about.md)
+- [About](/index.html?blog=about.md)
