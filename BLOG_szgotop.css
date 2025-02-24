@@ -13,7 +13,7 @@
     z-index: 2;
     width: 70px;
     height: 900px;
-    background: url(https://blog-static.cnblogs.com/files/blogs/409706/BLOG_scroll.gif);
+    background: url(/BLOG_scroll.gif);
     transition: all .5s ease-in-out;
     opacity: 1;
 }
