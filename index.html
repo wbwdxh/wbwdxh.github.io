@@ -362,7 +362,10 @@
 <body>
 	<header
 		style="margin: 0; position: sticky; top:0; left: 0; width: 100%; z-index: 9999; padding: 10px 0;border-bottom: 1px solid #eee; background-color: #fffc;">
-		<ul style="height: 100%; list-style-type: none; display: flex;  flex-direction: row;
+					
+			<!-- 进度条 -->
+			<div id="top-progress-bar" style="position: fixed; top: 0px; left: 0px; right: 0px; background-color: rgb(244, 67, 54); height: 2px; width: 0%; transition: width 0.2s ease 0s, opacity 0.6s ease 0s;"></div>
+			<ul style="height: 100%; list-style-type: none; display: flex;  flex-direction: row;
     justify-content: flex-start; padding: 0; margin: 0;">
 			<li style="height: 100%; margin-inline: 1em;"><a href="/index.html?blog=index.md">首页</a></li>
 			<li style="height: 100%; margin-inline: 1em;"><a href="/index.html?blog=about.md">关于</a></li>
@@ -473,6 +476,10 @@
 				console.error('There has been a problem with your fetch operation:', error);
 			});
 	</script>
+	<!-- 悬挂的喵 -->
+	<script type="text/javascript" src="https://blog-static.cnblogs.com/files/blogs/409706/BLOG_szgotop.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://blog-static.cnblogs.com/files/blogs/409706/BLOG_szgotop.css" />
+	<div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -999px;"></div>
 </body>
 
 </html>
