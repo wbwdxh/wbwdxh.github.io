@@ -252,7 +252,7 @@
 	},
 		e
 }()),
-	new Ribbons(backgroundAnimation: {
+	new Ribbons({
             colorSaturation: "60%",
             colorBrightness: "50%",
             colorAlpha: .5,
