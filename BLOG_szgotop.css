@@ -6,14 +6,14 @@
 #goToTop{display: none;!important}
 
 .back-to-top{
-	cursor: pointer;
+    cursor: pointer;
     position: fixed;
     right: 80px;
     top: -900px;
     z-index: 2;
     width: 70px;
     height: 900px;
-    background: url(/BLOG_scroll.gif);
+    background: url(https://wbwdxh.github.io/BLOG_scroll.gif);
     transition: all .5s ease-in-out;
     opacity: 1;
 }
