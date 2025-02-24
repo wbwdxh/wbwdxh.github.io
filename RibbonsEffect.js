@@ -252,5 +252,16 @@
 	},
 		e
 }()),
-	new Ribbons(window.cnblogsConfig.backgroundAnimation);
+	new Ribbons(backgroundAnimation: {
+            colorSaturation: "60%",
+            colorBrightness: "50%",
+            colorAlpha: .5,
+            colorCycleSpeed: 5,
+            verticalPosition: "random",
+            horizontalSpeed: 200,
+            ribbonCount: 3,
+            strokeSize: 0,
+            parallaxAmount: -.2,
+            animateSections: true
+        });
 //# sourceMappingURL=/sm/c1df5c1b1d16877c7a2ef95f23335a100e5e7a2f76371ded79ec481b65ab6113.map
