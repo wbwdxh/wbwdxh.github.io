@@ -386,8 +386,6 @@
 	<script defer type="module">
 		import { marked } from './marked.js';
 
-		
-		gitalk.render('gitalk-container')
 
 		var url = new URL(top.location.href);
 		var params = new URLSearchParams(url.search);
@@ -409,6 +407,8 @@
 		  distractionFreeMode: false,  // Facebook-like distraction free mode
 			language: "zh-CN"
 		})
+		
+		gitalk.render('gitalk-container')
 
 		//get博客内容
 		fetch('/md/' + param1)
