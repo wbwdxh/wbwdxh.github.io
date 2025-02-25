@@ -372,7 +372,7 @@
 		</ul>
 	</header>
 	<main id="blog-main"></main>
-	<!--marked+KaTeX+highlight-->
+	<main id="blog-chat"><div id="gitalk-container"></div></main>
 	<script src="./katex/katex.min.js"></script>
 	<script src="./katex/contrib/auto-render.min.js"></script>
 	<script src="./highlight/highlight.min.js"></script>
@@ -380,9 +380,14 @@
 	<script src="./codecopy/clipboard.js"></script>
 	<script src="./jquery-3.3.1.min.js"></script>
 	<script src="./RibbonsEffect.js"></script>
+	<script src="./gitalk.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./gitalk.css" />
 	<script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="150" mobile="false" src="./canvas-nest.min.js"></script>
 	<script defer type="module">
 		import { marked } from './marked.js';
+
+		
+		gitalk.render('gitalk-container')
 
 		var url = new URL(top.location.href);
 		var params = new URLSearchParams(url.search);
@@ -393,6 +398,17 @@
 		if (!param1) {
 			param1 = 'index.md';
 		}
+		
+		var gitalk = new Gitalk({
+		  clientID: 'Ov23liEGI0yfHsafjHNi',
+		  clientSecret: '6149a9a1f33fb1987fc6710ea7a02b30e455c6d6',
+		  repo: 'GitHub repo',
+		  owner: 'wbwdxh',
+		  admin: ['wbwdxh','wbw121124'],
+		  id: top.location.pathname+'?blog='+param1,      // Ensure uniqueness and length less than 50
+		  distractionFreeMode: false,  // Facebook-like distraction free mode
+			language: "zh-CN"
+		})
 
 		//get博客内容
 		fetch('/md/' + param1)
@@ -476,6 +492,7 @@
 			})
 			.catch(error => {
 				console.error('There has been a problem with your fetch operation:', error);
+				document.getElementById('blog-main').innerHTML = '<h1>404 Not Found</h1><br/>你好像迷路了'
 			});
 	</script>
 	<!-- 悬挂的喵 -->
