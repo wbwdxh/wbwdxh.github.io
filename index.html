@@ -402,10 +402,11 @@
   },
 			  repo: 'wbwdxh.github.io',
 			  owner: 'wbwdxh',
-			  id: top.location.pathname+'?blog='+param1,
+			  id: 'blog='+param1+' - '+top.location.pathname,
+			  link: top.location.pathname+'?blog='+param1,
 			})
 			
-			chat.render('comments')
+			chat.render(document.getElementById('comments'))
 		}
 	</script>
 	<script defer type="module">
