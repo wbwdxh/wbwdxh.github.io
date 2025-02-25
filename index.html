@@ -372,7 +372,7 @@
 		</ul>
 	</header>
 	<main id="blog-main"></main>
-	<main id="blog-chat"><div id="gitalk-container"></div></main>
+	<main id="blog-chat"><div id="comments"></div></main>
 	<script src="./katex/katex.min.js"></script>
 	<script src="./katex/contrib/auto-render.min.js"></script>
 	<script src="./highlight/highlight.min.js"></script>
@@ -380,8 +380,8 @@
 	<script src="./codecopy/clipboard.js"></script>
 	<script src="./jquery-3.3.1.min.js"></script>
 	<script src="./RibbonsEffect.js"></script>
-	<link rel="stylesheet" href="./gitalk.css">
-  	<script src="./gitalk.min.js"></script>
+	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 	<script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="150" mobile="false" src="./canvas-nest.min.js"></script>
 	<script>
 		if(true)
@@ -396,19 +396,16 @@
 				param1 = 'index.md';
 			}
 			
-			let gitalk = new Gitalk({
-			  clientID: 'Ov23liEGI0yfHsafjHNi',
-			  clientSecret: '6149a9a1f33fb1987fc6710ea7a02b30e455c6d6',
+			let chat = new Gitment({ oauth: {
+    client_id: 'Ov23liEGI0yfHsafjHNi',
+    client_secret: '6149a9a1f33fb1987fc6710ea7a02b30e455c6d6',
+  },
 			  repo: 'wbwdxh.github.io',
 			  owner: 'wbwdxh',
-			  admin: ['wbwdxh','wbw121124'],
-			  id: top.location.pathname+'?blog='+param1,      // Ensure uniqueness and length less than 50
-			  distractionFreeMode: true,  // Facebook-like distraction free mode
-				language: "zh-CN",
-				proxy: "https://github.com/login/oauth/authorize",
+			  id: top.location.pathname+'?blog='+param1,
 			})
 			
-			gitalk.render('gitalk-container')
+			chat.render('comments')
 		}
 	</script>
 	<script defer type="module">
