@@ -372,7 +372,14 @@
 		</ul>
 	</header>
 	<main id="blog-main"></main>
-	<main id="blog-chat"><div id="comments"></div></main>
+	<main id="blog-chat"><div id="comments"><script src="https://utteranc.es/client.js"
+        repo="wbwdxh/wbwdxh.github.io"
+        issue-term="url"
+        label="Utterances"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+</script></div></main>
 	<script src="./katex/katex.min.js"></script>
 	<script src="./katex/contrib/auto-render.min.js"></script>
 	<script src="./highlight/highlight.min.js"></script>
@@ -384,7 +391,7 @@
   	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 	<script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="150" mobile="false" src="./canvas-nest.min.js"></script>
 	<script>
-		if(true)
+		if(!true)
 		{
 			let url = new URL(top.location.href);
 			let params = new URLSearchParams(url.search);
