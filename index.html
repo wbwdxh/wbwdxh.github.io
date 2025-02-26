@@ -41,7 +41,7 @@
 			animation: spin 1s linear infinite;
 			box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 		}
-		
+
 		a.navbar-brand {
 			white-space: normal;
 			text-align: center;
@@ -424,100 +424,71 @@
 			display: none;
 		}*/
 
-		:root {	
-	  		counter-reset: section-h1 section-h2 section-h3 section-h4 section-h5 section-h6;
+		body {
+			counter-reset: section-h1 section-h2 section-h3 section-h4 section-h5 section-h6;
 		}
-		
+
 		@media (min-height: 350px) {
-	
-			h1::after{
-				text-decoration: none;
-				transition: all .35sease;
+
+			h1 {
+				counter-increment: section-h1;
+			}
+
+			h1:hover::after {
 				counter-increment: section-h1;
 				content: "h1:" counter(section-h1);
-				color: rgba(0,0,0,0);
-				display:none;
+				color: lightgray;
+				display: inline;
 			}
-			
-			h1:hover::after {
-				content: "h1:" counter(section-h1);
-				color:  lightgray;
-				display:inline;
-			}
-	
-			h2::after{
-				text-decoration: none;
-				transition: all .35sease;
+
+			h2 {
 				counter-increment: section-h2;
-				content: "h2:" counter(section-h2);
-				color: rgba(0,0,0,0);
-				display:none;
 			}
-			
+
 			h2:hover::after {
 				content: "h2:" counter(section-h2);
 				color: lightgray;
-				display:inline;
+				display: inline;
 			}
-	
-			h3::after{
-				text-decoration: none;
-				transition: all .35sease;
+
+			h3 {
 				counter-increment: section-h3;
-				content: "h3:" counter(section-h3);
-				color: rgba(0,0,0,0);
-				display:none;
 			}
-			
+
 			h3:hover::after {
 				content: "h3:" counter(section-h3);
 				color: lightgray;
-				display:inline;
+				display: inline;
 			}
-	
-			h4::after{
-				text-decoration: none;
-				transition: all .35sease;
+
+			h4 {
 				counter-increment: section-h4;
-				content: "h4:" counter(section-h4);
-				color: rgba(0,0,0,0);
-				display:none;
 			}
-			
+
 			h4:hover::after {
 				content: "h4:" counter(section-h4);
 				color: lightgray;
-				display:inline;
+				display: inline;
 			}
-	
-			h5::after{
-				text-decoration: none;
-				transition: all .35sease;
+
+			h5 {
 				counter-increment: section-h5;
-				content: "h5:" counter(section-h5);
-				color: rgba(0,0,0,0);
-				display:none;
 			}
-			
+
 			h5:hover::after {
 				content: "h5:" counter(section-h5);
 				color: lightgray;
-				display:inline;
+				display: inline;
 			}
-	
-			h6::after{
-				text-decoration: none;
-				transition: all .35sease;
-				counter-increment: section-h6;
+
+			h6 {
 				content: "h6:" counter(section-h6);
-				color: rgba(0,0,0,0);
-				display:none;
 			}
-			
+
 			h6:hover::after {
 				content: "h6:" counter(section-h6);
 				color: lightgray;
-				display:inline;
+				display: inline;
 			}
 		}
 	</style>
@@ -565,21 +536,11 @@
 				</script>
 		</div>
 		<div id="comments-2">
-			<script src="https://giscus.app/client.js"
-			        data-repo="wbwdxh/wbwdxh.github.io"
-			        data-repo-id="R_kgDONXOTxQ"
-			        data-category="Announcements"
-			        data-category-id="DIC_kwDONXOTxc4CnWAd"
-			        data-mapping="url"
-			        data-strict="1"
-			        data-reactions-enabled="1"
-			        data-emit-metadata="0"
-			        data-input-position="top"
-			        data-theme="light"
-			        data-lang="zh-CN"
-			        crossorigin="anonymous"
-			        async>
-			</script>
+			<script src="https://giscus.app/client.js" data-repo="wbwdxh/wbwdxh.github.io" data-repo-id="R_kgDONXOTxQ"
+				data-category="Announcements" data-category-id="DIC_kwDONXOTxc4CnWAd" data-mapping="url" data-strict="1"
+				data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light"
+				data-lang="zh-CN" crossorigin="anonymous" async>
+				</script>
 		</div>
 	</main>
 	<script src="./katex/katex.min.js"></script>
