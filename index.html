@@ -37,12 +37,11 @@
 			width: 10em;
 			height: 10em;
 			border-radius: 50%;
-			background: conic-gradient(black 0% 20%, rgba(0, 0, 0, 0) 20%);
+			background: conic-gradient(rgb(10, 182, 212) 0% 20%, rgba(0, 0, 0, 0) 20%);
 			animation: spin 1s linear infinite;
 			box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 		}
-	</style>
-	<style>
+
 		a.navbar-brand {
 			white-space: normal;
 			text-align: center;
@@ -380,6 +379,7 @@
 		}
 
 		main {
+			background: #fffa;
 			margin: 2em 1em;
 			border: 1px solid #0000;
 			box-shadow: 0 5px 1em 0 rgba(0, 0, 0, .1);
@@ -393,6 +393,103 @@
 
 		header {
 			box-shadow: 0 5px 1em 0 rgba(0, 0, 0, .1);
+		}
+
+		/*ul.fy.pagination {
+		    display: inline-block;
+		    padding: 0;
+		    margin: 0;
+		}
+		
+		ul.fy.pagination li {display: inline;}
+		
+		ul.fy.pagination li a {
+		    color: black;
+		    float: left;
+		    padding: 8px 16px;
+		    text-decoration: none;
+		}
+		
+		ul.fy.pagination li a.active {
+		    background-color: #79c0ff;
+		    color: white;
+		}
+		
+		ul.fy.pagination li a:hover:not(.active) {background-color: #ddd;}
+		
+		#comments-1 nth-child(2) {
+			display: none;
+		}
+		
+		#comments-1 nth-child(1) {
+			display: none;
+		}*/
+
+		body {
+			counter-reset: section-h1 section-h2 section-h3 section-h4 section-h5 section-h6;
+		}
+
+		@media (min-height: 350px) {
+
+			h1 {
+				counter-increment: section-h1;
+			}
+
+			h1:hover::after {
+				content: "h1:" counter(section-h1);
+				color: lightgray;
+				display: inline;
+			}
+
+			h2 {
+				counter-increment: section-h2;
+			}
+
+			h2:hover::after {
+				content: "h2:" counter(section-h2);
+				color: lightgray;
+				display: inline;
+			}
+
+			h3 {
+				counter-increment: section-h3;
+			}
+
+			h3:hover::after {
+				content: "h3:" counter(section-h3);
+				color: lightgray;
+				display: inline;
+			}
+
+			h4 {
+				counter-increment: section-h4;
+			}
+
+			h4:hover::after {
+				content: "h4:" counter(section-h4);
+				color: lightgray;
+				display: inline;
+			}
+
+			h5 {
+				counter-increment: section-h5;
+			}
+
+			h5:hover::after {
+				content: "h5:" counter(section-h5);
+				color: lightgray;
+				display: inline;
+			}
+
+			h6 {
+				content: "h6:" counter(section-h6);
+			}
+
+			h6:hover::after {
+				content: "h6:" counter(section-h6);
+				color: lightgray;
+				display: inline;
+			}
 		}
 	</style>
 </head>
@@ -423,7 +520,7 @@
 
 		<!-- 进度条 -->
 		<div id="top-progress-bar"
-			style="position: fixed; top: 0px; left: 0px; right: 0px; background-color: rgb(244, 67, 54); height: 2px; width: 0%; transition: width 0.2s ease 0s, opacity 0.6s ease 0s;">
+			style="position: fixed; top: 0px; left: 0px; right: 0px; background-color: lightskyblue; height: 2px; width: 0%; transition: width 0.2s ease 0s, opacity 0.6s ease 0s;">
 		</div>
 		<ul style="height: 100%; list-style-type: none; display: flex;  flex-direction: row;
     justify-content: flex-start; padding: 0; margin: 0;">
@@ -433,8 +530,12 @@
 	</header>
 	<main id="blog-main"></main>
 	<main id="blog-chat">
-		<div id="comments">
+		<<<<<<< HEAD <div id="comments">
 			<!-- <script src="https://utteranc.es/client.js" repo="wbwdxh/wbwdxh.github.io" issue-term="url"
+=======
+		<div id="comments-1">
+			<script src="https://utteranc.es/client.js" repo="wbwdxh/wbwdxh.github.io" issue-term="url"
+>>>>>>> 55c60bb16eba3d1a3a1801c627fb1489d3d3623d
 				label="Utterances" theme="github-light" crossorigin="anonymous" async>
 				</script> -->
 			<script src="https://giscus.app/client.js" data-repo="wbwdxh/wbwdxh.github.io" data-repo-id="R_kgDONXOTxQ"
@@ -442,7 +543,14 @@
 				data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light"
 				data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" async>
 				</script>
-		</div>
+			</div>
+			<div id="comments-2">
+				<script src="https://giscus.app/client.js" data-repo="wbwdxh/wbwdxh.github.io"
+					data-repo-id="R_kgDONXOTxQ" data-category="Announcements" data-category-id="DIC_kwDONXOTxc4CnWAd"
+					data-mapping="url" data-strict="1" data-reactions-enabled="1" data-emit-metadata="0"
+					data-input-position="top" data-theme="light" data-lang="zh-CN" crossorigin="anonymous" async>
+					</script>
+			</div>
 	</main>
 	<script src="./katex/katex.min.js"></script>
 	<script src="./katex/contrib/auto-render.min.js"></script>
