@@ -394,6 +394,14 @@
 		header {
 			box-shadow: 0 5px 1em 0 rgba(0, 0, 0, .1);
 		}
+
+		#comments nth-child(2) {
+			display: none;
+		}
+		
+		#comments nth-child(1) {
+			display: block;
+		}
 	</style>
 </head>
 
@@ -433,10 +441,12 @@
 	</header>
 	<main id="blog-main"></main>
 	<main id="blog-chat">
-		<div id="comments">
-			<!-- <script src="https://utteranc.es/client.js" repo="wbwdxh/wbwdxh.github.io" issue-term="url"
+		<div id="comments-1">
+			<script src="https://utteranc.es/client.js" repo="wbwdxh/wbwdxh.github.io" issue-term="url"
 				label="Utterances" theme="github-light" crossorigin="anonymous" async>
-				</script> -->
+				</script>
+		</div>
+		<div id="comments-2">
 			<script src="https://giscus.app/client.js"
 			        data-repo="wbwdxh/wbwdxh.github.io"
 			        data-repo-id="R_kgDONXOTxQ"
@@ -449,7 +459,6 @@
 			        data-input-position="top"
 			        data-theme="light"
 			        data-lang="zh-CN"
-			        data-loading="lazy"
 			        crossorigin="anonymous"
 			        async>
 			</script>
