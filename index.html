@@ -424,15 +424,11 @@
 			display: none;
 		}*/
 
+		:root {	
+	  		counter-reset: section-h1 section-h2 section-h3 section-h4 section-h5 section-h6;
+		}
+		
 		@media (min-height: 350px) {
-			body {	
-	  			counter-reset: section-h1;
-	  			counter-reset: section-h2;
-	  			counter-reset: section-h3;
-	  			counter-reset: section-h4;
-	  			counter-reset: section-h5;
-	  			counter-reset: section-h6;
-			}
 	
 			h1::after{
 				text-decoration: none;
@@ -444,9 +440,9 @@
 			}
 			
 			h1:hover::after {
-				content: counter(section-h1);
-				color: "h1:" lightgray;
-				display:block;
+				content: "h1:" counter(section-h1);
+				color:  lightgray;
+				display:inline;
 			}
 	
 			h2::after{
@@ -459,9 +455,9 @@
 			}
 			
 			h2:hover::after {
-				content: counter(section-h2);
-				color: "h2:" lightgray;
-				display:block;
+				content: "h2:" counter(section-h2);
+				color: lightgray;
+				display:inline;
 			}
 	
 			h3::after{
@@ -474,9 +470,9 @@
 			}
 			
 			h3:hover::after {
-				content: counter(section-h3);
-				color: "h3:" lightgray;
-				display:block;
+				content: "h3:" counter(section-h3);
+				color: lightgray;
+				display:inline;
 			}
 	
 			h4::after{
@@ -489,9 +485,9 @@
 			}
 			
 			h4:hover::after {
-				content: counter(section-h4);
-				color: "h4:" lightgray;
-				display:block;
+				content: "h4:" counter(section-h4);
+				color: lightgray;
+				display:inline;
 			}
 	
 			h5::after{
@@ -504,9 +500,9 @@
 			}
 			
 			h5:hover::after {
-				content: counter(section-h5);
-				color: "h5:" lightgray;
-				display:block;
+				content: "h5:" counter(section-h5);
+				color: lightgray;
+				display:inline;
 			}
 	
 			h6::after{
@@ -519,9 +515,9 @@
 			}
 			
 			h6:hover::after {
-				content: counter(section-h6);
-				color: "h6:" lightgray;
-				display:block;
+				content: "h6:" counter(section-h6);
+				color: lightgray;
+				display:inline;
 			}
 		}
 	</style>
