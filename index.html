@@ -551,9 +551,7 @@
 	<script src="./jquery-3.3.1.min.js"></script>
 	<script src="./RibbonsEffect.js"></script>
 	<!-- <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> -->
-	<script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="150" mobile="false"
-		src="./canvas-nest.min.js"></script>
+	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 	<script>
 		if (!true) {
 			let url = new URL(top.location.href);
@@ -579,7 +577,9 @@
 
 			chat.render(document.getElementById('comments'))
 		}
-	</script>
+	</script> -->
+	<script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="150" mobile="false"
+		src="./canvas-nest.min.js"></script>
 	<script defer type="module">
 		import { marked } from './marked.js';
 
@@ -598,7 +598,7 @@
 		fetch('/md/' + param1)
 			.then(response => {
 				if (!response.ok) {
-					throw new Error('Network response was not ok ' + response.statusText);
+					throw new Error('Network response was not ok, status:' + response.statusText);
 				}
 				return response.text(); // 或者 response.json()，取决于响应的内容类型
 			})
@@ -673,10 +673,13 @@
 
 				fun();
 
+				window.myloader.hide();
 			})
 			.catch(error => {
 				console.error('There has been a problem with your fetch operation:', error);
-				document.getElementById('blog-main').innerHTML = '<h1>404 Not Found</h1><br/>你好像迷路了'
+				document.getElementById('blog-main').innerHTML = '<h1>' + error + '</h1><br/>发生了错误，请检查网络连接或联系管理员';
+
+				window.myloader.hide();
 			});
 	</script>
 	<script>
@@ -715,6 +718,8 @@
 			}, 500);
 		}
 		showLoader();
+
+		window.myloader = { show: showLoader, hide: fadeOutLoader };
 
 		// // 动态DOM加载示例
 		// setTimeout(() => {
