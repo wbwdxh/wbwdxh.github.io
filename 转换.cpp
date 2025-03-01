@@ -536,6 +536,7 @@ signed main()
 </script>
 <script src="/katex/katex.min.js"></script>
 <script src="/katex/contrib/auto-render.min.js"></script>
+<script src="./codecopy/clipboard.js"></script>
 <script defer type="module">
 	import { marked } from '../marked.js';
 	if (true)
