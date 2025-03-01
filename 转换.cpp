@@ -106,7 +106,8 @@ signed main()
 		char c;
 		while (fin.get(c))
 			s += c;
-		fout << R"(<script>
+		fout << R"(
+<script>
 document.body.parentElement.lang = "zh-cn";
 //在head添加string
 document.head.innerHTML += `

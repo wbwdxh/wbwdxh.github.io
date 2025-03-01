@@ -1,3 +1,4 @@
+
 <script>
 document.body.parentElement.lang = "zh-cn";
 //在head添加string
