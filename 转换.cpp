@@ -14,7 +14,7 @@ namespace replaceMarkdownLinks
 	{
 		f = false;
 		// 正则表达式，用于匹配Markdown链接
-		regex mdLinkRegex(R"(\[([^\]\\]*(?:\\.[^\]\\]*)*)\]\(([^)]+)\.md\))");
+		regex mdLinkRegex(R"(\[([^\]\\]*(?:\\.[^\]\\]*)*?)\]\(([^)]+)\.md\))");
 
 		// 用于存储替换结果的字符串
 		string result = input;
