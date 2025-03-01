@@ -1,4 +1,4 @@
-
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <script>
 	document.body.parentElement.lang = "zh-cn";
 	//在head添加string
@@ -431,6 +431,38 @@
 <script src="/codecopy/clipboard.js"></script>
 <script defer type="module">
 	import { marked } from '../marked.js';
+	function showLoader() {
+		const loader = document.getElementById('loader');
+		loader.style.display = 'flex';
+		loader.style.opacity = '1';
+	}
+	function fadeOutLoader() {
+		const loader = document.getElementById('loader');
+		loader.style.opacity = '0';
+		setTimeout(() => {
+			loader.style.display = 'none';
+		}, 500);
+	}
+	// 初始加载检测
+	document.addEventListener('DOMContentLoaded', () => {
+		// 基础DOM加载完成
+		fadeOutLoader();
+		// 检测动态DOM更新
+		const observer = new MutationObserver((mutations) => {
+			if (document.querySelector('[data-loading]')) {
+				showLoader();
+			} else {
+				fadeOutLoader();
+			}
+		});
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true,
+			attributes: true
+		});
+	});
+	showLoader();
+	window.myloader = { show: showLoader, hide: fadeOutLoader };
 	if (true)
 	{
 		renderMathInElement(document.body, {
@@ -482,40 +514,9 @@
 			});
 		}
 		fun();
+		fadeOutLoader();
 		window.myloader.hide();
 	}
-	// 初始加载检测
-	document.addEventListener('DOMContentLoaded', () => {
-		// 基础DOM加载完成
-		fadeOutLoader();
-		// 检测动态DOM更新
-		const observer = new MutationObserver((mutations) => {
-			if (document.querySelector('[data-loading]')) {
-				showLoader();
-			} else {
-				fadeOutLoader();
-			}
-		});
-		observer.observe(document.body, {
-			childList: true,
-			subtree: true,
-			attributes: true
-		});
-	});
-	function showLoader() {
-		const loader = document.getElementById('loader');
-		loader.style.display = 'flex';
-		loader.style.opacity = '1';
-	}
-	function fadeOutLoader() {
-		const loader = document.getElementById('loader');
-		loader.style.opacity = '0';
-		setTimeout(() => {
-			loader.style.display = 'none';
-		}, 500);
-	}
-	showLoader();
-	window.myloader = { show: showLoader, hide: fadeOutLoader };
 </script>
 
 <div class="loader-overlay" id="loader" style="display: flex;opacity: 1;z-index: 100000000;">
