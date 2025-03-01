@@ -94,6 +94,17 @@ vector<string> search_files(const string& dir)
 signed main()
 {
 	auto files = search_files("md");
+	string s1;
+	for (auto& file : files)
+	{
+		if (file.size() < 3 || file.substr(file.size() - 3, 3).compare(".md"))
+			continue;
+		s1 = s1 + "1.[" + file.substr(3) + "](auto_compile/" + file.substr(3) + ")\n";
+	}
+	{
+		ofstream fout("auto_compile/all_file.md", ios::out);
+		fout << s1;
+	}
 	for (auto& file : files)
 	{
 		if (file.size() < 3 || file.substr(file.size() - 3, 3).compare(".md"))
