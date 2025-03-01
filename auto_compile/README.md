@@ -3,7 +3,6 @@
 	document.body.parentElement.lang = "zh-cn";
 	//在head添加string
 	document.head.innerHTML += `
-	<link rel="icon" id="favicon" href="/favicon.ico" type="image/x-icon">
 	<title>wbw121124's blog</title>
 	<link rel="stylesheet" href="/vs2015.css">
 	<link rel="stylesheet" href="/katex/katex.min.css">
@@ -519,4 +518,24 @@
 	window.myloader = { show: showLoader, hide: fadeOutLoader };
 </script>
 
+<div class="loader-overlay" id="loader" style="display: flex;opacity: 1;z-index: 100000000;">
+		<div class="loader" style="
+    display: flex;
+    opacity: 1;
+"></div>
+		<div class="loader" style="
+    position: fixed;
+    opacity: 1;
+    width: 9.5em;
+    height: 9.5em;
+    opacity: 1 !important;
+    background: white;
+    box-shadow: inset 0 0 0.75em rgba(0, 0, 0, 0.1);
+"></div>
+		<div style="
+    position: fixed;
+    opacity: 1;
+    z-index:999999999;
+">loading...</div>
+	</div>
 # Welcome to my GitHub Pages
