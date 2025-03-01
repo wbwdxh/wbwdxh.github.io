@@ -3,6 +3,7 @@
 	document.body.parentElement.lang = "zh-cn";
 	//在head添加string
 	document.head.innerHTML += `
+	<link rel="icon" id="favicon" href="/favicon.ico" type="image/x-icon">
 	<title>wbw121124's blog</title>
 	<link rel="stylesheet" href="/vs2015.css">
 	<link rel="stylesheet" href="/katex/katex.min.css">
@@ -428,7 +429,7 @@
 </script>
 <script src="/katex/katex.min.js"></script>
 <script src="/katex/contrib/auto-render.min.js"></script>
-<script src="./codecopy/clipboard.js"></script>
+<script src="/codecopy/clipboard.js"></script>
 <script defer type="module">
 	import { marked } from '../marked.js';
 	if (true)
