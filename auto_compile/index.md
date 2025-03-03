@@ -119,10 +119,9 @@
 <!--插入内容 end-->
 # Welcome
 
-1. [平衡树](平衡树.html)
-1. [二分图](二分图.html)
-1. [连通性问题](连通性问题.html)
-1. [README](README.html)
-1. [About](about.html)
-
-1. [all md file](all_md_fileall_md_file.md)
+1. [平衡树](/auto_compile/平衡树.html)
+1. [二分图](/auto_compile/二分图.html)
+1. [连通性问题](/auto_compile/连通性问题.html)
+1. [README](/auto_compile/README.html)
+1. [About](/auto_compile/about.html)
+1. [all md file](/auto_compileall_md_file.md)

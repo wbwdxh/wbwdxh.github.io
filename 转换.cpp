@@ -37,7 +37,7 @@ namespace replaceMarkdownLinks
 			// cout << result.substr(match.position(), match.length()) << '\n';
 
 			// 构建替换字符串
-			string replacement = "[" + linkText + "](" + url + ".html)";
+			string replacement = "[" + linkText + "](/auto_compile/" + url + ".html)";
 
 			// 替换原始字符串中的匹配部分
 			result.erase(match.position(), match.length());
@@ -102,7 +102,7 @@ signed main()
 	{
 		if (file.size() < 3 || file.substr(file.size() - 3, 3).compare(".md"))
 			continue;
-		s1 = s1 + "1. [" + file.substr(3) + "](auto_compile/" + file.substr(3) + ")\n";
+		s1 = s1 + "1. [" + file.substr(3) + "](/auto_compile/" + file.substr(3) + ")\n";
 	}
 	{
 		ofstream fout("md/all_md_file.md", ios::out);
@@ -247,7 +247,8 @@ signed main()
 		s = replaceMarkdownLinks::run(s);
 		fout << s;
 		if (file == "md\\index.md")
-			fout << "\n1. [all md file](all_md_fileall_md_file.md)\n";
+			fout << string(s.back() != '\n' ? "\n" : "") +
+			"1. [all md file](/auto_compileall_md_file.md)\n";
 		fin.close();
 		fout.close();
 		cout << file << " done\n";
