@@ -1,4 +1,5 @@
 1. [about.md](auto_compile/about.md)
+1. [all_md_file.md](auto_compile/all_md_file.md)
 1. [C++笔记.md](auto_compile/C++笔记.md)
 1. [CF2036E.md](auto_compile/CF2036E.md)
 1. [index.md](auto_compile/index.md)

@@ -1,3 +1,4 @@
+<!--插入内容 start-->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <script>
 	document.body.parentElement.lang = "zh-cn";
@@ -115,6 +116,7 @@
     z-index:999999999;
 ">loading...</div>
 	</div>
+<!--插入内容 end-->
 # [NOIP十三连测第十三套 ] --T1--加减乘除
 
 ![image-20241029202938971](./C++笔记.assets/image-20241029202938971.png)

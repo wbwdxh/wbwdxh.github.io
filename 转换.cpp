@@ -105,9 +105,12 @@ signed main()
 		s1 = s1 + "1. [" + file.substr(3) + "](auto_compile/" + file.substr(3) + ")\n";
 	}
 	{
-		ofstream fout("auto_compile/all_file.md", ios::out);
+		ofstream fout("md/all_md_file.md", ios::out);
 		fout << s1;
+		files.push_back("md/all_md_file.md");
 	}
+	string run_string(R"(python -u "change.py")");
+	system(run_string.c_str());
 	for (auto& file : files)
 	{
 		if (file.size() < 3 || file.substr(file.size() - 3, 3).compare(".md"))
@@ -120,7 +123,8 @@ signed main()
 		char c;
 		while (fin.get(c))
 			s += c;
-		fout << R"(<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		fout << R"(<!--插入内容 start-->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <script>
 	document.body.parentElement.lang = "zh-cn";
 </script>
@@ -237,12 +241,13 @@ signed main()
     z-index:999999999;
 ">loading...</div>
 	</div>
+<!--插入内容 end-->
 )";
 		//替换内容
 		s = replaceMarkdownLinks::run(s);
 		fout << s;
 		if (file == "md\\index.md")
-			fout << "\n1. [all_files](all_files.md)\n";
+			fout << "\n1. [all md file](all_md_fileall_md_file.md)\n";
 		fin.close();
 		fout.close();
 		cout << file << " done\n";

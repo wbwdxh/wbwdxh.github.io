@@ -1,3 +1,4 @@
+<!--插入内容 start-->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <script>
 	document.body.parentElement.lang = "zh-cn";
@@ -115,4 +116,5 @@
     z-index:999999999;
 ">loading...</div>
 	</div>
+<!--插入内容 end-->
 # Welcome to my GitHub Pages

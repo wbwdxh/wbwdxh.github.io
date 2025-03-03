@@ -1,3 +1,4 @@
+<!--插入内容 start-->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <script>
 	document.body.parentElement.lang = "zh-cn";
@@ -115,6 +116,7 @@
     z-index:999999999;
 ">loading...</div>
 	</div>
+<!--插入内容 end-->
 # Welcome
 
 1. [平衡树](平衡树.html)
@@ -123,4 +125,4 @@
 1. [README](README.html)
 1. [About](about.html)
 
-1. [all_files](all_files.md)
+1. [all md file](all_md_fileall_md_file.md)
