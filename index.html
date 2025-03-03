@@ -340,9 +340,24 @@
 			margin-bottom: 60px;
 		}
 
+		.anchorjs-link {
+			transition: all .25s linear;
+			margin-left: -0.25em;
+		}
+
+		*:hover>.anchorjs-link {
+			margin-left: 0em !important;
+		}
+
 		@media (max-height: 300px) {
 			header {
 				position: initial !important;
+			}
+		}
+
+		@media (min-height: 301px) {
+			.anchorjs-link:target {
+				scroll-margin-top: 45px;
 			}
 		}
 
@@ -437,7 +452,7 @@
 			}
 
 			h1:hover::after {
-				content: "h1:" counter(section-h1);
+				content: " h1:" counter(section-h1);
 				color: lightgray;
 				display: inline;
 			}
@@ -447,7 +462,7 @@
 			}
 
 			h2:hover::after {
-				content: "h2:" counter(section-h2);
+				content: " h2:" counter(section-h2);
 				color: lightgray;
 				display: inline;
 			}
@@ -457,7 +472,7 @@
 			}
 
 			h3:hover::after {
-				content: "h3:" counter(section-h3);
+				content: " h3:" counter(section-h3);
 				color: lightgray;
 				display: inline;
 			}
@@ -467,7 +482,7 @@
 			}
 
 			h4:hover::after {
-				content: "h4:" counter(section-h4);
+				content: " h4:" counter(section-h4);
 				color: lightgray;
 				display: inline;
 			}
@@ -477,17 +492,17 @@
 			}
 
 			h5:hover::after {
-				content: "h5:" counter(section-h5);
+				content: " h5:" counter(section-h5);
 				color: lightgray;
 				display: inline;
 			}
 
 			h6 {
-				content: "h6:" counter(section-h6);
+				counter-increment: section-h6;
 			}
 
 			h6:hover::after {
-				content: "h6:" counter(section-h6);
+				content: " h6:" counter(section-h6);
 				color: lightgray;
 				display: inline;
 			}
@@ -560,39 +575,24 @@
 	<script src="./codecopy/clipboard.js"></script>
 	<script src="./jquery-3.3.1.min.js"></script>
 	<script src="./RibbonsEffect.js"></script>
-	<!-- <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-	<script>
-		if (!true) {
-			let url = new URL(top.location.href);
-			let params = new URLSearchParams(url.search);
-
-			// 获取单个参数url
-			let param1 = params.get('blog');
-
-			if (!param1) {
-				param1 = 'index.md';
-			}
-
-			let chat = new Gitment({
-				oauth: {
-					client_id: 'Ov23liEGI0yfHsafjHNi',
-					client_secret: '6149a9a1f33fb1987fc6710ea7a02b30e455c6d6',
-				},
-				repo: 'wbwdxh.github.io',
-				owner: 'wbwdxh',
-				id: 'blog=' + param1 + ' - ' + top.location.pathname,
-				link: top.location.pathname + '?blog=' + param1,
-			})
-
-			chat.render(document.getElementById('comments'))
-		}
-	</script> -->
 	<script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="150" mobile="false"
 		src="./canvas-nest.min.js"></script>
-	<script defer type="module">
+	<script type="module">
 		import { marked } from './marked.js';
+		import 'https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js';
 
+		function loadsript(src) {
+			var script = document.createElement('script');
+			script.src = src;
+			document.body.appendChild(script);
+		}
+
+		function loadsript(src, f) {
+			var script = document.createElement('script');
+			script.src = src;
+			document.body.appendChild(script);
+			script.onload = f;
+		}
 
 		var url = new URL(top.location.href);
 		var params = new URLSearchParams(url.search);
@@ -616,6 +616,7 @@
 				var md = data;
 				var html = marked.parse(md);
 				document.getElementById('blog-main').innerHTML = html;
+				anchors.add();
 				renderMathInElement(document.body, {
 					delimiters: [
 						{ left: '$$', right: '$$', display: true },
@@ -680,10 +681,10 @@
 						});
 					});
 				}
-
-				fun();
-
 				window.myloader.hide();
+				document.addEventListener('DOMContentLoaded', () => {
+					fun();
+				});
 			})
 			.catch(error => {
 				console.error('There has been a problem with your fetch operation:', error);
