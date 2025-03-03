@@ -519,7 +519,18 @@
 			h5::after,
 			h6::after {
 				transition: all .25s linear;
-				display: none;
+				content: "";
+				margin-left: -0.4375em;
+				display: inline;
+			}
+
+			h1:hover::after,
+			h2:hover::after,
+			h3:hover::after,
+			h4:hover::after,
+			h5:hover::after,
+			h6:hover::after {
+				margin-left: 0 !important;
 			}
 		}
 	</style>
