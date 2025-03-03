@@ -102,7 +102,8 @@ signed main()
 	{
 		if (file.size() < 3 || file.substr(file.size() - 3, 3).compare(".md"))
 			continue;
-		s1 = s1 + "1. [" + file.substr(3) + "](/auto_compile/" + file.substr(3) + ")\n";
+		s1 = s1 + "1. [" + file.substr(3) + "](/auto_compile/" +
+			file.substr(3, file.size() - 6) + ".html)\n";
 	}
 	{
 		ofstream fout("md/all_md_file.md", ios::out);
