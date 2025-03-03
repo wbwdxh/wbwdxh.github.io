@@ -17,11 +17,9 @@ for root, dirs, files in os.walk(current_path):
     for file in files:
         # 判断文件是否为文本文件
         if (
-            file.endswith(".txt")
-            or file.endswith(".md")
-            or file.endswith(".py")
-            or file.endswith(".cpp")
-            or file.endswith(".html")
+            (file.endswith(".txt") or file.endswith(".md") or file.endswith(".html"))
+            and file != "README.md"
+            and file != "DIGESTS.md"
         ):
             # 获取文件的完整路径
             file_path = os.path.join(root, file)

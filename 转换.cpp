@@ -102,7 +102,7 @@ signed main()
 	{
 		if (file.size() < 3 || file.substr(file.size() - 3, 3).compare(".md"))
 			continue;
-		s1 = s1 + "1.[" + file.substr(3) + "](auto_compile/" + file.substr(3) + ")\n";
+		s1 = s1 + "1. [" + file.substr(3) + "](auto_compile/" + file.substr(3) + ")\n";
 	}
 	{
 		ofstream fout("auto_compile/all_file.md", ios::out);
@@ -241,6 +241,8 @@ signed main()
 		//替换内容
 		s = replaceMarkdownLinks::run(s);
 		fout << s;
+		if (file == "md\\index.md")
+			fout << "\n1. [all_files](all_files.md)\n";
 		fin.close();
 		fout.close();
 		cout << file << " done\n";
