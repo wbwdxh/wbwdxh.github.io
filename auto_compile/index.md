@@ -124,4 +124,4 @@
 1. [连通性问题](/auto_compile/连通性问题.html)
 1. [README](/auto_compile/README.html)
 1. [About](/auto_compile/about.html)
-1. [all md file](/auto_compile/all_md_file.md)
+1. [all md file](/auto_compile/all_md_file.html)

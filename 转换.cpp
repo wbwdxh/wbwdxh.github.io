@@ -248,7 +248,7 @@ signed main()
 		fout << s;
 		if (file == "md\\index.md")
 			fout << string(s.back() != '\n' ? "\n" : "") +
-			"1. [all md file](/auto_compile/all_md_file.md)\n";
+			"1. [all md file](/auto_compile/all_md_file.html)\n";
 		fin.close();
 		fout.close();
 		cout << file << " done\n";
