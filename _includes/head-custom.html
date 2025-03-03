@@ -332,9 +332,29 @@
 		margin-bottom: 60px;
 	}
 
+	.anchorjs-link {
+		transition: all .25s linear;
+		margin-left: -0.25em !important;
+	}
+
+	*:hover>.anchorjs-link {
+		margin-left: 0.1875em !important;
+	}
+
 	@media (max-height: 300px) {
 		header {
 			position: initial !important;
+		}
+	}
+
+	@media (min-height: 301px) {
+
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			scroll-margin-top: 45px;
 		}
 	}
 
@@ -389,23 +409,23 @@
 	}
 
 	/*ul.fy.pagination {
-			display: inline-block;
-			padding: 0;
-			margin: 0;
+		    display: inline-block;
+		    padding: 0;
+		    margin: 0;
 		}
 		
 		ul.fy.pagination li {display: inline;}
 		
 		ul.fy.pagination li a {
-			color: black;
-			float: left;
-			padding: 8px 16px;
-			text-decoration: none;
+		    color: black;
+		    float: left;
+		    padding: 8px 16px;
+		    text-decoration: none;
 		}
 		
 		ul.fy.pagination li a.active {
-			background-color: #79c0ff;
-			color: white;
+		    background-color: #79c0ff;
+		    color: white;
 		}
 		
 		ul.fy.pagination li a:hover:not(.active) {background-color: #ddd;}
@@ -413,20 +433,23 @@
 		#comments-1 nth-child(2) {
 			display: none;
 		}
+		
 		#comments-1 nth-child(1) {
 			display: none;
 		}*/
+
 	body {
 		counter-reset: section-h1 section-h2 section-h3 section-h4 section-h5 section-h6;
 	}
 
 	@media (min-height: 350px) {
+
 		h1 {
 			counter-increment: section-h1;
 		}
 
 		h1:hover::after {
-			content: "h1:" counter(section-h1);
+			content: " h1:" counter(section-h1);
 			color: lightgray;
 			display: inline;
 		}
@@ -436,7 +459,7 @@
 		}
 
 		h2:hover::after {
-			content: "h2:" counter(section-h2);
+			content: " h2:" counter(section-h2);
 			color: lightgray;
 			display: inline;
 		}
@@ -446,7 +469,7 @@
 		}
 
 		h3:hover::after {
-			content: "h3:" counter(section-h3);
+			content: " h3:" counter(section-h3);
 			color: lightgray;
 			display: inline;
 		}
@@ -456,7 +479,7 @@
 		}
 
 		h4:hover::after {
-			content: "h4:" counter(section-h4);
+			content: " h4:" counter(section-h4);
 			color: lightgray;
 			display: inline;
 		}
@@ -466,19 +489,41 @@
 		}
 
 		h5:hover::after {
-			content: "h5:" counter(section-h5);
+			content: " h5:" counter(section-h5);
 			color: lightgray;
 			display: inline;
 		}
 
 		h6 {
-			content: "h6:" counter(section-h6);
+			counter-increment: section-h6;
 		}
 
 		h6:hover::after {
-			content: "h6:" counter(section-h6);
+			content: " h6:" counter(section-h6);
 			color: lightgray;
 			display: inline;
+		}
+
+		h1::after,
+		h2::after,
+		h3::after,
+		h4::after,
+		h5::after,
+		h6::after {
+			transition: all .25s linear;
+			color: #0000;
+			content: "";
+			margin-left: -0.4375em;
+			display: inline;
+		}
+
+		h1:hover::after,
+		h2:hover::after,
+		h3:hover::after,
+		h4:hover::after,
+		h5:hover::after,
+		h6:hover::after {
+			margin-left: 0 !important;
 		}
 	}
 </style>
