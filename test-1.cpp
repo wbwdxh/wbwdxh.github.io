@@ -6,36 +6,36 @@ namespace replaceMarkdownLinks
 #include<bits/stdc++.h>
 	using namespace std;
 	bool f = false;
-	// º¯Êı£ºÌæ»»MarkdownÁ´½ÓÖĞµÄURL
+	// å‡½æ•°ï¼šæ›¿æ¢Markdowné“¾æ¥ä¸­çš„URL
 	string replaceMarkdownLinks(const string& input, bool& f)
 	{
 		f = false;
-		// ÕıÔò±í´ïÊ½£¬ÓÃÓÚÆ¥ÅäMarkdownÁ´½Ó
+		// æ­£åˆ™è¡¨è¾¾å¼ï¼Œç”¨äºåŒ¹é…Markdowné“¾æ¥
 		regex mdLinkRegex(R"(\[([^\]\\]*(?:\\.[^\]\\]*)*)\]\(([^)]+)\.md\))");
 
-		// ÓÃÓÚ´æ´¢Ìæ»»½á¹ûµÄ×Ö·û´®
+		// ç”¨äºå­˜å‚¨æ›¿æ¢ç»“æœçš„å­—ç¬¦ä¸²
 		string result = input;
 
-		// Ê¹ÓÃstd::regex_replace½øĞĞÌæ»»
+		// ä½¿ç”¨std::regex_replaceè¿›è¡Œæ›¿æ¢
 		sregex_iterator iter(result.begin(), result.end(), mdLinkRegex);
 		sregex_iterator end;
 
 		while (iter != end)
 		{
 			smatch match = *iter;
-			string linkText = match[1].str(); // ²¶»ñµÄÁ´½ÓÎÄ±¾
-			string url = match[2].str(); // ²¶»ñµÄURL
+			string linkText = match[1].str(); // æ•è·çš„é“¾æ¥æ–‡æœ¬
+			string url = match[2].str(); // æ•è·çš„URL
 			// cout << linkText << ' ' << url << ' ' << url.substr(17) << '\n';
 
-			// ¹¹½¨Ìæ»»×Ö·û´®
+			// æ„å»ºæ›¿æ¢å­—ç¬¦ä¸²
 			string replacement = "[" + linkText + "](" + url.substr(17) + ".html)";
 
-			// Ìæ»»Ô­Ê¼×Ö·û´®ÖĞµÄÆ¥Åä²¿·Ö
+			// æ›¿æ¢åŸå§‹å­—ç¬¦ä¸²ä¸­çš„åŒ¹é…éƒ¨åˆ†
 			result.replace(match.position(), match.length(), replacement);
 
 			f = true;
 
-			//ÅĞ¶ÏÊÇ·ñ'std::out_of_range'
+			//åˆ¤æ–­æ˜¯å¦'std::out_of_range'
 			if (iter->position() + iter->length() > result.size())
 			{
 				break;
@@ -49,7 +49,7 @@ namespace replaceMarkdownLinks
 	string run(string input)
 	{
 
-		// µ÷ÓÃº¯Êı½øĞĞÌæ»»
+		// è°ƒç”¨å‡½æ•°è¿›è¡Œæ›¿æ¢
 		string result = replaceMarkdownLinks(input, f);
 		while (f)
 			result = replaceMarkdownLinks(result, f);
@@ -59,19 +59,19 @@ namespace replaceMarkdownLinks
 
 int main()
 {
-	// Ê¾ÀıÊäÈë×Ö·û´®£¬°üº¬MarkdownÁ´½ÓºÍ×ªÒå×Ö·û
+	// ç¤ºä¾‹è¾“å…¥å­—ç¬¦ä¸²ï¼ŒåŒ…å«Markdowné“¾æ¥å’Œè½¬ä¹‰å­—ç¬¦
 	string input = R"(# Welcome
 
-1. [Æ½ºâÊ÷](/index.html?blog=Æ½ºâÊ÷.md)
-1. [¶ş·ÖÍ¼](/index.html?blog=¶ş·ÖÍ¼.md)
-1. [Á¬Í¨ĞÔÎÊÌâ](/index.html?blog=Á¬Í¨ĞÔÎÊÌâ.md)
+1. [å¹³è¡¡æ ‘](/index.html?blog=å¹³è¡¡æ ‘.md)
+1. [äºŒåˆ†å›¾](/index.html?blog=äºŒåˆ†å›¾.md)
+1. [è¿é€šæ€§é—®é¢˜](/index.html?blog=è¿é€šæ€§é—®é¢˜.md)
 1. [README](/index.html?blog=README.md)
 1. [About](/index.html?blog=about.md)
 )";
 
 	string result = replaceMarkdownLinks::run(input);
 
-	// Êä³ö½á¹û
+	// è¾“å‡ºç»“æœ
 	cout << "Result:\n" << result << endl;
 
 	return 0;

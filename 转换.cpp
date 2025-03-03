@@ -14,7 +14,7 @@ namespace replaceMarkdownLinks
 	{
 		f = false;
 		// 正则表达式，用于匹配Markdown链接
-		regex mdLinkRegex(R"(\[([^\]\\]*(?:\\.[^\]\\]*)*?)\]\(([^)]+)\.md\))");
+		regex mdLinkRegex(R"(\[([^\]\n\r]*?)\]\(/index\.html\?blog=([^()\n\r\ ]*?)\.md\))");
 
 		// 用于存储替换结果的字符串
 		string result = input;
@@ -28,21 +28,24 @@ namespace replaceMarkdownLinks
 			string linkText = match[1].str(); // 捕获的链接文本
 			string url = match[2].str(); // 捕获的URL
 			// cout << url << '\n';
-			if (url.size() < 17)
-			{
-				++iter;
-				continue;
-			}
-			// cout << linkText << ' ' << url << ' ' << url.substr(17) << '\n';
+			// if (url.size() < 17)
+			// {
+			// 	++iter;
+			// 	continue;
+			// }
+			// cout << linkText << ' ' << url << ' ' << url. << '\n';
+			// cout << result.substr(match.position(), match.length()) << '\n';
 
 			// 构建替换字符串
-			string replacement = "[" + linkText + "](" + url.substr(17) + ".html)";
+			string replacement = "[" + linkText + "](" + url + ".html)";
 
 			// 替换原始字符串中的匹配部分
-			result.replace(match.position(), match.length(), replacement);
+			result.erase(match.position(), match.length());
+			result.insert(match.position(), replacement);
+			// result.replace(match.position(), match.length(), replacement);
 
 			f = true;
-
+			return result;
 			//判断是否'std::out_of_range'
 			if (iter->position() + iter->length() > result.size())
 			{
