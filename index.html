@@ -721,6 +721,25 @@
 			});
 	</script>
 	<script>
+		document.addEventListener('scroll', function () {
+			function getScrollPercentage() {
+				// 获取页面滚动的垂直位置
+				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+				// 获取页面的总高度
+				var scrollHeight = document.documentElement.scrollHeight;
+				var clientHeight = window.innerHeight || document.documentElement.clientHeight;
+
+				// 计算滚动位置占页面高度的百分比
+				var scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
+
+				return scrollPercent;
+			}
+			//设置#top-progress-bar的宽度为滚动百分比
+			document.getElementById('top-progress-bar').style.width = Math.round(getScrollPercentage()) + '%';
+		});
+	</script>
+	<script>
 		// 初始加载检测
 		document.addEventListener('DOMContentLoaded', () => {
 			// 基础DOM加载完成
