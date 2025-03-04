@@ -721,7 +721,7 @@
 			});
 	</script>
 	<script>
-		document.addEventListener('scroll', function () {
+		var updatetopprogressbar = function () {
 			function getScrollPercentage() {
 				// 获取页面滚动的垂直位置
 				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -737,7 +737,14 @@
 			}
 			//设置#top-progress-bar的宽度为滚动百分比
 			document.getElementById('top-progress-bar').style.width = Math.round(getScrollPercentage()) + '%';
+		};
+		document.addEventListener('scroll', function () {
+			updatetopprogressbar();
 		});
+		document.addEventListener('resize', function () {
+			updatetopprogressbar();
+		});
+		updatetopprogressbar();
 	</script>
 	<script>
 		// 初始加载检测
