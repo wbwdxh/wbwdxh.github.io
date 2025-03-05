@@ -628,7 +628,8 @@
 		var param1 = params.get('blog');
 
 		if (!param1) {
-			param1 = 'index.md';
+			// param1 = 'index.md';
+			top.location.href = "/index.html?blog=index.md";
 		}
 
 		//get博客内容
@@ -644,6 +645,7 @@
 				var html = marked.parse(md);
 				document.getElementById('blog-main').innerHTML = html;
 				anchors.add();
+				document.title = param1.substring(0, param1.length - 3) + " | wbw121124's blog";
 				renderMathInElement(document.body, {
 					delimiters: [
 						{ left: '$$', right: '$$', display: true },
