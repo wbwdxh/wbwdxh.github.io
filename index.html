@@ -534,6 +534,12 @@
 				margin-left: 0 !important;
 			}
 		}
+
+		/*css 获取页面高度和宽度*/
+		:root {
+			--w: tan(atan2(100vw, 1px));
+			--h: tan(atan2(100vh, 1px));
+		}
 	</style>
 	<style id="comments-style">
 		#comments-1 {
@@ -549,23 +555,23 @@
 <body>
 	<div class="loader-overlay" id="loader" style="display: flex;opacity: 1;z-index: 100000000;">
 		<div class="loader" style="
-    display: flex;
-    opacity: 1;
-"></div>
+			display: flex;
+			opacity: 1;
+		"></div>
 		<div class="loader" style="
-    position: fixed;
-    opacity: 1;
-    width: 9.5em;
-    height: 9.5em;
-    opacity: 1 !important;
-    background: white;
-    box-shadow: inset 0 0 0.75em rgba(0, 0, 0, 0.1);
-"></div>
+			position: fixed;
+			opacity: 1;
+			width: 9.5em;
+			height: 9.5em;
+			opacity: 1 !important;
+			background: white;
+			box-shadow: inset 0 0 0.75em rgba(0, 0, 0, 0.1);
+		"></div>
 		<div style="
-    position: fixed;
-    opacity: 1;
-    z-index:999999999;
-">loading...</div>
+			position: fixed;
+			opacity: 1;
+			z-index:999999999;
+		">loading...</div>
 	</div>
 	<header
 		style="margin: 0; position: sticky; top:0; left: 0; width: 100%; z-index: 9999; padding: 10px 0;border-bottom: 1px solid #eee; background-color: #fffc;">
@@ -602,6 +608,7 @@
 	<script src="./codecopy/clipboard.js"></script>
 	<script src="./jquery-3.3.1.min.js"></script>
 	<script src="./RibbonsEffect.js"></script>
+	<script src="./translate.js"></script>
 	<script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="150" mobile="false"
 		src="./canvas-nest.min.js"></script>
 	<script type="module">
@@ -628,7 +635,8 @@
 		var param1 = params.get('blog');
 
 		if (!param1) {
-			param1 = 'index.md';
+			top.location.href = 'index.html?blog=index.md';
+			// param1 = 'index.md';
 		}
 
 		//get博客内容
@@ -721,7 +729,7 @@
 			});
 	</script>
 	<script>
-		var updatetopprogressbar = function () {
+		document.addEventListener('scroll', function () {
 			function getScrollPercentage() {
 				// 获取页面滚动的垂直位置
 				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -737,14 +745,7 @@
 			}
 			//设置#top-progress-bar的宽度为滚动百分比
 			document.getElementById('top-progress-bar').style.width = Math.round(getScrollPercentage()) + '%';
-		};
-		document.addEventListener('scroll', function () {
-			updatetopprogressbar();
 		});
-		document.addEventListener('resize', function () {
-			updatetopprogressbar();
-		});
-		updatetopprogressbar();
 	</script>
 	<script>
 		// 初始加载检测
