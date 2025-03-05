@@ -592,7 +592,6 @@
 	</div>
 	<header
 		style="margin: 0; position: sticky; top:0; left: 0; width: 100%; z-index: 9999; padding: 10px 0;border-bottom: 1px solid #eee; background-color: #fffc;">
-
 		<!-- 进度条 -->
 		<div id="top-progress-bar"
 			style="position: fixed; top: 0px; left: 0px; right: 0px; background-color: lightskyblue; height: 2px; width: 0%; transition: width 0.2s ease 0s, opacity 0.6s ease 0s;">
@@ -606,12 +605,36 @@
 	<main id="blog-main"></main>
 	<main id="blog-chat">
 		<span style="display: flex; flex-direction: row; flex-wrap: nowrap;
-			align-content: flex-start; justify-content: flex-start; align-items: center;">
-			<button onclick="showchatbox(1)" class="btn1">utteranc</button>
-			<button onclick="showchatbox(2)" class="btn1 clicked">giscus</button>
+			align-content: flex-start; justify-content: flex-start;
+			align-items: center;">
+			<button id="utteranc-btn" onclick="showchatbox(1)" class="btn1">utteranc</button>
+			<button id="giscus-btn" onclick="showchatbox(2)" class="btn1 clicked">giscus</button>
 			<script>
 				function showchatbox(x) {
-					document.getElementById("");
+					if (x == 2) {
+						document.getElementById("comments-style").innerHTML =
+							`#comments-1 {
+								display: none;
+							}
+							#comments-2 {
+								display: block;
+							}`;
+						document.getElementById("giscus-btn").classList.add("clicked");
+						document.getElementById("utteranc-btn").classList.add("clicked");
+						document.getElementById("utteranc-btn").classList.remove("clicked");
+					}
+					else {
+						document.getElementById("comments-style").innerHTML =
+							`#comments-2 {
+								display: none;
+							}
+							#comments-1 {
+								display: block;
+							}`;
+						document.getElementById("utteranc-btn").classList.add("clicked");
+						document.getElementById("giscus-btn").classList.add("clicked");
+						document.getElementById("giscus-btn").classList.remove("clicked");
+					}
 				}
 			</script>
 		</span>
