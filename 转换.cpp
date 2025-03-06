@@ -112,6 +112,8 @@ signed main()
 	}
 	string run_string(R"(python -u "change.py")");
 	system(run_string.c_str());
+	string run_string1(R"(C:\Users\yl\AppData\Local\Programs\Python\Python38-32\python -u "change.py")");
+	system(run_string1.c_str());
 	for (auto& file : files)
 	{
 		if (file.size() < 3 || file.substr(file.size() - 3, 3).compare(".md"))
