@@ -576,7 +576,8 @@
 </head>
 
 <body>
-	<div class="loader-overlay" id="loader" style="display: flex;opacity: 1;z-index: 100000000;">
+	<div class="loader-overlay" id="loader" style="display: flex; opacity: 1;
+	z-index: 100000000;">
 		<div class="loader" style="
 			display: flex;
 			opacity: 1;
@@ -596,16 +597,22 @@
 			z-index:999999999;
 		">loading...</div>
 	</div>
-	<header
-		style="margin: 0; position: sticky; top:0; left: 0; width: 100%; z-index: 9999; padding: 10px 0;border-bottom: 1px solid #eee; background-color: #fffc;">
+	<header style="margin: 0; position: sticky; top:0; left: 0; width: 100%;
+		z-index: 9999; padding: 10px 0;border-bottom: 1px solid #eee;
+		background-color: #fffc;">
 		<!-- 进度条 -->
-		<div id="top-progress-bar"
-			style="position: fixed; top: 0px; left: 0px; right: 0px; background-color: lightskyblue; height: 2px; width: 0%; transition: width 0.2s ease 0s, opacity 0.6s ease 0s;">
+		<div id="top-progress-bar" style="position: fixed; top: 0px; left: 0px; right: 0px;
+			background-color: lightskyblue; height: 2px; width: 0%;
+			transition: width 0.2s ease 0s, opacity 0.6s ease 0s;">
 		</div>
-		<ul style="height: 100%; list-style-type: none; display: flex;  flex-direction: row;
-    justify-content: flex-start; padding: 0; margin: 0;">
-			<li style="height: 100%; margin-inline: 1em;"><a href="/index.html?blog=index.md">首页</a></li>
-			<li style="height: 100%; margin-inline: 1em;"><a href="/index.html?blog=about.md">关于</a></li>
+		<ul style="height: 100%; list-style-type: none; display: flex;
+		flex-direction: row; justify-content: flex-start; padding: 0; margin: 0;">
+			<li style="height: 100%; margin-inline: 1em;">
+				<a href="/index.html?blog=index.md">首页</a>
+			</li>
+			<li style="height: 100%; margin-inline: 1em;">
+				<a href="/index.html?blog=about.md">关于</a>
+			</li>
 		</ul>
 	</header>
 	<main id="blog-main"></main>
@@ -614,8 +621,12 @@
 			align-content: flex-start; justify-content: flex-start; margin: 0; padding: 0;
 			align-items: center; background-color: #F6F8FA; box-sizing: border-box;
 			border-radius: .375rem; border-color: #d0d7de; border: 0 solid !important;">
-			<button id="utteranc-btn" onclick="showchatbox(1)" class="btn1">utteranc</button>
-			<button id="giscus-btn" onclick="showchatbox(2)" class="btn1 clicked">giscus</button>
+			<button id="utteranc-btn" onclick="showchatbox(1)" class="btn1">
+				utteranc
+			</button>
+			<button id="giscus-btn" onclick="showchatbox(2)" class="btn1 clicked">
+				giscus
+			</button>
 			<script>
 				function showchatbox(x) {
 					if (x == 2) {
@@ -782,8 +793,8 @@
 			})
 			.catch(error => {
 				console.error('There has been a problem with your fetch operation:', error);
-				document.getElementById('blog-main').innerHTML = '<h1>' + error + '</h1><br/>发生了错误，请检查网络连接或联系管理员';
-
+				document.getElementById('blog-main').innerHTML = '<h1>' + error +
+					'</h1><br/>发生了错误，请检查网络连接或联系管理员';
 				window.myloader.hide();
 			});
 	</script>
@@ -791,11 +802,13 @@
 		document.addEventListener('scroll', function () {
 			function getScrollPercentage() {
 				// 获取页面滚动的垂直位置
-				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+				var scrollTop = window.pageYOffset ||
+					document.documentElement.scrollTop || document.body.scrollTop || 0;
 
 				// 获取页面的总高度
 				var scrollHeight = document.documentElement.scrollHeight;
-				var clientHeight = window.innerHeight || document.documentElement.clientHeight;
+				var clientHeight = window.innerHeight ||
+					document.documentElement.clientHeight;
 
 				// 计算滚动位置占页面高度的百分比
 				var scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
@@ -803,7 +816,8 @@
 				return scrollPercent;
 			}
 			//设置#top-progress-bar的宽度为滚动百分比
-			document.getElementById('top-progress-bar').style.width = Math.round(getScrollPercentage()) + '%';
+			document.getElementById('top-progress-bar').style.width =
+				Math.round(getScrollPercentage()) + '%';
 		});
 	</script>
 	<script>
