@@ -119,6 +119,7 @@
 <!--插入内容 end-->
 # Welcome
 
+1. [莫队算法](/auto_compile/莫队算法.html)
 1. [平衡树](/auto_compile/平衡树.html)
 1. [二分图](/auto_compile/二分图.html)
 1. [连通性问题](/auto_compile/连通性问题.html)
