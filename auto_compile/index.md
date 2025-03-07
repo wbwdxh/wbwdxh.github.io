@@ -120,6 +120,7 @@
 <!--插入内容 end-->
 # Welcome
 
+1. [第三周训练赛](/auto_compile/第三周训练赛.html)
 1. [莫队算法](/auto_compile/莫队算法.html)
 1. [平衡树](/auto_compile/平衡树.html)
 1. [二分图](/auto_compile/二分图.html)
