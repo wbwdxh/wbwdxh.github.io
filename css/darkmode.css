@@ -1,0 +1,62 @@
+﻿.bg-white {
+	--bs-bg-opacity: 1;
+	background-color: rgba(0,0,0, var(--bs-bg-opacity)) !important;
+}
+
+body {
+	color:lightgray !important;
+	background-color:black !important;
+}
+
+main {
+	color: lightgray !important;
+	background-color: rgba(0,0,0,.9) !important;
+}
+
+.text-dark {
+	--bs-text-opacity: 1;
+	color: rgba(var(--bs-light-rgb), var(--bs-text-opacity)) !important;
+}
+
+input[type="text" i] {
+	background-color: black;
+	color: lightgray !important;
+	border-style: solid;
+}
+
+input[type="button" i] {
+	background-color: black;
+	color: lightgray !important;
+	border-style: solid;
+}
+
+input[type="reset" i] {
+	background-color: black;
+	color: lightgray !important;
+	border-style: solid;
+}
+
+input[type="submit" i] {
+	background-color: black;
+	color: lightgray !important;
+	border-style: solid;
+}
+
+input[type="password" i] {
+	background-color: black;
+	color: lightgray !important;
+	border-style: solid;
+}
+
+input[type="search" i] {
+	background-color: black;
+	color: lightgray !important;
+	border-style: solid;
+}
+
+input {
+	border-radius: 2px;
+	border: 1px;
+	border-color: #767676;
+	border-style: solid;
+}

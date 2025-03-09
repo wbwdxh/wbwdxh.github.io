@@ -1,0 +1,193 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+	html {
+		font-size: 16px;
+	}
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+	/*  margin-bottom: 60px;*/
+}
+
+a {
+	text-decoration: none;
+}
+
+#link, a {
+	border-bottom: 2px solid;
+	border-bottom-color: rgba(255,255,255,0);
+	transition: border-bottom 500ms !important;
+	-webkit-transition: border-bottom 500ms !important;
+}
+#link:hover, a:hover {
+	border-bottom: 2px solid blue;
+}
+
+/*.wd-highlight {
+	border-bottom: 2px solid;
+	border-bottom-color: rgba(0,0,255,50);
+}*/
+
+.wd-highlight {
+	background: url(https://gips1.baidu.com/it/u=2836061073,118057589&fm=3028&app=3028&f=PNG&fmt=auto&q=90&size=f13_24) no-repeat left 100%,url(https://gips2.baidu.com/it/u=4291128784,2689508941&fm=3028&app=3028&f=PNG&fmt=auto&q=90&size=f13_24) no-repeat right 100%,url(https://gips2.baidu.com/it/u=555983622,2727705561&fm=3028&app=3028&f=PNG&fmt=auto&q=90&size=f4_24) no-repeat center 100%;
+	-webkit-background-size: .04rem .08rem,.04rem .08rem,calc(100% - .08rem) .08rem;
+	background-size: .04rem .08rem,.04rem .08rem,calc(100% - .08rem) .08rem;
+}
+
+/*.markdown-ai-light {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	margin: 0;
+	color: #24292f;
+	background-color: #fff;
+	font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+	font-size: .16rem;
+	line-height: 1.75;
+	word-wrap: break-word;
+	word-break: normal;
+}*/
+
+.navbar-brand:hover {
+	border-bottom: 2px solid;
+	border-bottom-color: rgba(255,255,255,0);
+}
+
+/*滚动条*/
+::-webkit-scrollbar {
+	width: 4px;
+	/*	height: 12px;*/
+	height: 4px;
+}
+
+::-webkit-scrollbar-track-piece {
+	background-color: transparent;
+	-webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+/*	height: 12px;*/
+/*	height:4px;*/
+	background-color: blue;
+	-webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+	width: 4px;
+	background-color: blue;
+	-webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical:hover, ::-webkit-scrollbar-thumb:horizontal:hover {
+	background-color: skyblue;
+}
+/*end*/
+
+/*.warning{
+	color
+}*/
+
+.footer-copy {
+	white-space: normal;
+	line-height: 115%;
+	text-align: center;
+}
+
+/*.footer {
+	padding-top:21px;
+	padding-bottom:21px;
+}*/
+
+.footer {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	position: relative !important;
+}
+
+/*@media (min-width: 768px) {
+	.footer {
+		padding-top: 21px;
+		padding-bottom: 21px;
+	}
+}*/
+
+.xhx ::after {
+	--text-accent: #24c6dc;
+	--text-sub-accent: #ff0099;
+	--main-gradient: linear-gradient(130deg, #24c6dc, #5433ff 41.07%, #ff0099 76.05%);
+}
+
+
+/* 未选中状态的checkbox样式 */
+/*input[type="checkbox"] {*/
+	/* 根据需要自定义未选中状态的样式 */
+	/*cursor: pointer; /* 鼠标指针样式 *//*
+}*/
+
+	/* 选中状态的checkbox样式 */
+	/*input[type="checkbox"]:checked {
+		/* 根据需要自定义选中状态的样式 */
+		/*color: blue; /* 文字颜色 */
+		/*background-color: yellow; /* 背景颜色 */
+		/*border-color: red; /* 边框颜色 */
+		/*fill:blue;
+	}*/
+
+/*全局基础样式*/
+/*下面的样式放到全局css里面去*/
+
+/*--页面鼠标默认样式--*/
+body,html {
+	/* 鼠标图标 */
+	cursor: url("../BLOG_cursor.ico"),auto !important;
+	/*url("你的鼠标指针图标路径")*/
+}
+
+/*利用background-clip属性实现文字颜色渐变效果*/
+
+.gradient-color {
+	background-image: linear-gradient(90deg,#7209d4,#2832d4 33%,#00a5b2);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+#main {
+	background-color: rgba(255, 255, 255, .9);
+	padding: 10px 20px;
+	box-shadow: 0 0 20px 10px rgba(220, 220, 220, .3);
+}
+
+/*改*/
+
+/*body {
+	background-color:#333;
+}
+
+#main {
+	background-color:rgba(51, 51, 51, .9);
+	color:#dddddd;
+}
+
+.text-dark {
+	color:#eee!important;
+}
+
+.navbar-light div {
+	background-color:#333;
+}
+
+header nav {
+	background-color: #333 !important;
+}*/

@@ -1,0 +1,21 @@
+﻿.danmu {
+	position: absolute;
+	right: 0;
+	white-space: nowrap;
+	font-size: 24px;
+	color: white;
+}
+
+@keyframes move {
+	from {
+		right: 0;
+	}
+
+	to {
+		right: calc(100% + 200px);
+	}
+}
+/*
+你可以在：https://blog.csdn.net/weixin_62650212/article/details/129679986
+中找到
+*/

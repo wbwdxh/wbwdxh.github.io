@@ -1,0 +1,170 @@
+﻿:root {
+	--success-rgba: rgba(105,255,105,0.8);
+	--info-rgba: rgba(105,105,255,0.8);
+	--warning-rgba: rgba(255,180,105,0.8);
+	--critical-rgba: rgba(255,105,105,0.8)
+}
+
+#notifications {
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: flex;
+	flex-flow: column-reverse;
+	padding: 25px
+}
+
+.notification {
+	backdrop-filter: blur(0.5em);
+	background-color: rgba(0,0,0,0.5);
+	box-shadow: 2px 2px .25em rgba(0,0,0,1);
+	border-radius: 5px;
+	width: 320px;
+	height: auto;
+	padding: 7px;
+	overflow: hidden;
+	margin: auto auto 10px auto;
+	animation: fade-out 10.1s linear
+}
+
+@keyframes fade-out {
+	0% {
+		opacity: 1
+	}
+
+	90% {
+		opacity: 1
+	}
+
+	100% {
+		opacity: 0
+	}
+}
+
+.notification:hover {
+	animation: none 0s linear
+}
+
+.notification:before {
+	position: absolute;
+	content: "";
+	height: 120%;
+	width: 30px;
+	margin: -28px auto auto -34px
+}
+
+.notification-success.notification:before {
+	background: linear-gradient(to top,transparent,var(--success-rgba))
+}
+
+.notification-success .notification-loader {
+	background-color: var(--success-rgba)
+}
+
+.notification-info.notification:before {
+	background: linear-gradient(to top,transparent,var(--info-rgba))
+}
+
+.notification-info .notification-loader {
+	background-color: var(--info-rgba)
+}
+
+.notification-warning.notification:before {
+	background: linear-gradient(to top,transparent,var(--warning-rgba))
+}
+
+.notification-warning .notification-loader {
+	background-color: var(--warning-rgba)
+}
+
+.notification-critical.notification:before {
+	background: linear-gradient(to top,transparent,var(--critical-rgba))
+}
+
+.notification-critical .notification-loader {
+	background-color: var(--critical-rgba)
+}
+
+@keyframes countdown {
+	from {
+		width: 0
+	}
+
+	to {
+		width: 100%
+	}
+}
+
+.notification-loader {
+	transition: .3s all;
+	width: 0;
+	animation: countdown 10s linear;
+	height: 4px;
+	margin: -8px auto auto -5px;
+	position: absolute
+}
+
+.notification:hover .notification-loader {
+	animation: none 0s linear
+}
+
+.close-button {
+	transition: .3s all;
+	position: absolute;
+	margin: auto auto auto 305px;
+	width: 15px;
+	height: 15px;
+	stroke: #757575;
+	cursor: pointer
+}
+
+	.close-button:hover {
+		stroke: white;
+		stroke-width: 2px;
+		filter: drop-shadow(1px 1px .2em rgba(255,255,255,0.5))
+	}
+
+.notification-title {
+	color: white;
+	font-weight: bold;
+	letter-spacing: 3px;
+	text-shadow: 2px 2px .1em black
+}
+
+.notification-text {
+	width: 100%;
+	color: white;
+	text-shadow: 2px 2px .1em black;
+	padding: 0 20px 0 10px
+}
+
+	.notification-text a {
+		text-decoration: underline;
+		color: white
+	}
+
+	.notification-text i {
+		font-size: 12px
+	}
+
+.new-notification-button {
+	transition: .1s all;
+	position: fixed;
+	color: black;
+	bottom: 20px;
+	left: 20px;
+	cursor: pointer;
+	font-size: 24px;
+	font-weight: bolder;
+	border-radius: 5px;
+	border: 0 solid black;
+	box-shadow: 3px 3px .2em black;
+	background-color: rgba(255,255,255,0.5);
+	backdrop-filter: blur(3px)
+}
+
+	.new-notification-button:hover {
+		background-color: rgba(45,45,45,0.5);
+		color: white;
+		text-shadow: 1px 1px 2px black
+	}
