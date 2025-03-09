@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>代码编辑器示例</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/a11y-dark.min.css">
+	<style>
+		.editor-container {
+			display: flex;
+			/*height: 400px; /* 或你想要的任何高度 */
+			/*overflow: hidden;*/
+			/*max-width: 100%;*/
+		}
+
+		.editor,
+		.highlighter {
+			min-height: 95%;
+			min-width: 95%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			flex: 1;
+			overflow-y: auto;
+			padding: 10px;
+			margin: 0;
+		}
+
+		.editor {
+			left: 0px;
+			color: #0000;
+			background-color: #0000;
+			z-index: 1;
+		}
+
+		.highlighter {
+			margin: 0;
+			z-index: -1;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="I" style="color:#D4D4D4 !important;z-index:0;position: fixed;" class="hljs">|</div>
+	<div class="editor-container" id="editor-container">
+		<pre><code id="editor" class="editor hljs" contenteditable="true" placeholder="在这里编写代码..."></code></pre>
+		<pre><code class="highlighter hljs"></code></pre>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+    const editor = document.querySelector('.editor');
+    const highlighter = document.querySelector('.highlighter');
+
+    editor.addEventListener('input', function() {
+        /*// 将可编辑区域的内容复制到高亮区域
+        highlighter.textContent = editor.innerText;
+
+        // 使用highlight.js进行高亮
+        hljs.highlightBlock(highlighter);*/
+// 尝试将内容作为JS代码高亮
+        try {
+            // 使用highlight.js的自动检测语言功能，这里我们直接指定为javascript
+            const highlightedHtml = hljs.highlightAuto(editor.innerText, ['html']).value;
+            highlighter.innerHTML = highlightedHtml;
+        } catch (error) {
+            // 如果高亮失败，可以显示错误信息或保留原样
+            console.error('Failed to highlight code:', error);
+            highlightedCode.textContent = 'Error highlighting code';
+        }
+        // （可选）同步滚动，但注意这通常不直接适用，因为两个容器的高度可能不同
+        // 一种方法是尝试通过计算来同步，但这可能很复杂且不精确
+        // 这里我们省略了直接同步滚动的代码，因为它依赖于具体实现和布局
+    });
+
+    // 注意：直接同步滚动可能需要更复杂的逻辑，
+    // 例如监听滚动事件并动态设置scrollTop值，但这可能导致性能问题和不同步的问题。
+    // 另一个方法是尝试使用CSS的`position: sticky`或JavaScript的`IntersectionObserver`来优化体验，
+    // 但这取决于你的具体需求和布局。
+});
+
+	
+/*document.getElementById('editor').addEventListener('input', function() {
+    var sel = window.getSelection();
+    var range = sel.getRangeAt(0);
+    var rect = range.getBoundingClientRect();
+    var elem = document.getElementById('I');
+    elem.style.left = rect.left + 'px';
+    elem.style.top = rect.top + rect.height / 2 - elem.offsetHeight / 2 + 'px';
+});*/
+	/*document.getElementById('editor').addEventListener('mousedown', function(event) {
+    moveElementToCursor(event);
+});
+	document.getElementById('editor').addEventListener('mouseup', function(event) {
+    moveElementToCursor(event);
+});
+document.getElementById('editor').addEventListener('input', function(event) {
+    moveElementToCursor(event);
+});
+
+document.getElementById('editor').addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        moveElementToCursor(event);
+    }
+});
+document.getElementById('editor').addEventListener('keydown', function(event) {
+    moveElementToCursor(event);
+});*/
+setInterval(()=>{
+	document.getElementById('I').style.display="block";
+	setTimeout(()=>{document.getElementById('I').style.display="none"},500)
+	},1000);
+setInterval(()=>{
+    moveElementToCursor(document.getElementById('editor'));
+	},1000/24);//放电影？？？
+function moveElementToCursor(event) {
+    var input = document.getElementById('editor');
+    input.focus();
+    var sel = window.getSelection();
+    var range = sel.getRangeAt(0);
+    var rect = range.getBoundingClientRect();
+    var elem = document.getElementById('I');
+    elem.style.left = rect.left + rect.width / 2 - elem.offsetWidth / 2 + 'px';
+    elem.style.top = rect.top + rect.height / 2 - elem.offsetHeight / 2 + 'px';
+}
+	
+/*window.addEventListener('scroll', function() {
+  var scrollX = window.scrollX || window.pageXOffset; // 获取x轴滚动长度
+  var scrollY = window.scrollY || window.pageYOffset; // 获取y轴滚动长度
+  console.log('X轴滚动长度：‌' + scrollX);
+  console.log('Y轴滚动长度：‌' + scrollY);
+moveElementToCursor(document.getElementById('editor'));
+});*/
+/*document.addEventListener('keydown', function(event) {
+    var sel = window.getSelection();
+    var range = sel.getRangeAt(0);
+    var rect = range.getBoundingClientRect();
+    var elem = document.getElementById('I');
+    elem.style.left = rect.left + rect.width / 2 - elem.offsetWidth / 2 + 'px';
+    elem.style.top = rect.top + rect.height / 2 - elem.offsetHeight / 2 + 'px';
+});*/
+/*function getCaretCoordinates(element) {
+  var selection = window.getSelection();
+  var range = selection.getRangeAt(0);
+  var preCaretRange = range.cloneRange();
+  preCaretRange.selectNodeContents(element);
+  preCaretRange.setEnd(range.endContainer, range.endOffset);
+  var rect = preCaretRange.getBoundingClientRect();
+ 
+  return {
+    x: rect.left,
+    y: rect.top
+  };
+}
+ 
+// 使用方法：
+// 假设有一个文本输入框：<input id="editor" type="text">
+var input = document.getElementById('editor');
+input.focus(); // 确保输入框是焦点
+var caretCoords = getCaretCoordinates(input);
+	var I = document.getElementById('I');
+document.addEventListener('selectionchange', function() {
+    var selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        var range = selection.getRangeAt(0);
+        var rect = range.getBoundingClientRect();
+ 
+        var x = rect.left.toFixed(0);
+        var y = rect.top.toFixed(0);
+ 
+        console.log('Cursor X: ' + x + ', Y: ' + y);
+		I.style.top=x.tostring();
+		I.style.left=y.tostring();
+    }
+});*/
+	</script>
+</body>
+
+</html>

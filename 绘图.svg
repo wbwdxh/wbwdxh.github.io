@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   width="25%"
+   height="25%"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="绘图.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title8">image</title>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showguides="false"
+     inkscape:zoom="2.1190784"
+     inkscape:cx="243.73803"
+     inkscape:cy="132.36886"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <!-- <defs
+     id="defs1">
+    <rect
+       x="8.0084639"
+       y="12.012696"
+       id="rect5"
+       height="36.038087"
+       width="261.80068" />
+  </defs> -->
+  <g
+     inkscape:label="图层 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28px;line-height:0px;font-family:Consolas;-inkscape-font-specification:'Consolas Italic';fill:#000000;stroke:none"
+       x="1.8876128"
+       y="23.595161"
+       id="text7"><tspan
+         sodipodi:role="line"
+         id="tspan7"
+         x="1.8876128"
+         y="23.595161">tmpprj</tspan></text>
+    <rect
+       style="fill:#0000ff;stroke:none;stroke-width:1"
+       id="rect7"
+       width="96.740166"
+       height="3.303323"
+       x="0.94380641"
+       y="29.258003"
+       ry="2.3595164"
+       inkscape:transform-center-x="4.7190326"
+       inkscape:transform-center-y="-3.6336552"
+       rx="2.3595164" />
+  </g>
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>image</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>
