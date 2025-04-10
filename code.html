@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Monaco 代码编辑器</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+			overflow: hidden;
+			background-color: #1e1e1e;
+			color: #d4d4d4;
+		}
+
+		.header {
+			background-color: #252526;
+			color: #d4d4d4;
+			padding: 10px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 1px solid #1e1e1e;
+		}
+
+		.title {
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		.controls {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+		}
+
+		button,
+		select,
+		input {
+			padding: 5px 10px;
+			border-radius: 4px;
+			border: none;
+			background-color: #3c3c3c;
+			color: #d4d4d4;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #2a2d2e;
+		}
+
+		select {
+			min-width: 120px;
+		}
+
+		input[type="number"] {
+			width: 60px;
+			-moz-appearance: textfield;
+			appearance: textfield;
+		}
+
+		input[type="number"]::-webkit-outer-spin-button,
+		input[type="number"]::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		.editor-container {
+			flex: 1;
+			display: flex;
+			background-color: #1e1e1e;
+			height: 1vh;
+		}
+
+		#editor {
+			width: 100%;
+			height: 100%;
+		}
+
+		#preview {
+			width: 50%;
+			height: 100%;
+			border: none;
+			background-color: #1e1e1e;
+			padding: 20px;
+			overflow: auto;
+			box-sizing: border-box;
+			color: #d4d4d4;
+		}
+
+		.splitter {
+			width: 5px;
+			background-color: #252526;
+			cursor: col-resize;
+		}
+
+		.status-bar {
+			background-color: #252526;
+			color: #858585;
+			padding: 5px 10px;
+			font-size: 12px;
+			display: flex;
+			justify-content: space-between;
+			border-top: 1px solid #1e1e1e;
+		}
+
+		.theme-toggle {
+			position: fixed;
+			bottom: 10px;
+			right: 10px;
+			z-index: 100;
+			background-color: #3c3c3c;
+			color: #d4d4d4;
+			border: none;
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			font-size: 20px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+		}
+
+		.font-controls {
+			display: flex;
+			gap: 5px;
+			align-items: center;
+		}
+
+		.font-controls label {
+			font-size: 12px;
+			margin-right: -5px;
+		}
+
+		.view-toggle {
+			position: fixed;
+			bottom: 60px;
+			right: 10px;
+			z-index: 100;
+			background-color: #3c3c3c;
+			color: #d4d4d4;
+			border: none;
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			font-size: 20px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+		}
+
+		/* Markdown 预览样式 - 暗色主题 */
+		#preview h1,
+		#preview h2,
+		#preview h3,
+		#preview h4,
+		#preview h5,
+		#preview h6 {
+			margin-top: 1em;
+			margin-bottom: 0.5em;
+			font-weight: bold;
+			color: #d4d4d4;
+		}
+
+		#preview h1 {
+			font-size: 2em;
+			border-bottom: 1px solid #333;
+			color: #569cd6;
+		}
+
+		#preview h2 {
+			font-size: 1.5em;
+			border-bottom: 1px solid #333;
+			color: #4ec9b0;
+		}
+
+		#preview h3 {
+			font-size: 1.25em;
+			color: #c586c0;
+		}
+
+		#preview h4 {
+			font-size: 1em;
+			color: #9cdcfe;
+		}
+
+		#preview h5 {
+			font-size: 0.875em;
+			color: #ce9178;
+		}
+
+		#preview h6 {
+			font-size: 0.85em;
+			color: #858585;
+		}
+
+		#preview p {
+			margin: 0 0 1em;
+			color: #d4d4d4;
+		}
+
+		#preview ul,
+		#preview ol {
+			margin: 0 0 1em 2em;
+			padding: 0;
+			color: #d4d4d4;
+		}
+
+		#preview li {
+			margin: 0.25em 0;
+			color: #d4d4d4;
+		}
+
+		#preview blockquote {
+			margin: 0 0 1em;
+			padding: 0 1em;
+			border-left: 4px solid #6a9955;
+			color: #d4d4d4;
+			background-color: #252526;
+		}
+
+		#preview pre {
+			background-color: #252526;
+			padding: 1em;
+			border-radius: 3px;
+			overflow: auto;
+			border: 1px solid #333;
+		}
+
+		#preview code {
+			font-family: Consolas, Monaco, monospace;
+			background-color: #252526;
+			padding: 0.2em 0.4em;
+			border-radius: 3px;
+			color: #d4d4d4;
+		}
+
+		#preview a {
+			color: #569cd6;
+			text-decoration: none;
+		}
+
+		#preview a:hover {
+			text-decoration: underline;
+		}
+
+		#preview img {
+			max-width: 100%;
+			background-color: white;
+			padding: 5px;
+			border-radius: 3px;
+		}
+
+		#preview table {
+			border-collapse: collapse;
+			margin: 1em 0;
+			width: 100%;
+		}
+
+		#preview th,
+		#preview td {
+			border: 1px solid #333;
+			padding: 0.5em 1em;
+			color: #d4d4d4;
+		}
+
+		#preview th {
+			background-color: #252526;
+			font-weight: bold;
+		}
+
+		#preview tr:nth-child(even) {
+			background-color: #252526;
+		}
+
+		/* KaTeX 公式样式 */
+		.katex {
+			font-size: 1.1em !important;
+			color: #d4d4d4 !important;
+		}
+
+		/* 数学公式块样式 */
+		.math-block {
+			text-align: center;
+			margin: 1em 0;
+			padding: 0.5em;
+			background-color: #252526;
+			border-radius: 3px;
+			overflow-x: auto;
+		}
+
+		/* Highlight.js 主题 - 类似 VS Code 暗色主题 */
+		.hljs {
+			display: block;
+			overflow-x: auto;
+			padding: 0.5em;
+			background: #1e1e1e;
+			color: #d4d4d4;
+		}
+
+		.hljs-keyword,
+		.hljs-literal,
+		.hljs-name,
+		.hljs-symbol {
+			color: #569cd6;
+		}
+
+		.hljs-link {
+			color: #569cd6;
+			text-decoration: underline;
+		}
+
+		.hljs-built_in,
+		.hljs-type {
+			color: #4ec9b0;
+		}
+
+		.hljs-number,
+		.hljs-class {
+			color: #b5cea8;
+		}
+
+		.hljs-string,
+		.hljs-meta-string {
+			color: #ce9178;
+		}
+
+		.hljs-regexp,
+		.hljs-template-tag {
+			color: #9a5334;
+		}
+
+		.hljs-subst,
+		.hljs-function,
+		.hljs-title,
+		.hljs-params,
+		.hljs-formula {
+			color: #dcdcaa;
+		}
+
+		.hljs-comment,
+		.hljs-quote {
+			color: #6a9955;
+			font-style: italic;
+		}
+
+		.hljs-doctag {
+			color: #608b4e;
+		}
+
+		.hljs-meta,
+		.hljs-meta-keyword,
+		.hljs-tag {
+			color: #9b9b9b;
+		}
+
+		.hljs-variable,
+		.hljs-template-variable {
+			color: #bd63c5;
+		}
+
+		.hljs-attr,
+		.hljs-attribute,
+		.hljs-builtin-name {
+			color: #9cdcfe;
+		}
+
+		.hljs-section {
+			color: gold;
+		}
+
+		.hljs-emphasis {
+			font-style: italic;
+		}
+
+		.hljs-strong {
+			font-weight: bold;
+		}
+
+		.hljs-bullet,
+		.hljs-selector-tag,
+		.hljs-selector-id,
+		.hljs-selector-class,
+		.hljs-selector-attr,
+		.hljs-selector-pseudo {
+			color: #d7ba7d;
+		}
+
+		.hljs-addition {
+			background-color: #144212;
+			display: inline-block;
+			width: 100%;
+		}
+
+		.hljs-deletion {
+			background-color: #600;
+			display: inline-block;
+			width: 100%;
+		}
+	</style>
+	<!-- 引入 highlight.js -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs2015.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+	<!-- 引入 KaTeX -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+		crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+	<!-- 引入 marked.js -->
+	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+	<script>
+		// 配置 marked 支持 KaTeX 和代码高亮
+		marked.setOptions({
+			highlight: function (code, lang) {
+				const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+				return hljs.highlight(code.text, { language }).value;
+			},
+			breaks: false,
+			gfm: true,
+			pedantic: false,
+			smartLists: true,
+			smartypants: false,
+			xhtml: false
+		});
+
+		// 自定义 marked 渲染器以支持数学公式
+		const renderer = {
+			code(code, infostring) {
+				infostring = infostring || code.lang;
+				// console.log(code, infostring);
+				if (infostring === 'math') {
+					return `<div class="math-block">${katex.renderToString(code.text, { throwOnError: false })}</div>`;
+				}
+				let s = code.text;
+				s = s.replaceAll('&', '&amp;');
+				s = s.replaceAll('<', '&lt;');
+				s = s.replaceAll('>', '&gt;');
+				return `<pre><code>${s}</code></pre>`;
+			}
+		};
+
+		marked.use({ renderer });
+	</script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title">Monaco 代码编辑器</div>
+		<div class="controls">
+			<select id="language-select">
+				<option value="javascript">JavaScript</option>
+				<option value="typescript">TypeScript</option>
+				<option value="html">HTML</option>
+				<option value="css">CSS</option>
+				<option value="python">Python</option>
+				<option value="java">Java</option>
+				<option value="csharp">C#</option>
+				<option value="cpp">C++</option>
+				<option value="go">Go</option>
+				<option value="rust">Rust</option>
+				<option value="php">PHP</option>
+				<option value="sql">SQL</option>
+				<option value="json">JSON</option>
+				<option value="xml">XML</option>
+				<option value="markdown" selected>Markdown</option>
+			</select>
+
+			<div class="font-controls">
+				<label for="font-family">字体:</label>
+				<select id="font-family">
+					<option value="'Courier New', monospace">Courier New</option>
+					<option value="'Consolas', monospace" selected>Consolas</option>
+					<option value="'Fira Code', monospace">Fira Code</option>
+					<option value="'Source Code Pro', monospace">Source Code Pro</option>
+					<option value="'Roboto Mono', monospace">Roboto Mono</option>
+				</select>
+			</div>
+
+			<div class="font-controls">
+				<label for="font-size">大小:</label>
+				<input type="number" id="font-size" min="8" max="32" value="14">
+			</div>
+
+			<div class="font-controls">
+				<label for="tab-size">Tab:</label>
+				<input type="number" id="tab-size" min="1" max="8" value="4">
+			</div>
+
+			<button id="run-btn">运行 (JS)</button>
+			<button id="preview-btn">预览</button>
+			<button id="save-btn">保存</button>
+		</div>
+	</div>
+
+	<div class="editor-container">
+		<div id="editor"></div>
+		<div class="splitter" id="splitter"></div>
+		<div id="preview"></div>
+	</div>
+
+	<div class="status-bar">
+		<div id="cursor-position">行: 1, 列: 1</div>
+		<div id="file-info">未保存的文件</div>
+	</div>
+
+	<button class="theme-toggle" id="theme-toggle">🌓</button>
+	<button class="view-toggle" id="view-toggle">👁️</button>
+
+	<script>
+		// 加载 Monaco Editor 脚本
+		const loadMonacoScript = () => {
+			return new Promise((resolve) => {
+				const script = document.createElement('script');
+				script.src = 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.40.0/min/vs/loader.min.js';
+				script.onload = () => {
+					// 配置 Monaco Editor 的路径
+					require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.40.0/min/vs' } });
+
+					// 加载 editor 核心
+					require(['vs/editor/editor.main'], () => {
+						resolve();
+					});
+				};
+				document.body.appendChild(script);
+			});
+		};
+
+		// 初始化编辑器
+		const initEditor = async () => {
+			await loadMonacoScript();
+
+			// 默认代码
+			const defaultCode = {
+				'javascript': '// JavaScript 代码示例\nfunction greet(name) {\n  return `Hello, ${name}!`;\n}\n\nconsole.log(greet("World"));',
+				'typescript': '// TypeScript 代码示例\nfunction greet(name: string): string {\n  return `Hello, ${name}!`;\n}\n\nconsole.log(greet("World"));',
+				'html': '<!DOCTYPE html>\n<html>\n<head>\n  <title>HTML 预览示例</title>\n  <style>\n    body {\n      font-family: Arial, sans-serif;\n      margin: 0;\n      padding: 20px;\n      background-color: #f5f5f5;\n    }\n    h1 {\n      color: #333;\n    }\n    .container {\n      max-width: 800px;\n      margin: 0 auto;\n      background: white;\n      padding: 20px;\n      border-radius: 5px;\n      box-shadow: 0 2px 5px rgba(0,0,0,0.1);\n    }\n  </style>\n</head>\n<body>\n  <div class="container">\n    <h1>HTML 预览功能</h1>\n    <p>编辑左侧的HTML代码，右侧会实时显示预览效果。</p>\n    <p>试试修改这段文字看看效果！</p>\n  </div>\n</body>\n</html>',
+				'css': '/* CSS 代码示例 */\nbody {\n  font-family: Arial, sans-serif;\n  margin: 0;\n  padding: 20px;\n  background-color: #f5f5f5;\n}\n\nh1 {\n  color: #333;\n}',
+				'python': '# Python 代码示例\ndef greet(name):\n    return f"Hello, {name}!"\n\nprint(greet("World"))',
+				'java': '// Java 代码示例\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello World!");\n    }\n}',
+				'csharp': '// C# 代码示例\nusing System;\n\nclass Program {\n    static void Main() {\n        Console.WriteLine("Hello World!");\n    }\n}',
+				'cpp': '// C++ 代码示例\n#include <iostream>\n\nint main() {\n\tstd::cout << "Hello World!" << std::endl;\n\treturn 0;\n}',
+				'go': '// Go 代码示例\npackage main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println("Hello World!")\n}',
+				'rust': '// Rust 代码示例\nfn main() {\n    println!("Hello World!");\n}',
+				'php': '<?php\n// PHP 代码示例\nfunction greet($name) {\n    return "Hello, $name!";\n}\n\necho greet("World");\n?>',
+				'sql': '-- SQL 代码示例\nSELECT * FROM users WHERE age > 18 ORDER BY name ASC;',
+				'json': '{\n  "name": "John Doe",\n  "age": 30,\n  "isActive": true,\n  "address": {\n    "street": "123 Main St",\n    "city": "New York"\n  },\n  "hobbies": ["reading", "hiking"]\n}',
+				'xml': '<!-- XML 代码示例 -->\n<person>\n  <name>John Doe</name>\n  <age>30</age>\n  <address>\n    <street>123 Main St</street>\n    <city>New York</city>\n  </address>\n</person>',
+				'markdown': '# Markdown 示例\n\n这是一个 **Markdown** 文档示例。\n\n## 数学公式\n\n行内公式: $E = mc^2$\n\n块级公式:\n\n$$\n\\int_a^b f(x) dx = F(b) - F(a)\n$$\n\n或者:\n\n```math\n\\sum_{i=1}^n i = \\frac{n(n+1)}{2}\n```\n\n## 代码示例\n\n```javascript\n// JavaScript 代码块\nfunction hello() {\n  console.log("Hello World!");\n}\n```\n\n## 其他元素\n\n- 列表项 1\n- 列表项 2\n\n[链接](https://example.com)\n\n> 引用内容示例\n\n| 表格示例 | 第二列 |\n|----------|--------|\n| 行1      | 数据1  |\n| 行2      | 数据2  |'
+			};
+
+			// 创建编辑器
+			const editor = monaco.editor.create(document.getElementById('editor'), {
+				value: defaultCode['markdown'],
+				language: 'markdown',
+				theme: 'vs-dark',
+				automaticLayout: true,
+				minimap: { enabled: true },
+				fontSize: 14,
+				fontFamily: "'Consolas', monospace",
+				lineNumbers: 'on',
+				roundedSelection: true,
+				scrollBeyondLastLine: false,
+				readOnly: false,
+				renderWhitespace: 'selection',
+				tabSize: 4
+			});
+			editor.getModel().updateOptions({ tabSize: 4 });
+
+			// 获取预览元素
+			const preview = document.getElementById('preview');
+
+			// 更新预览
+			const updatePreview = () => {
+				const language = document.getElementById('language-select').value;
+				const content = editor.getValue();
+
+				if (language === 'html') {
+					// 创建iframe来安全预览HTML
+					const iframe = document.createElement('iframe');
+					iframe.style.width = '100%';
+					iframe.style.height = '100%';
+					iframe.style.border = 'none';
+					iframe.srcdoc = content;
+
+					// 清空预览区域并添加iframe
+					preview.innerHTML = '';
+					preview.appendChild(iframe);
+				} else if (language === 'markdown') {
+					// 使用marked.js渲染Markdown
+					preview.innerHTML = marked.parse(content);
+
+					// 渲染完成后，高亮所有代码块
+					document.querySelectorAll('pre code').forEach((block) => {
+						if (!block.classList.contains('language-math')) {
+							hljs.highlightElement(block);
+						}
+					});
+
+					// 处理数学公式
+					// katex.renderMathInElement(document.body);
+					renderMathInElement(document.getElementById("preview"), {
+						// customised options
+						// • auto-render specific keys, e.g.:
+						delimiters: [
+							{ left: '$$', right: '$$', display: true },
+							{ left: '$', right: '$', display: false }
+						],
+						// • rendering keys, e.g.:
+						throwOnError: true
+					});
+				} else {
+					preview.innerHTML = '<p>预览功能仅支持HTML和Markdown</p>';
+				}
+			};
+
+			// 初始化预览
+			updatePreview();
+
+			// 更新光标位置显示
+			editor.onDidChangeCursorPosition((e) => {
+				document.getElementById('cursor-position').textContent =
+					`行: ${e.position.lineNumber}, 列: ${e.position.column}`;
+			});
+
+			// 语言选择器
+			const languageSelect = document.getElementById('language-select');
+			languageSelect.addEventListener('change', () => {
+				const language = languageSelect.value;
+				monaco.editor.setModelLanguage(editor.getModel(), language);
+				editor.setValue(defaultCode[language] || `// ${language} 代码`);
+
+				// 如果是HTML或Markdown语言，显示预览面板
+				if (language === 'html' || language === 'markdown') {
+					document.getElementById('editor').style.width = "50%";
+					document.getElementById('preview').style.display = 'block';
+					document.getElementById('splitter').style.display = 'block';
+					updatePreview();
+				} else {
+					document.getElementById('editor').style.width = "100%";
+					document.getElementById('preview').style.display = 'none';
+					document.getElementById('splitter').style.display = 'none';
+				}
+			});
+
+			// 运行按钮 (仅对JavaScript有效)
+			document.getElementById('run-btn').addEventListener('click', () => {
+				if (languageSelect.value === 'javascript') {
+					try {
+						// 使用eval运行代码 (仅用于演示，生产环境应更安全地处理)
+						eval(editor.getValue());
+					} catch (error) {
+						console.error(error);
+						alert(`执行错误: ${error.message}`);
+					}
+				} else {
+					alert('运行功能仅支持JavaScript代码');
+				}
+			});
+
+			// 预览按钮
+			document.getElementById('preview-btn').addEventListener('click', () => {
+				const language = languageSelect.value;
+				if (language === 'html' || language === 'markdown') {
+					const preview = document.getElementById('preview');
+					if (preview.style.display !== 'none')
+						updatePreview();
+				} else {
+					alert('预览功能仅支持HTML和Markdown代码');
+				}
+			});
+
+			// 保存按钮
+			document.getElementById('save-btn').addEventListener('click', () => {
+				const blob = new Blob([editor.getValue()], { type: 'text/plain' });
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = `code.${languageSelect.value}`;
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				URL.revokeObjectURL(url);
+
+				document.getElementById('file-info').textContent = `已保存: code.${languageSelect.value}`;
+				setTimeout(() => {
+					document.getElementById('file-info').textContent = '未保存的文件';
+				}, 3000);
+			});
+
+			// 主题切换
+			let isDarkTheme = true;
+			document.getElementById('theme-toggle').addEventListener('click', () => {
+				isDarkTheme = !isDarkTheme;
+				monaco.editor.setTheme(isDarkTheme ? 'vs-dark' : 'vs');
+				document.getElementById('theme-toggle').textContent = isDarkTheme ? '🌓' : '🌒';
+			});
+
+			// 视图切换
+			document.getElementById('view-toggle').addEventListener('click', () => {
+				const preview = document.getElementById('preview');
+				const splitter = document.getElementById('splitter');
+				if (preview.style.display === 'none') {
+					preview.style.display = 'block';
+					splitter.style.display = 'block';
+					document.getElementById('editor').style.width = "50%";
+				} else {
+					preview.style.display = 'none';
+					splitter.style.display = 'none';
+					document.getElementById('editor').style.width = "100%";
+				}
+			});
+
+			// 监听内容变化
+			editor.onDidChangeModelContent(() => {
+				document.getElementById('file-info').textContent = '未保存的文件*';
+				const language = languageSelect.value;
+				if (language === 'html' || language === 'markdown') {
+					updatePreview();
+				}
+			});
+
+			// 字体设置
+			const fontFamilySelect = document.getElementById('font-family');
+			fontFamilySelect.addEventListener('change', () => {
+				editor.updateOptions({ fontFamily: fontFamilySelect.value });
+			});
+
+			// 字体大小设置
+			const fontSizeInput = document.getElementById('font-size');
+			fontSizeInput.addEventListener('change', () => {
+				const size = Math.min(32, Math.max(8, parseInt(fontSizeInput.value) || 14));
+				fontSizeInput.value = size;
+				editor.updateOptions({ fontSize: size });
+			});
+
+			// Tab大小设置
+			const tabSizeInput = document.getElementById('tab-size');
+			tabSizeInput.addEventListener('change', () => {
+				const size = Math.min(8, Math.max(1, parseInt(tabSizeInput.value) || 2));
+				tabSizeInput.value = size;
+				editor.getModel().updateOptions({ tabSize: size });
+			});
+
+			// 分割条拖动功能
+			const splitter = document.getElementById('splitter');
+			let isDragging = false;
+
+			splitter.addEventListener('mousedown', (e) => {
+				isDragging = true;
+				document.body.style.cursor = 'col-resize';
+				e.preventDefault();
+			});
+
+			document.addEventListener('mousemove', (e) => {
+				if (!isDragging) return;
+
+				const editorContainer = document.querySelector('.editor-container');
+				const containerRect = editorContainer.getBoundingClientRect();
+				const newEditorWidth = e.clientX - containerRect.left;
+				const newPreviewWidth = containerRect.width - newEditorWidth - 5;
+
+				if (newEditorWidth > 100 && newPreviewWidth > 100) {
+					document.getElementById('editor').style.width = `${newEditorWidth}px`;
+					document.getElementById('preview').style.width = `${newPreviewWidth}px`;
+				}
+			});
+
+			document.addEventListener('mouseup', () => {
+				isDragging = false;
+				document.body.style.cursor = '';
+			});
+		};
+
+		// 初始化应用
+		document.addEventListener('DOMContentLoaded', initEditor);
+	</script>
+</body>
+
+</html>
