@@ -7,3 +7,25 @@ blockquote {
 * {
 	font-display: swap;
 }
+
+table {
+	border-collapse: collapse;
+	/*移动到中间*/
+	margin-left: 50%;
+	transform: translateX(-50%);
+}
+
+table,
+th,
+td {
+	border: 1px solid #666;
+}
+
+th,
+td {
+	padding: 5px;
+}
+
+th {
+	background-color: rgba(250, 250, 248, 0.8);
+}
