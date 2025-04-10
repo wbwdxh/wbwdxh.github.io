@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="wbw121124">
+	<meta name="description" content="wbw121124的博客">
+	<meta name="keywords" content="C++, 算法, 编程">
+	<title>wbw121124's blog</title>
+	<link rel="stylesheet" href="./style.css">
+	<link rel="stylesheet" href="./vs2015.css">
+	<link rel="shortcut icon" id="favicon" href="/favicon.ico" type="image/x-icon">
+	<style>
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+				opacity: 1;
+			}
+
+			100% {
+				transform: rotate(360deg);
+				opacity: 0.8;
+			}
+		}
+
+		.loader-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(255, 255, 255, 0.8);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+			transition: opacity 0.5s ease;
+		}
+
+		.loader {
+			width: 10em;
+			height: 10em;
+			border-radius: 50%;
+			background: conic-gradient(rgb(10, 182, 212) 0% 20%, rgba(0, 0, 0, 0) 20%);
+			animation: spin 1s linear infinite;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+		}
+
+		a.navbar-brand {
+			white-space: normal;
+			text-align: center;
+			word-break: break-all;
+		}
+
+		a {
+			color: #0077cc;
+		}
+
+		.btn-primary {
+			color: #fff;
+			background-color: #1b6ec2;
+			border-color: #1861ac;
+		}
+
+		.nav-pills .nav-link.active,
+		.nav-pills .show>.nav-link {
+			color: #fff;
+			background-color: #1b6ec2;
+			border-color: #1861ac;
+		}
+
+		.border-top {
+			border-top: 1px solid #e5e5e5;
+		}
+
+		.border-bottom {
+			border-bottom: 1px solid #e5e5e5;
+		}
+
+		.box-shadow {
+			box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+		}
+
+		button.accept-policy {
+			font-size: 1rem;
+			line-height: inherit;
+		}
+
+		.footer {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			white-space: nowrap;
+			line-height: 60px;
+		}
+
+		img {
+			max-width: 100%;
+		}
+
+		/* for block of numbers */
+		.hljs-ln-numbers {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			text-align: center;
+			color: #aaa;
+			border-right: 1px solid #aaa;
+			vertical-align: top;
+			/*padding-right: 10px !important;*/
+			padding-right: 0.5em !important;
+			/* your custom style here */
+			/*margin: auto;*/
+		}
+
+		/* for block of code */
+		.hljs-ln-code {
+			/*padding-left: 10px;*/
+			padding-left: 0.5em !important;
+		}
+
+		.hljs-prt {
+			background-color: #2b2b2b;
+			border-radius: 1em;
+			box-shadow: 0 10px 30px 0px rgb(0 0 0 / 40%);
+		}
+
+		/*codecopy*/
+		.codecopy-btn {
+			z-index: 1;
+			position: absolute;
+			transition: all 0.5s;
+			top: 10px;
+			right: 10px;
+			width: 90px;
+			height: 2em;
+			margin: 0;
+			border-radius: 5px;
+			background-color: rgba(221, 221, 221, .1);
+			color: #999;
+			text-align: center;
+			font-weight: 700;
+			font-size: 14px;
+			border: 1px solid #2f2f2f00;
+		}
+
+		.codecopy-btn:hover {
+			background-color: rgba(221, 221, 221, .2);
+			/*top: 9px;*/
+		}
+
+		.hljs.language-html::before,
+		.hljs.language-xml::before {
+			content: "HTML/XML"
+		}
+
+		.hljs.language-javascript::before {
+			content: "JavaScript"
+		}
+
+		.hljs.language-c::before {
+			content: "C"
+		}
+
+		.hljs.language-cpp::before {
+			content: "C++"
+		}
+
+		.hljs.language-java::before {
+			content: "Java"
+		}
+
+		.hljs.language-asp::before {
+			content: "ASP"
+		}
+
+		.hljs.language-actionscript::before {
+			content: "ActionScript/Flash/Flex"
+		}
+
+		.hljs.language-bash::before {
+			content: "Bash"
+		}
+
+		.hljs.language-css::before {
+			content: "CSS"
+		}
+
+		.hljs.language-asp::before {
+			content: "ASP"
+		}
+
+		.hljs.language-cs::before,
+		.hljs.language-csharp::before {
+			content: "C#"
+		}
+
+		.hljs.language-d::before {
+			content: "D"
+		}
+
+		.hljs.language-golang::before,
+		.hljs.language-go::before {
+			content: "Go"
+		}
+
+		.hljs.language-json::before {
+			content: "JSON"
+		}
+
+		.hljs.language-lua::before {
+			content: "Lua"
+		}
+
+		.hljs.language-less::before {
+			content: "LESS"
+		}
+
+		.hljs.language-md::before,
+		.hljs.language-markdown::before,
+		.hljs.language-mkdown::before,
+		.hljs.language-mkd::before {
+			content: "Markdown"
+		}
+
+		.hljs.language-mm::before,
+		.hljs.language-objc::before,
+		.hljs.language-obj-c::before,
+		.hljs.language-objective-c::before {
+			content: "Objective-C"
+		}
+
+		.hljs.language-php::before {
+			content: "PHP"
+		}
+
+		.hljs.language-perl::before,
+		.hljs.language-pl::before,
+		.hljs.language-pm::before {
+			content: "Perl"
+		}
+
+		.hljs.language-python::before,
+		.hljs.language-py::before,
+		.hljs.language-gyp::before,
+		.hljs.language-ipython::before {
+			content: "Python"
+		}
+
+		.hljs.language-r::before {
+			content: "R"
+		}
+
+		.hljs.language-ruby::before,
+		.hljs.language-rb::before,
+		.hljs.language-gemspec::before,
+		.hljs.language-podspec::before,
+		.hljs.language-thor::before,
+		.hljs.language-irb::before {
+			content: "Ruby"
+		}
+
+		.hljs.language-sql::before {
+			content: "SQL"
+		}
+
+		.hljs.language-sh::before,
+		.hljs.language-shell::before,
+		.hljs.language-Session::before,
+		.hljs.language-shellsession::before,
+		.hljs.language-console::before {
+			content: "Shell"
+		}
+
+		.hljs.language-swift::before {
+			content: "Swift"
+		}
+
+		.hljs.language-vb::before {
+			content: "VB/VBScript"
+		}
+
+		.hljs.language-yaml::before {
+			content: "YAML"
+		}
+
+		.hljs {
+			border-radius: 1em;
+			position: relative;
+			display: block;
+			overflow-x: hidden;
+			color: #999;
+			padding-top: 30px !important;
+			box-shadow: 0 10px 30px 0px rgb(0 0 0 / 40%)
+		}
+
+		.hljs::before {
+			content: "";
+			position: absolute;
+			left: 15px;
+			top: 10px;
+			overflow: visible;
+			width: 12px;
+			height: 12px;
+			border-radius: 16px;
+			box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+			-webkit-box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+			background-color: #fc625d;
+			white-space: nowrap;
+			text-indent: 75px;
+			font-size: 16px;
+			line-height: 12px;
+			font-weight: 700;
+		}
+
+		html {
+			font-size: 14px;
+		}
+
+		@media (min-width: 768px) {
+			html {
+				font-size: 16px;
+			}
+		}
+
+		.btn:focus,
+		.btn:active:focus,
+		.btn-link.nav-link:focus,
+		.form-control:focus,
+		.form-check-input:focus {
+			box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+		}
+
+		html {
+			position: relative;
+			min-height: 100%;
+		}
+
+		body {
+			margin-bottom: 60px;
+		}
+
+		.anchorjs-link {
+			transition: all .25s linear;
+			margin-left: -0.25em !important;
+		}
+
+		*:hover>.anchorjs-link {
+			margin-left: 0.1875em !important;
+		}
+
+		@media (max-height: 300px) {
+			header {
+				position: initial !important;
+			}
+		}
+
+		@media (min-height: 301px) {
+
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				scroll-margin-top: 45px;
+			}
+		}
+
+		main a,
+		footer a,
+		.a a {
+			--background-primary: #1a1a1a;
+			--text-bright: #fff;
+			--bg-sub-accent-55: rgba(13, 185, 215, .55);
+			/*text-shadow: -1px -1px 2px var(--background-primary), -1px 1px 2px var(--background-primary), 1px -1px 2px var(--background-primary), 1px 1px 2px var(--background-primary);
+	-webkit-text-fill-color: var(--text-bright);*/
+			background-position: 0 100%;
+			background-repeat: repeat-x;
+			background-size: 5px 5px;
+			text-decoration: none;
+			transition: all .35s ease;
+			background-image: linear-gradient(to bottom, var(--bg-sub-accent-55) 0%, var(--bg-sub-accent-55) 100%);
+		}
+
+		main a:hover,
+		footer a:hover,
+		.a a:hover {
+			color: white;
+			background-size: 5px 50px;
+		}
+
+		pre code {
+			tab-size: 4;
+			/*新宋体*/
+			font-family: "新宋体", "Courier New", Courier, monospace;
+		}
+
+		body {
+			margin: 0 0 60px 0;
+		}
+
+		main {
+			background: #fffa;
+			margin: 2em 1em;
+			border: 1px solid #0000;
+			box-shadow: 0 5px 1em 0 rgba(0, 0, 0, .1);
+			padding: 8px;
+		}
+
+		header ul li a {
+			color: black;
+			text-decoration: none;
+		}
+
+		header {
+			box-shadow: 0 5px 1em 0 rgba(0, 0, 0, .1);
+		}
+
+		/*ul.fy.pagination {
+		    display: inline-block;
+		    padding: 0;
+		    margin: 0;
+		}
+		
+		ul.fy.pagination li {display: inline;}
+		
+		ul.fy.pagination li a {
+		    color: black;
+		    float: left;
+		    padding: 8px 16px;
+		    text-decoration: none;
+		}
+		
+		ul.fy.pagination li a.active {
+		    background-color: #79c0ff;
+		    color: white;
+		}
+		
+		ul.fy.pagination li a:hover:not(.active) {background-color: #ddd;}
+		
+		#comments-1 nth-child(2) {
+			display: none;
+		}
+		
+		#comments-1 nth-child(1) {
+			display: none;
+		}*/
+
+		body {
+			counter-reset: section-h1 section-h2 section-h3 section-h4 section-h5 section-h6;
+		}
+
+		@media (min-height: 350px) {
+
+			h1 {
+				counter-increment: section-h1;
+			}
+
+			h1:hover::after {
+				content: " h1:" counter(section-h1);
+				color: lightgray;
+				display: inline;
+			}
+
+			h2 {
+				counter-increment: section-h2;
+			}
+
+			h2:hover::after {
+				content: " h2:" counter(section-h2);
+				color: lightgray;
+				display: inline;
+			}
+
+			h3 {
+				counter-increment: section-h3;
+			}
+
+			h3:hover::after {
+				content: " h3:" counter(section-h3);
+				color: lightgray;
+				display: inline;
+			}
+
+			h4 {
+				counter-increment: section-h4;
+			}
+
+			h4:hover::after {
+				content: " h4:" counter(section-h4);
+				color: lightgray;
+				display: inline;
+			}
+
+			h5 {
+				counter-increment: section-h5;
+			}
+
+			h5:hover::after {
+				content: " h5:" counter(section-h5);
+				color: lightgray;
+				display: inline;
+			}
+
+			h6 {
+				counter-increment: section-h6;
+			}
+
+			h6:hover::after {
+				content: " h6:" counter(section-h6);
+				color: lightgray;
+				display: inline;
+			}
+
+			h1::after,
+			h2::after,
+			h3::after,
+			h4::after,
+			h5::after,
+			h6::after {
+				transition: all .25s linear;
+				color: #0000;
+				content: "";
+				margin-left: -0.4375em;
+				display: inline;
+			}
+
+			h1:hover::after,
+			h2:hover::after,
+			h3:hover::after,
+			h4:hover::after,
+			h5:hover::after,
+			h6:hover::after {
+				transition: all .25s linear;
+				margin-left: 0 !important;
+			}
+		}
+
+		.btn1 {
+			border-radius: .375rem;
+			border: 1px #0000 solid;
+			font-size: .875rem;
+			background-color: #F6F8FA;
+			padding-inline: 1em;
+			padding-block: .5em;
+			transition: all .25s linear;
+		}
+
+		.btn1:hover {
+			background-color: #d0d7de52;
+		}
+
+		.btn1:active {
+			background-color: #ebecf0;
+			border: 1px #1f232826 solid;
+		}
+
+		.btn1.clicked {
+			border: 1px #8c959f solid;
+			background-color: #fff;
+		}
+
+		/*css 获取页面高度和宽度*/
+		:root {
+			--w: tan(atan2(100vw, 1px));
+			--h: tan(atan2(100vh, 1px));
+		}
+	</style>
+	<style id="comments-style">
+		#comments-1 {
+			display: none;
+		}
+
+		#comments-2 {
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="loader-overlay" id="loader" style="display: flex; opacity: 1;
+	z-index: 100000000;">
+		<div class="loader" style="
+			display: flex;
+			opacity: 1;
+		"></div>
+		<div class="loader" style="
+			position: fixed;
+			opacity: 1;
+			width: 9.5em;
+			height: 9.5em;
+			opacity: 1 !important;
+			background: white;
+			box-shadow: inset 0 0 0.75em rgba(0, 0, 0, 0.1);
+		"></div>
+		<div style="
+			position: fixed;
+			opacity: 1;
+			z-index:999999999;
+		">loading...</div>
+	</div>
+	<header style="margin: 0; position: sticky; top:0; left: 0; width: 100%;
+		z-index: 9999; padding: 10px 0;border-bottom: 1px solid #eee;
+		background-color: #fffc;">
+		<!-- 进度条 -->
+		<div id="top-progress-bar" style="position: fixed; top: 0px; left: 0px; right: 0px;
+			background-color: lightskyblue; height: 2px; width: 0%;
+			transition: width 0.2s ease 0s, opacity 0.6s ease 0s;">
+		</div>
+		<ul style="height: 100%; list-style-type: none; display: flex;
+		flex-direction: row; justify-content: flex-start; padding: 0; margin: 0;">
+			<li style="height: 100%; margin-inline: 1em;">
+				<a href="/index.html?blog=index.md">首页</a>
+			</li>
+			<li style="height: 100%; margin-inline: 1em;">
+				<a href="/tools.html">工具</a>
+			</li>
+			<li style="height: 100%; margin-inline: 1em;">
+				<a href="/index.html?blog=about.md">关于</a>
+			</li>
+		</ul>
+	</header>
+	<main id="blog-main">
+		<table>
+			<thead>
+				<tr>
+					<th>工具</th>
+					<th>简介</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><a href="/code.html">代码编辑器</a></td>
+					<td>使用 Monaco Editor 制作</td>
+				</tr>
+			</tbody>
+		</table>
+	</main>
+	<main id="blog-chat">
+		<span style="display: inline-flex; flex-direction: row; flex-wrap: nowrap;
+			align-content: flex-start; justify-content: flex-start; margin: 0; padding: 0;
+			align-items: center; background-color: #F6F8FA; box-sizing: border-box;
+			border-radius: .375rem; border-color: #d0d7de; border: 0 solid !important;">
+			<button id="utteranc-btn" onclick="showchatbox(1)" class="btn1">
+				utteranc
+			</button>
+			<button id="giscus-btn" onclick="showchatbox(2)" class="btn1 clicked">
+				giscus
+			</button>
+			<script>
+				function showchatbox(x) {
+					if (x == 2) {
+						document.getElementById("comments-style").innerHTML =
+							`#comments-1 {
+								display: none;
+							}
+							#comments-2 {
+								display: block;
+							}`;
+						document.getElementById("giscus-btn").classList.add("clicked");
+						document.getElementById("utteranc-btn").classList.add("clicked");
+						document.getElementById("utteranc-btn").classList.remove("clicked");
+					}
+					else {
+						document.getElementById("comments-style").innerHTML =
+							`#comments-2 {
+								display: none;
+							}
+							#comments-1 {
+								display: block;
+							}`;
+						document.getElementById("utteranc-btn").classList.add("clicked");
+						document.getElementById("giscus-btn").classList.add("clicked");
+						document.getElementById("giscus-btn").classList.remove("clicked");
+					}
+				}
+			</script>
+		</span>
+		<div id="comments-1">
+			<script src="https://utteranc.es/client.js" repo="wbwdxh/wbwdxh.github.io" issue-term="url"
+				label="Utterances" theme="github-light" crossorigin="anonymous" async>
+				</script>
+		</div>
+		<div id="comments-2">
+			<script src="https://giscus.app/client.js" data-repo="wbwdxh/wbwdxh.github.io" data-repo-id="R_kgDONXOTxQ"
+				data-category="Announcements" data-category-id="DIC_kwDONXOTxc4CnWAd" data-mapping="url" data-strict="1"
+				data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light"
+				data-lang="zh-CN" crossorigin="anonymous" async>
+				</script>
+		</div>
+	</main>
+	<script src="./jquery-3.3.1.min.js"></script>
+	<script src="./RibbonsEffect.js"></script>
+	<script src="./translate.js"></script>
+	<script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="150" mobile="false"
+		src="./canvas-nest.min.js"></script>
+	<script>
+		document.addEventListener('scroll', function () {
+			function getScrollPercentage() {
+				// 获取页面滚动的垂直位置
+				var scrollTop = window.pageYOffset ||
+					document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+				// 获取页面的总高度
+				var scrollHeight = document.documentElement.scrollHeight;
+				var clientHeight = window.innerHeight ||
+					document.documentElement.clientHeight;
+
+				// 计算滚动位置占页面高度的百分比
+				var scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
+
+				return scrollPercent;
+			}
+			//设置#top-progress-bar的宽度为滚动百分比
+			document.getElementById('top-progress-bar').style.width =
+				Math.round(getScrollPercentage()) + '%';
+		});
+	</script>
+	<script>
+		// 初始加载检测
+		document.addEventListener('DOMContentLoaded', () => {
+			// 基础DOM加载完成
+			fadeOutLoader();
+
+			// 检测动态DOM更新
+			const observer = new MutationObserver((mutations) => {
+				if (document.querySelector('[data-loading]')) {
+					showLoader();
+				} else {
+					fadeOutLoader();
+				}
+			});
+
+			observer.observe(document.body, {
+				childList: true,
+				subtree: true,
+				attributes: true
+			});
+		});
+
+		function showLoader() {
+			const loader = document.getElementById('loader');
+			loader.style.display = 'flex';
+			loader.style.opacity = '1';
+		}
+
+		function fadeOutLoader() {
+			const loader = document.getElementById('loader');
+			loader.style.opacity = '0';
+			setTimeout(() => {
+				loader.style.display = 'none';
+			}, 500);
+		}
+		showLoader();
+
+		window.myloader = { show: showLoader, hide: fadeOutLoader };
+
+		// // 动态DOM加载示例
+		// setTimeout(() => {
+		// 	showLoader();
+		// 	// 模拟异步DOM插入
+		// 	const tempDiv = document.createElement('div');
+		// 	tempDiv.setAttribute('data-loading', 'true');
+		// 	tempDiv.innerHTML = '<p>动态加载的内容...</p>';
+
+		// 	setTimeout(() => {
+		// 		document.body.appendChild(tempDiv);
+		// 		tempDiv.removeAttribute('data-loading');
+		// 	}, 2000);
+		// }, 3000);
+	</script>
+	<!-- 悬挂的喵 -->
+	<script type="text/javascript" src="./BLOG_szgotop.js"></script>
+	<link rel="stylesheet" type="text/css" href="./BLOG_szgotop.css" />
+	<div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -999px;"></div>
+</body>
+
+</html>

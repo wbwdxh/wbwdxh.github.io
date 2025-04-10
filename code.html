@@ -6,6 +6,211 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Monaco 代码编辑器</title>
 	<style>
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+				opacity: 1;
+			}
+
+			100% {
+				transform: rotate(360deg);
+				opacity: 0.8;
+			}
+		}
+
+		.loader-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(30, 30, 30, 0.8);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+			transition: opacity 0.5s ease;
+		}
+
+		.loader {
+			width: 10em;
+			height: 10em;
+			border-radius: 50%;
+			background: conic-gradient(rgb(10, 182, 212) 0% 20%, rgba(0, 0, 0, 0) 20%);
+			animation: spin 1s linear infinite;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+		}
+
+		.hljs.language-html::before,
+		.hljs.language-xml::before {
+			content: "HTML/XML"
+		}
+
+		.hljs.language-javascript::before {
+			content: "JavaScript"
+		}
+
+		.hljs.language-c::before {
+			content: "C"
+		}
+
+		.hljs.language-cpp::before {
+			content: "C++"
+		}
+
+		.hljs.language-java::before {
+			content: "Java"
+		}
+
+		.hljs.language-asp::before {
+			content: "ASP"
+		}
+
+		.hljs.language-actionscript::before {
+			content: "ActionScript/Flash/Flex"
+		}
+
+		.hljs.language-bash::before {
+			content: "Bash"
+		}
+
+		.hljs.language-css::before {
+			content: "CSS"
+		}
+
+		.hljs.language-asp::before {
+			content: "ASP"
+		}
+
+		.hljs.language-cs::before,
+		.hljs.language-csharp::before {
+			content: "C#"
+		}
+
+		.hljs.language-d::before {
+			content: "D"
+		}
+
+		.hljs.language-golang::before,
+		.hljs.language-go::before {
+			content: "Go"
+		}
+
+		.hljs.language-json::before {
+			content: "JSON"
+		}
+
+		.hljs.language-lua::before {
+			content: "Lua"
+		}
+
+		.hljs.language-less::before {
+			content: "LESS"
+		}
+
+		.hljs.language-md::before,
+		.hljs.language-markdown::before,
+		.hljs.language-mkdown::before,
+		.hljs.language-mkd::before {
+			content: "Markdown"
+		}
+
+		.hljs.language-mm::before,
+		.hljs.language-objc::before,
+		.hljs.language-obj-c::before,
+		.hljs.language-objective-c::before {
+			content: "Objective-C"
+		}
+
+		.hljs.language-php::before {
+			content: "PHP"
+		}
+
+		.hljs.language-perl::before,
+		.hljs.language-pl::before,
+		.hljs.language-pm::before {
+			content: "Perl"
+		}
+
+		.hljs.language-python::before,
+		.hljs.language-py::before,
+		.hljs.language-gyp::before,
+		.hljs.language-ipython::before {
+			content: "Python"
+		}
+
+		.hljs.language-r::before {
+			content: "R"
+		}
+
+		.hljs.language-ruby::before,
+		.hljs.language-rb::before,
+		.hljs.language-gemspec::before,
+		.hljs.language-podspec::before,
+		.hljs.language-thor::before,
+		.hljs.language-irb::before {
+			content: "Ruby"
+		}
+
+		.hljs.language-sql::before {
+			content: "SQL"
+		}
+
+		.hljs.language-sh::before,
+		.hljs.language-shell::before,
+		.hljs.language-Session::before,
+		.hljs.language-shellsession::before,
+		.hljs.language-console::before {
+			content: "Shell"
+		}
+
+		.hljs.language-swift::before {
+			content: "Swift"
+		}
+
+		.hljs.language-vb::before {
+			content: "VB/VBScript"
+		}
+
+		.hljs.language-yaml::before {
+			content: "YAML"
+		}
+
+		.hljs,
+		.math-block {
+			border-radius: 1em;
+			position: relative;
+			display: block;
+			overflow-x: hidden;
+			color: #d4d4d4;
+			padding-top: 30px !important;
+			box-shadow: 0 10px 30px 0px rgb(0 0 0 / 40%)
+		}
+
+		#preview .math-block::before {
+			content: "Math"
+		}
+
+		.hljs::before,
+		.math-block::before {
+			content: "";
+			position: absolute;
+			left: 15px;
+			top: 10px;
+			overflow: visible;
+			width: 12px;
+			height: 12px;
+			border-radius: 16px;
+			box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+			-webkit-box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+			background-color: #fc625d;
+			white-space: nowrap;
+			text-indent: 75px;
+			font-size: 16px;
+			line-height: 12px;
+			font-weight: 700;
+		}
+
 		body {
 			margin: 0;
 			padding: 0;
@@ -111,7 +316,7 @@
 
 		.theme-toggle {
 			position: fixed;
-			bottom: 10px;
+			bottom: 20px;
 			right: 10px;
 			z-index: 100;
 			background-color: #3c3c3c;
@@ -141,7 +346,26 @@
 
 		.view-toggle {
 			position: fixed;
-			bottom: 60px;
+			bottom: 70px;
+			right: 10px;
+			z-index: 100;
+			background-color: #3c3c3c;
+			color: #d4d4d4;
+			border: none;
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			font-size: 20px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+		}
+
+		.save-toggle {
+			position: fixed;
+			bottom: 120px;
 			right: 10px;
 			z-index: 100;
 			background-color: #3c3c3c;
@@ -228,7 +452,12 @@
 			background-color: #252526;
 		}
 
-		#preview pre {
+		#preview blockquote p {
+			margin: 0;
+		}
+
+		#preview pre code,
+		.math-block {
 			background-color: #252526;
 			padding: 1em;
 			border-radius: 3px;
@@ -236,7 +465,8 @@
 			border: 1px solid #333;
 		}
 
-		#preview code {
+		#preview code,
+		.math-block {
 			font-family: Consolas, Monaco, monospace;
 			background-color: #252526;
 			padding: 0.2em 0.4em;
@@ -299,11 +529,12 @@
 		}
 
 		/* Highlight.js 主题 - 类似 VS Code 暗色主题 */
-		.hljs {
+		.hljs,
+		.math-block {
 			display: block;
 			overflow-x: auto;
 			padding: 0.5em;
-			background: #1e1e1e;
+			background: #252526;
 			color: #d4d4d4;
 		}
 
@@ -407,16 +638,81 @@
 			width: 100%;
 		}
 	</style>
+	<style>
+		.help-toggle {
+			position: fixed;
+			bottom: 170px;
+			right: 10px;
+			z-index: 100;
+			background-color: #3c3c3c;
+			color: #d4d4d4;
+			border: none;
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			font-size: 20px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+		}
+
+		.help-panel {
+			position: fixed;
+			bottom: 220px;
+			right: 10px;
+			width: 400px;
+			max-height: 500px;
+			background-color: #252526;
+			border-radius: 8px;
+			padding: 15px;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+			z-index: 99;
+			overflow-y: auto;
+			display: none;
+		}
+
+		.help-panel h3 {
+			color: #569cd6;
+			margin-top: 0;
+			border-bottom: 1px solid #333;
+			padding-bottom: 5px;
+		}
+
+		.help-panel table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 10px 0;
+		}
+
+		.help-panel th,
+		.help-panel td {
+			border: 1px solid #333;
+			padding: 8px;
+			text-align: left;
+		}
+
+		.help-panel th {
+			background-color: #1e1e1e;
+		}
+
+		.help-panel code {
+			background-color: #1e1e1e;
+			padding: 2px 4px;
+			border-radius: 3px;
+		}
+	</style>
 	<!-- 引入 highlight.js -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs2015.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.staticfile.net/highlight.js/11.7.0/styles/vs2015.min.css">
+	<script src="https://cdn.staticfile.net/highlight.js/11.7.0/highlight.min.js"></script>
 	<!-- 引入 KaTeX -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
-		crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+	<link rel="stylesheet" href="https://cdn.staticfile.net/KaTeX/0.16.8/katex.min.css">
+	<script src="https://cdn.staticfile.net/KaTeX/0.16.8/katex.min.js"></script>
+	<script defer src="https://cdn.staticfile.net/KaTeX/0.16.8/contrib/auto-render.min.js" crossorigin="anonymous"
+		onload="renderMathInElement(document.body);"></script>
 	<!-- 引入 marked.js -->
-	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+	<script src="https://cdn.staticfile.net/marked/15.0.7/marked.min.js"></script>
 	<script>
 		// 配置 marked 支持 KaTeX 和代码高亮
 		marked.setOptions({
@@ -438,7 +734,7 @@
 				infostring = infostring || code.lang;
 				// console.log(code, infostring);
 				if (infostring === 'math') {
-					return `<div class="math-block">${katex.renderToString(code.text, { throwOnError: false })}</div>`;
+					return `<div class="math-block katex-display">${katex.renderToString(code.text, { throwOnError: false, displayMode: true })}</div>`;
 				}
 				let s = code.text;
 				s = s.replaceAll('&', '&amp;');
@@ -453,6 +749,80 @@
 </head>
 
 <body>
+	<div class="loader-overlay" id="loader" style="display: flex; opacity: 1;
+		z-index: 100000000;">
+		<div class="loader" style="
+				display: flex;
+				opacity: 1;
+			"></div>
+		<div class="loader" style="
+				position: fixed;
+				opacity: 1;
+				width: 9.5em;
+				height: 9.5em;
+				opacity: 1 !important;
+				background: #1e1e1e;
+				box-shadow: inset 0 0 0.75em rgba(0, 0, 0, 0.1);
+			"></div>
+		<div style="
+				position: fixed;
+				opacity: 1;
+				z-index:999999999;
+			">loading...</div>
+	</div>
+	<script>
+		// // 初始加载检测
+		// document.addEventListener('DOMContentLoaded', () => {
+		// 	// 基础DOM加载完成
+		// 	fadeOutLoader();
+
+		// 	// 检测动态DOM更新
+		// 	const observer = new MutationObserver((mutations) => {
+		// 		if (document.querySelector('[data-loading]')) {
+		// 			showLoader();
+		// 		} else {
+		// 			fadeOutLoader();
+		// 		}
+		// 	});
+
+		// 	observer.observe(document.body, {
+		// 		childList: true,
+		// 		subtree: true,
+		// 		attributes: true
+		// 	});
+		// });
+
+		function showLoader() {
+			const loader = document.getElementById('loader');
+			loader.style.display = 'flex';
+			loader.style.opacity = '1';
+		}
+
+		function fadeOutLoader() {
+			const loader = document.getElementById('loader');
+			loader.style.opacity = '0';
+			setTimeout(() => {
+				loader.style.display = 'none';
+			}, 500);
+		}
+		showLoader();
+
+		window.myloader = { show: showLoader, hide: fadeOutLoader };
+
+		// // 动态DOM加载示例
+		// setTimeout(() => {
+		// 	showLoader();
+		// 	// 模拟异步DOM插入
+		// 	const tempDiv = document.createElement('div');
+		// 	tempDiv.setAttribute('data-loading', 'true');
+		// 	tempDiv.innerHTML = '<p>动态加载的内容...</p>';
+
+		// 	setTimeout(() => {
+		// 		document.body.appendChild(tempDiv);
+		// 		tempDiv.removeAttribute('data-loading');
+		// 	}, 2000);
+		// }, 3000);
+	</script>
 	<div class="header">
 		<div class="title">Monaco 代码编辑器</div>
 		<div class="controls">
@@ -514,16 +884,168 @@
 
 	<button class="theme-toggle" id="theme-toggle">🌓</button>
 	<button class="view-toggle" id="view-toggle">👁️</button>
+	<button class="save-toggle" id="save-toggle">
+		<svg t="1743583851192" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+			p-id="910">
+			<path
+				d="M874.1 336.92H150.31c-29.72 0-53.9 23.32-53.9 51.97v288.74c0 28.66 24.18 51.97 53.9 51.97h138.6v123.2H735.5V729.6h138.6c29.72 0 53.9-23.32 53.9-51.97V388.9c0-28.66-24.19-51.98-53.9-51.98zM689.3 806.61H335.11V560.22H689.3v246.39z m192.5-128.97c0 2.79-3.09 5.77-7.7 5.77H735.5v-123.2H774v-46.2H250.41v46.2h38.5v123.2h-138.6c-4.61 0-7.7-2.99-7.7-5.77V388.9c0-2.79 3.09-5.77 7.7-5.77H874.1c4.61 0 7.7 2.99 7.7 5.77v288.74zM335.11 144.43H689.3v169.39h46.2V98.23H288.91V314.9h46.2z"
+				fill="#d4d4d4" p-id="911"></path>
+			<path
+				d="M412.11 637.22h200.2v46.2h-200.2zM373.61 714.21H650.8v46.2H373.61zM653.37 421.62h61.6v46.2h-61.6zM738.06 421.62h77v46.2h-77z"
+				fill="#d4d4d4" p-id="912"></path>
+		</svg>
+	</button>
+	<button class="help-toggle" id="help-toggle">?</button>
+
+	<div class="help-panel" id="help-panel" style="display: none;">
+		<h3>Markdown & KaTeX 语法帮助</h3>
+
+		<h4>基础格式</h4>
+		<table>
+			<tr>
+				<th>语法</th>
+				<th>效果</th>
+			</tr>
+			<tr>
+				<td><code># 标题1</code></td>
+				<td>一级标题</td>
+			</tr>
+			<tr>
+				<td><code>## 标题2</code></td>
+				<td>二级标题</td>
+			</tr>
+			<tr>
+				<td><code>**粗体**</code></td>
+				<td><strong>粗体</strong></td>
+			</tr>
+			<tr>
+				<td><code>*斜体*</code></td>
+				<td><em>斜体</em></td>
+			</tr>
+			<tr>
+				<td><code>[链接](http://example.com)</code></td>
+				<td><a href="#">链接</a></td>
+			</tr>
+			<tr>
+				<td><code>![图片](image.png)</code></td>
+				<td>图片</td>
+			</tr>
+		</table>
+
+		<h4>列表</h4>
+		<table>
+			<tr>
+				<th>语法</th>
+				<th>效果</th>
+			</tr>
+			<tr>
+				<td><code>- 无序列表项</code></td>
+				<td>• 无序列表项</td>
+			</tr>
+			<tr>
+				<td><code>1. 有序列表项</code></td>
+				<td>1. 有序列表项</td>
+			</tr>
+		</table>
+
+		<h4>代码</h4>
+		<table>
+			<tr>
+				<th>语法</th>
+				<th>效果</th>
+			</tr>
+			<tr>
+				<td><code>```语言<br>代码块<br>```</code></td>
+				<td>语法高亮的代码块</td>
+			</tr>
+			<tr>
+				<td><code>`行内代码`</code></td>
+				<td><code>行内代码</code></td>
+			</tr>
+		</table>
+
+		<h4>KaTeX 数学公式</h4>
+		<table>
+			<tr>
+				<th>语法</th>
+				<th>效果</th>
+			</tr>
+			<tr>
+				<td><code>$行内公式$</code></td>
+				<td>行内数学公式</td>
+			</tr>
+			<tr>
+				<td><code>$$块级公式$$</code></td>
+				<td>单独一行的数学公式</td>
+			</tr>
+			<tr>
+				<td><code>```math<br>公式<br>```</code></td>
+				<td>代码块形式的数学公式</td>
+			</tr>
+		</table>
+
+		<h4>常用数学符号</h4>
+		<table>
+			<tr>
+				<th>语法</th>
+				<th>符号</th>
+			</tr>
+			<tr>
+				<td><code>\alpha</code></td>
+				<td>α</td>
+			</tr>
+			<tr>
+				<td><code>\beta</code></td>
+				<td>β</td>
+			</tr>
+			<tr>
+				<td><code>\sum</code></td>
+				<td>∑</td>
+			</tr>
+			<tr>
+				<td><code>\int</code></td>
+				<td>∫</td>
+			</tr>
+			<tr>
+				<td><code>\frac{a}{b}</code></td>
+				<td>分数 a/b</td>
+			</tr>
+			<tr>
+				<td><code>\sqrt{x}</code></td>
+				<td>√x</td>
+			</tr>
+		</table>
+	</div>
 
 	<script>
+		function setCookie(cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+			var expires = "expires=" + d.toGMTString();
+			document.cookie = cname + "=" + cvalue + "; " + expires;
+		}
+
+		function getCookie(cname) {
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i].trim();
+				if (c.indexOf(name) == 0) { return c.substring(name.length, c.length); }
+			}
+			return null;
+		}
+
+		var savedtheme = getCookie("theme") || "vs-dark";
+		setCookie("theme", savedtheme, 365);
+
 		// 加载 Monaco Editor 脚本
 		const loadMonacoScript = () => {
 			return new Promise((resolve) => {
 				const script = document.createElement('script');
-				script.src = 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.40.0/min/vs/loader.min.js';
+				script.src = 'https://cdn.staticfile.net/monaco-editor/0.41.0/min/vs/loader.min.js';
 				script.onload = () => {
 					// 配置 Monaco Editor 的路径
-					require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.40.0/min/vs' } });
+					require.config({ 'vs/nls': { availableLanguages: { '*': 'zh-cn' } }, paths: { vs: 'https://cdn.staticfile.net/monaco-editor/0.41.0/min/vs/' } });
 
 					// 加载 editor 核心
 					require(['vs/editor/editor.main'], () => {
@@ -561,7 +1083,7 @@
 			const editor = monaco.editor.create(document.getElementById('editor'), {
 				value: defaultCode['markdown'],
 				language: 'markdown',
-				theme: 'vs-dark',
+				theme: savedtheme,
 				automaticLayout: true,
 				minimap: { enabled: true },
 				fontSize: 14,
@@ -697,10 +1219,14 @@
 			});
 
 			// 主题切换
-			let isDarkTheme = true;
+			let isDarkTheme = savedtheme == 'vs-dark';
+			document.getElementById('theme-toggle').textContent = isDarkTheme ? '🌓' : '🌒';
 			document.getElementById('theme-toggle').addEventListener('click', () => {
 				isDarkTheme = !isDarkTheme;
 				monaco.editor.setTheme(isDarkTheme ? 'vs-dark' : 'vs');
+				savedtheme = isDarkTheme ? 'vs-dark' : 'vs';
+				setCookie("theme", savedtheme, 365);
+				console.log(getCookie("theme"));
 				document.getElementById('theme-toggle').textContent = isDarkTheme ? '🌓' : '🌒';
 			});
 
@@ -717,6 +1243,538 @@
 					splitter.style.display = 'none';
 					document.getElementById('editor').style.width = "100%";
 				}
+			});
+			function openNewTabWithContent(content, title = "新页面") {
+				const newWindow = window.open("", "_blank");
+				newWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+		<head>
+		<title>${title}</title>
+		<style>
+			@keyframes spin {
+				0% {
+					transform: rotate(0deg);
+					opacity: 1;
+				}
+
+				100% {
+					transform: rotate(360deg);
+					opacity: 0.8;
+				}
+			}
+
+			.loader-overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(30, 30, 30, 0.8);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				z-index: 9999;
+				transition: opacity 0.5s ease;
+			}
+
+			.loader {
+				width: 10em;
+				height: 10em;
+				border-radius: 50%;
+				background: conic-gradient(rgb(10, 182, 212) 0% 20%, rgba(0, 0, 0, 0) 20%);
+				animation: spin 1s linear infinite;
+				box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+			}
+
+			.hljs.language-html::before,
+			.hljs.language-xml::before {
+				content: "HTML/XML"
+			}
+
+			.hljs.language-javascript::before {
+				content: "JavaScript"
+			}
+
+			.hljs.language-c::before {
+				content: "C"
+			}
+
+			.hljs.language-cpp::before {
+				content: "C++"
+			}
+
+			.hljs.language-java::before {
+				content: "Java"
+			}
+
+			.hljs.language-asp::before {
+				content: "ASP"
+			}
+
+			.hljs.language-actionscript::before {
+				content: "ActionScript/Flash/Flex"
+			}
+
+			.hljs.language-bash::before {
+				content: "Bash"
+			}
+
+			.hljs.language-css::before {
+				content: "CSS"
+			}
+
+			.hljs.language-asp::before {
+				content: "ASP"
+			}
+
+			.hljs.language-cs::before,
+			.hljs.language-csharp::before {
+				content: "C#"
+			}
+
+			.hljs.language-d::before {
+				content: "D"
+			}
+
+			.hljs.language-golang::before,
+			.hljs.language-go::before {
+				content: "Go"
+			}
+
+			.hljs.language-json::before {
+				content: "JSON"
+			}
+
+			.hljs.language-lua::before {
+				content: "Lua"
+			}
+
+			.hljs.language-less::before {
+				content: "LESS"
+			}
+
+			.hljs.language-md::before,
+			.hljs.language-markdown::before,
+			.hljs.language-mkdown::before,
+			.hljs.language-mkd::before {
+				content: "Markdown"
+			}
+
+			.hljs.language-mm::before,
+			.hljs.language-objc::before,
+			.hljs.language-obj-c::before,
+			.hljs.language-objective-c::before {
+				content: "Objective-C"
+			}
+
+			.hljs.language-php::before {
+				content: "PHP"
+			}
+
+			.hljs.language-perl::before,
+			.hljs.language-pl::before,
+			.hljs.language-pm::before {
+				content: "Perl"
+			}
+
+			.hljs.language-python::before,
+			.hljs.language-py::before,
+			.hljs.language-gyp::before,
+			.hljs.language-ipython::before {
+				content: "Python"
+			}
+
+			.hljs.language-r::before {
+				content: "R"
+			}
+
+			.hljs.language-ruby::before,
+			.hljs.language-rb::before,
+			.hljs.language-gemspec::before,
+			.hljs.language-podspec::before,
+			.hljs.language-thor::before,
+			.hljs.language-irb::before {
+				content: "Ruby"
+			}
+
+			.hljs.language-sql::before {
+				content: "SQL"
+			}
+
+			.hljs.language-sh::before,
+			.hljs.language-shell::before,
+			.hljs.language-Session::before,
+			.hljs.language-shellsession::before,
+			.hljs.language-console::before {
+				content: "Shell"
+			}
+
+			.hljs.language-swift::before {
+				content: "Swift"
+			}
+
+			.hljs.language-vb::before {
+				content: "VB/VBScript"
+			}
+
+			.hljs.language-yaml::before {
+				content: "YAML"
+			}
+
+			.hljs,
+			.math-block {
+				border-radius: 1em;
+				position: relative;
+				display: block;
+				overflow-x: hidden;
+				color: #d4d4d4;
+				padding-top: 30px !important;
+				box-shadow: 0 10px 30px 0px rgb(0 0 0 / 40%)
+			}
+
+			body .math-block::before {
+				content: "Math"
+			}
+
+			.hljs::before,
+			.math-block::before {
+				content: "";
+				position: absolute;
+				left: 15px;
+				top: 10px;
+				overflow: visible;
+				width: 12px;
+				height: 12px;
+				border-radius: 16px;
+				box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+				-webkit-box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+				background-color: #fc625d;
+				white-space: nowrap;
+				text-indent: 75px;
+				font-size: 16px;
+				line-height: 12px;
+				font-weight: 700;
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: Arial, sans-serif;
+				display: flex;
+				flex-direction: column;
+				height: 100vh;
+				overflow: hidden;
+				background-color: #1e1e1e;
+				color: #d4d4d4;
+			}
+
+			body {
+				height: 100%;
+				border: none;
+				background-color: #1e1e1e;
+				padding: 20px;
+				overflow: auto;
+				box-sizing: border-box;
+				color: #d4d4d4;
+			}
+
+			/* Markdown 预览样式 - 暗色主题 */
+			body h1,
+			body h2,
+			body h3,
+			body h4,
+			body h5,
+			body h6 {
+				margin-top: 1em;
+				margin-bottom: 0.5em;
+				font-weight: bold;
+				color: #d4d4d4;
+			}
+
+			body h1 {
+				font-size: 2em;
+				border-bottom: 1px solid #333;
+				color: #569cd6;
+			}
+
+			body h2 {
+				font-size: 1.5em;
+				border-bottom: 1px solid #333;
+				color: #4ec9b0;
+			}
+
+			body h3 {
+				font-size: 1.25em;
+				color: #c586c0;
+			}
+
+			body h4 {
+				font-size: 1em;
+				color: #9cdcfe;
+			}
+
+			body h5 {
+				font-size: 0.875em;
+				color: #ce9178;
+			}
+
+			body h6 {
+				font-size: 0.85em;
+				color: #858585;
+			}
+
+			body p {
+				margin: 0 0 1em;
+				color: #d4d4d4;
+			}
+
+			body ul,
+			body ol {
+				margin: 0 0 1em 2em;
+				padding: 0;
+				color: #d4d4d4;
+			}
+
+			body li {
+				margin: 0.25em 0;
+				color: #d4d4d4;
+			}
+
+			body blockquote {
+				margin: 0 0 1em;
+				padding: 0 1em;
+				border-left: 4px solid #6a9955;
+				color: #d4d4d4;
+				background-color: #252526;
+			}
+
+			body blockquote p {
+				margin: 0;
+			}
+
+			body pre code,
+			.math-block {
+				background-color: #252526;
+				padding: 1em;
+				border-radius: 3px;
+				overflow: auto;
+				border: 1px solid #333;
+			}
+
+			body code,
+			.math-block {
+				font-family: Consolas, Monaco, monospace;
+				background-color: #252526;
+				padding: 0.2em 0.4em;
+				border-radius: 3px;
+				color: #d4d4d4;
+			}
+
+			body a {
+				color: #569cd6;
+				text-decoration: none;
+			}
+
+			body a:hover {
+				text-decoration: underline;
+			}
+
+			body img {
+				max-width: 100%;
+				background-color: white;
+				padding: 5px;
+				border-radius: 3px;
+			}
+
+			body table {
+				border-collapse: collapse;
+				margin: 1em 0;
+				width: 100%;
+			}
+
+			body th,
+			body td {
+				border: 1px solid #333;
+				padding: 0.5em 1em;
+				color: #d4d4d4;
+			}
+
+			body th {
+				background-color: #252526;
+				font-weight: bold;
+			}
+
+			body tr:nth-child(even) {
+				background-color: #252526;
+			}
+
+			/* KaTeX 公式样式 */
+			.katex {
+				font-size: 1.1em !important;
+				color: #d4d4d4 !important;
+			}
+
+			/* 数学公式块样式 */
+			.math-block {
+				text-align: center;
+				margin: 1em 0;
+				padding: 0.5em;
+				background-color: #252526;
+				border-radius: 3px;
+				overflow-x: auto;
+			}
+
+			/* Highlight.js 主题 - 类似 VS Code 暗色主题 */
+			.hljs,
+			.math-block {
+				display: block;
+				overflow-x: auto;
+				padding: 0.5em;
+				background: #252526;
+				border-radius: 3px;
+				color: #d4d4d4;
+			}
+
+			.hljs-keyword,
+			.hljs-literal,
+			.hljs-name,
+			.hljs-symbol {
+				color: #569cd6;
+			}
+
+			.hljs-link {
+				color: #569cd6;
+				text-decoration: underline;
+			}
+
+			.hljs-built_in,
+			.hljs-type {
+				color: #4ec9b0;
+			}
+
+			.hljs-number,
+			.hljs-class {
+				color: #b5cea8;
+			}
+
+			.hljs-string,
+			.hljs-meta-string {
+				color: #ce9178;
+			}
+
+			.hljs-regexp,
+			.hljs-template-tag {
+				color: #9a5334;
+			}
+
+			.hljs-subst,
+			.hljs-function,
+			.hljs-title,
+			.hljs-params,
+			.hljs-formula {
+				color: #dcdcaa;
+			}
+
+			.hljs-comment,
+			.hljs-quote {
+				color: #6a9955;
+				font-style: italic;
+			}
+
+			.hljs-doctag {
+				color: #608b4e;
+			}
+
+			.hljs-meta,
+			.hljs-meta-keyword,
+			.hljs-tag {
+				color: #9b9b9b;
+			}
+
+			.hljs-variable,
+			.hljs-template-variable {
+				color: #bd63c5;
+			}
+
+			.hljs-attr,
+			.hljs-attribute,
+			.hljs-builtin-name {
+				color: #9cdcfe;
+			}
+
+			.hljs-section {
+				color: gold;
+			}
+
+			.hljs-emphasis {
+				font-style: italic;
+			}
+
+			.hljs-strong {
+				font-weight: bold;
+			}
+
+			.hljs-bullet,
+			.hljs-selector-tag,
+			.hljs-selector-id,
+			.hljs-selector-class,
+			.hljs-selector-attr,
+			.hljs-selector-pseudo {
+				color: #d7ba7d;
+			}
+
+			.hljs-addition {
+				background-color: #144212;
+				display: inline-block;
+				width: 100%;
+			}
+
+			.hljs-deletion {
+				background-color: #600;
+				display: inline-block;
+				width: 100%;
+			}
+		</style>
+		<link rel="stylesheet" href="https://cdn.staticfile.net/KaTeX/0.16.8/katex.min.css">
+		</head>
+		<body>
+		${content}
+		</body>
+    </html>
+  `);
+				return newWindow;
+				//newWindow.document.close(); // 必须调用，否则加载可能不完整
+			}
+
+			document.getElementById('save-toggle').addEventListener('click', () => {
+				const language = document.getElementById('language-select').value;
+				const content = editor.getValue();
+				let p = openNewTabWithContent(marked.parse(content));
+				// 使用marked.js渲染Markdown
+				// p.body.innerHTML = marked.parse(content);
+
+				// 渲染完成后，高亮所有代码块
+				p.document.querySelectorAll('pre code').forEach((block) => {
+					if (!block.classList.contains('language-math')) {
+						hljs.highlightElement(block);
+					}
+				});
+
+				// 处理数学公式
+				// katex.renderMathInElement(document.body);
+				renderMathInElement(p.document.body, {
+					// customised options
+					// • auto-render specific keys, e.g.:
+					delimiters: [
+						{ left: '$$', right: '$$', display: true },
+						{ left: '$', right: '$', display: false }
+					],
+					// • rendering keys, e.g.:
+					throwOnError: true
+				});
+				p.print();
+				p.document.close();
 			});
 
 			// 监听内容变化
@@ -774,10 +1832,28 @@
 				}
 			});
 
+			// 帮助面板切换
+			document.getElementById('help-toggle').addEventListener('click', () => {
+				const helpPanel = document.getElementById('help-panel');
+				helpPanel.style.display = helpPanel.style.display === 'block' ? 'none' : 'block';
+			});
+
+			// 点击其他地方关闭帮助面板
+			document.addEventListener('click', (e) => {
+				const helpPanel = document.getElementById('help-panel');
+				const helpToggle = document.getElementById('help-toggle');
+
+				if (e.target !== helpToggle && !helpPanel.contains(e.target)) {
+					helpPanel.style.display = 'none';
+				}
+			});
+
 			document.addEventListener('mouseup', () => {
 				isDragging = false;
 				document.body.style.cursor = '';
 			});
+
+			fadeOutLoader();
 		};
 
 		// 初始化应用
