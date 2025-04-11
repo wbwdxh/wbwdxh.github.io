@@ -1,0 +1,483 @@
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+		opacity: 1;
+	}
+
+	100% {
+		transform: rotate(360deg);
+		opacity: 0.8;
+	}
+}
+
+.loader-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(30, 30, 30, 0.8);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	transition: opacity 0.5s ease;
+}
+
+.loader {
+	width: 10em;
+	height: 10em;
+	border-radius: 50%;
+	background: conic-gradient(rgb(10, 182, 212) 0% 20%, rgba(0, 0, 0, 0) 20%);
+	animation: spin 1s linear infinite;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.hljs.language-html::before,
+.hljs.language-xml::before {
+	content: "HTML/XML"
+}
+
+.hljs.language-javascript::before {
+	content: "JavaScript"
+}
+
+.hljs.language-c::before {
+	content: "C"
+}
+
+.hljs.language-cpp::before {
+	content: "C++"
+}
+
+.hljs.language-java::before {
+	content: "Java"
+}
+
+.hljs.language-asp::before {
+	content: "ASP"
+}
+
+.hljs.language-actionscript::before {
+	content: "ActionScript/Flash/Flex"
+}
+
+.hljs.language-bash::before {
+	content: "Bash"
+}
+
+.hljs.language-css::before {
+	content: "CSS"
+}
+
+.hljs.language-asp::before {
+	content: "ASP"
+}
+
+.hljs.language-cs::before,
+.hljs.language-csharp::before {
+	content: "C#"
+}
+
+.hljs.language-d::before {
+	content: "D"
+}
+
+.hljs.language-golang::before,
+.hljs.language-go::before {
+	content: "Go"
+}
+
+.hljs.language-json::before {
+	content: "JSON"
+}
+
+.hljs.language-lua::before {
+	content: "Lua"
+}
+
+.hljs.language-less::before {
+	content: "LESS"
+}
+
+.hljs.language-md::before,
+.hljs.language-markdown::before,
+.hljs.language-mkdown::before,
+.hljs.language-mkd::before {
+	content: "Markdown"
+}
+
+.hljs.language-mm::before,
+.hljs.language-objc::before,
+.hljs.language-obj-c::before,
+.hljs.language-objective-c::before {
+	content: "Objective-C"
+}
+
+.hljs.language-php::before {
+	content: "PHP"
+}
+
+.hljs.language-perl::before,
+.hljs.language-pl::before,
+.hljs.language-pm::before {
+	content: "Perl"
+}
+
+.hljs.language-python::before,
+.hljs.language-py::before,
+.hljs.language-gyp::before,
+.hljs.language-ipython::before {
+	content: "Python"
+}
+
+.hljs.language-r::before {
+	content: "R"
+}
+
+.hljs.language-ruby::before,
+.hljs.language-rb::before,
+.hljs.language-gemspec::before,
+.hljs.language-podspec::before,
+.hljs.language-thor::before,
+.hljs.language-irb::before {
+	content: "Ruby"
+}
+
+.hljs.language-sql::before {
+	content: "SQL"
+}
+
+.hljs.language-sh::before,
+.hljs.language-shell::before,
+.hljs.language-Session::before,
+.hljs.language-shellsession::before,
+.hljs.language-console::before {
+	content: "Shell"
+}
+
+.hljs.language-swift::before {
+	content: "Swift"
+}
+
+.hljs.language-vb::before {
+	content: "VB/VBScript"
+}
+
+.hljs.language-yaml::before {
+	content: "YAML"
+}
+
+.hljs,
+.math-block {
+	border-radius: 1em;
+	position: relative;
+	display: block;
+	overflow-x: hidden;
+	color: #d4d4d4;
+	padding-top: 30px !important;
+	box-shadow: 0 10px 30px 0px rgb(0 0 0 / 40%)
+}
+
+body .math-block::before {
+	content: "Math"
+}
+
+.hljs::before,
+.math-block::before {
+	content: "";
+	position: absolute;
+	left: 15px;
+	top: 10px;
+	overflow: visible;
+	width: 12px;
+	height: 12px;
+	border-radius: 16px;
+	box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+	-webkit-box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+	background-color: #fc625d;
+	white-space: nowrap;
+	text-indent: 75px;
+	font-size: 16px;
+	line-height: 12px;
+	font-weight: 700;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	overflow: hidden;
+	background-color: #1e1e1e;
+	color: #d4d4d4;
+}
+
+body {
+	height: 100%;
+	border: none;
+	background-color: #1e1e1e;
+	padding: 20px;
+	overflow: auto;
+	box-sizing: border-box;
+	color: #d4d4d4;
+}
+
+/* Markdown 预览样式 - 暗色主题 */
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+	font-weight: bold;
+	color: #d4d4d4;
+}
+
+body h1 {
+	font-size: 2em;
+	border-bottom: 1px solid #333;
+	color: #569cd6;
+}
+
+body h2 {
+	font-size: 1.5em;
+	border-bottom: 1px solid #333;
+	color: #4ec9b0;
+}
+
+body h3 {
+	font-size: 1.25em;
+	color: #c586c0;
+}
+
+body h4 {
+	font-size: 1em;
+	color: #9cdcfe;
+}
+
+body h5 {
+	font-size: 0.875em;
+	color: #ce9178;
+}
+
+body h6 {
+	font-size: 0.85em;
+	color: #858585;
+}
+
+body p {
+	margin: 0 0 1em;
+	color: #d4d4d4;
+}
+
+body ul,
+body ol {
+	margin: 0 0 1em 2em;
+	padding: 0;
+	color: #d4d4d4;
+}
+
+body li {
+	margin: 0.25em 0;
+	color: #d4d4d4;
+}
+
+body blockquote {
+	margin: 0 0 1em;
+	padding: 0 1em;
+	border-left: 4px solid #6a9955;
+	color: #d4d4d4;
+	background-color: #252526;
+}
+
+body blockquote p {
+	margin: 0;
+}
+
+body pre code,
+.math-block {
+	background-color: #252526;
+	padding: 1em;
+	border-radius: 3px;
+	overflow: auto;
+	border: 1px solid #333;
+}
+
+body code,
+.math-block {
+	font-family: Consolas, Monaco, monospace;
+	background-color: #252526;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	color: #d4d4d4;
+}
+
+body a {
+	color: #569cd6;
+	text-decoration: none;
+}
+
+body a:hover {
+	text-decoration: underline;
+}
+
+body img {
+	max-width: 100%;
+	background-color: white;
+	padding: 5px;
+	border-radius: 3px;
+}
+
+body table {
+	border-collapse: collapse;
+	margin: 1em 0;
+	width: 100%;
+}
+
+body th,
+body td {
+	border: 1px solid #333;
+	padding: 0.5em 1em;
+	color: #d4d4d4;
+}
+
+body th {
+	background-color: #252526;
+	font-weight: bold;
+}
+
+body tr:nth-child(even) {
+	background-color: #252526;
+}
+
+/* KaTeX 公式样式 */
+.katex {
+	font-size: 1.1em !important;
+	color: #d4d4d4 !important;
+}
+
+/* 数学公式块样式 */
+.math-block {
+	text-align: center;
+	margin: 1em 0;
+	padding: 0.5em;
+	background-color: #252526;
+	border-radius: 3px;
+	overflow-x: auto;
+}
+
+/* Highlight.js 主题 - 类似 VS Code 暗色主题 */
+.hljs,
+.math-block {
+	display: block;
+	overflow-x: auto;
+	padding: 0.5em;
+	background: #252526;
+	border-radius: 3px;
+	color: #d4d4d4;
+}
+
+.hljs-keyword,
+.hljs-literal,
+.hljs-name,
+.hljs-symbol {
+	color: #569cd6;
+}
+
+.hljs-link {
+	color: #569cd6;
+	text-decoration: underline;
+}
+
+.hljs-built_in,
+.hljs-type {
+	color: #4ec9b0;
+}
+
+.hljs-number,
+.hljs-class {
+	color: #b5cea8;
+}
+
+.hljs-string,
+.hljs-meta-string {
+	color: #ce9178;
+}
+
+.hljs-regexp,
+.hljs-template-tag {
+	color: #9a5334;
+}
+
+.hljs-subst,
+.hljs-function,
+.hljs-title,
+.hljs-params,
+.hljs-formula {
+	color: #dcdcaa;
+}
+
+.hljs-comment,
+.hljs-quote {
+	color: #6a9955;
+	font-style: italic;
+}
+
+.hljs-doctag {
+	color: #608b4e;
+}
+
+.hljs-meta,
+.hljs-meta-keyword,
+.hljs-tag {
+	color: #9b9b9b;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+	color: #bd63c5;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-builtin-name {
+	color: #9cdcfe;
+}
+
+.hljs-section {
+	color: gold;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+
+.hljs-bullet,
+.hljs-selector-tag,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+	color: #d7ba7d;
+}
+
+.hljs-addition {
+	background-color: #144212;
+	display: inline-block;
+	width: 100%;
+}
+
+.hljs-deletion {
+	background-color: #600;
+	display: inline-block;
+	width: 100%;
+}
