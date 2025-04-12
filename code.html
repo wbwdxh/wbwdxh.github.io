@@ -1212,7 +1212,10 @@
 						// • rendering keys, e.g.:
 						throwOnError: true
 					});
-				} else {
+				} else if (language === 'javascript') {
+					preview.innerHTML = 'Please run code to preview outputs';
+				}
+				else {
 					preview.innerHTML = '<p>预览功能仅支持HTML和Markdown</p>';
 				}
 			};
@@ -1234,7 +1237,7 @@
 				editor.setValue(defaultCode[language] || `// ${language} 代码`);
 
 				// 如果是HTML或Markdown语言，显示预览面板
-				if (language === 'html' || language === 'markdown') {
+				if (language === 'html' || language === 'markdown' || language === 'javascript') {
 					document.getElementById('editor').style.width = "50%";
 					document.getElementById('preview').style.display = 'block';
 					document.getElementById('splitter').style.display = 'block';
@@ -1246,12 +1249,28 @@
 				}
 			});
 
+			const originalMethods = {};
+			["log", "error", "warn", "info", "debug"].forEach((method) => {
+				originalMethods[method] = console[method];
+				console[method] = function (...args) {
+					console.history.push({ type: method, timestamp: new Date(), args });
+					originalMethods[method].apply(console, args);
+				};
+			});
+
 			// 运行按钮 (仅对JavaScript有效)
 			document.getElementById('run-btn').addEventListener('click', () => {
 				if (languageSelect.value === 'javascript') {
 					try {
+						// 初始化 console.history
+						console.history = [];
 						// 使用eval运行代码 (仅用于演示，生产环境应更安全地处理)
 						eval(editor.getValue());
+						let output = "";
+						console.history.forEach((method) => {
+							output = output + method.args + '\n';
+						})
+						document.getElementById('preview').innerText = output;
 					} catch (error) {
 						console.error(error);
 						alert(`执行错误: ${error.message}`);
@@ -1268,6 +1287,8 @@
 					const preview = document.getElementById('preview');
 					if (preview.style.display !== 'none')
 						updatePreview();
+				} else if (language === 'javascript') {
+					updatePreview();
 				} else {
 					alert('预览功能仅支持HTML和Markdown代码');
 				}
