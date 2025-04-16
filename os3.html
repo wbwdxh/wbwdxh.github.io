@@ -444,7 +444,6 @@
 
 			.window {
 				min-width: 280px;
-				max-width: 90%;
 				width: auto;
 				left: 5%;
 			}
@@ -528,22 +527,22 @@
 	<div id="wallpaper" class="default-wallpaper"></div>
 	<div id="desktop">
 		<div id="app-grid">
-			<div class="app-icon" onclick="openApp('notepad')">
+			<div class="app-icon" ondblclick="openApp('notepad')">
 				<img src="data:image/svg+xml;base64,PHN2ZyB0PSIxNzQ0NTQ2ODgyMDM2IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjM1OTQiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cGF0aCBkPSJNODM4LjkgNjRIMjgyLjRjLTQ5LjIgMC04OS4xIDQwLjItODkuMSA4OS42djg5LjZIOTZ2NTkuN2g5Ny4ydjU5LjdIOTZ2NTkuN2g5Ny4yVjQ4Mkg5NnY1OS43aDk3LjJ2NTkuN0g5NnY1OS43aDk3LjJ2MjA5LjFjMCA0OS40IDQwIDg5LjYgODkuMSA4OS42aDU1Ni41YzQ5LjIgMCA4OS4xLTQwLjIgODkuMS04OS42VjE1My42YzAuMS00OS40LTM5LjktODkuNi04OS04OS42eiBtMjkuNyA4MDYuNGMwIDE2LjUtMTMuMyAyOS45LTI5LjcgMjkuOUgyODIuNGMtMTYuNCAwLTI5LjctMTMuNC0yOS43LTI5LjlWNjYxLjNoNTkuNHYtNTkuN2gtNTkuNHYtNTkuN2g1OS40di01OS43aC01OS40di01OS43aDU5LjR2LTU5LjdoLTU5LjR2LTU5LjdoNTkuNHYtNTkuN2gtNTkuNHYtODkuNmMwLTE2LjUgMTMuMy0yOS45IDI5LjctMjkuOWg1NTYuNWMxNi40IDAgMjkuNyAxMy40IDI5LjcgMjkuOXY3MTYuNnoiIGZpbGw9IndoaXRlIiBwLWlkPSIzNTk1Ij48L3BhdGg+PHBhdGggZD0iTTM4MS41IDE4My41aDQyNy43djIzOC45SDM4MS41eiIgZmlsbD0id2hpdGUiIHAtaWQ9IjM1OTYiPjwvcGF0aD48L3N2Zz4="
 					alt="记事本">
 				<span>记事本</span>
 			</div>
-			<div class="app-icon" onclick="openApp('calculator')">
+			<div class="app-icon" ondblclick="openApp('calculator')">
 				<img src="data:image/svg+xml;base64,PHN2ZyB0PSIxNzQ0NDcwOTM3NTQyIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI4NjkiDQoJd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPg0KCTxwYXRoDQoJCWQ9Ik04MDAgNjRIMjI0Yy0xNy42IDAtMzIgMTQuNC0zMiAzMnY4MzJjMCAxNy42IDE0LjQgMzIgMzIgMzJoNTc2YzE3LjYgMCAzMi0xNC40IDMyLTMyVjk2YzAtMTcuNi0xNC40LTMyLTMyLTMyeiBtLTQxNiA3NjhoLTY0di02NGg2NHY2NHogbTAtMTYwaC02NHYtNjRoNjR2NjR6IG0wLTE2MGgtNjR2LTY0aDY0djY0eiBtMTYwIDMyMGgtNjR2LTY0aDY0djY0eiBtMC0xNjBoLTY0di02NGg2NHY2NHogbTAtMTYwaC02NHYtNjRoNjR2NjR6IG0xNjAgMzIwaC02NHYtNjRoNjR2NjR6IG0wLTE2MGgtNjR2LTY0aDY0djY0eiBtMC0xNjBoLTY0di02NGg2NHY2NHogbTAtMTkySDMyMFYxOTJoMzg0djEyOHoiDQoJCXAtaWQ9IjI4NzAiIGZpbGw9IndoaXRlIj48L3BhdGg+DQo8L3N2Zz4="
 					alt="计算器">
 				<span>计算器</span>
 			</div>
-			<div class="app-icon" onclick="openApp('filemanager')">
+			<div class="app-icon" ondblclick="openApp('filemanager')">
 				<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNDE2IDIxMmMwLTU4LjktNDcuMS0xMDYtMTA2LTEwNkgxMDRDNDUuMSAxMDYgMCAxNTMuMSAwIDIxMnYyMDBjMCA1OC45IDQ1LjEgMTA2IDEwNCAxMDZoMzA2YzU4LjkgMCAxMDYtNDcuMSAxMDYtMTA2VjIxMnoiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii40Ii8+PHBhdGggZD0iTTQxNiAyMTJjMC01OC45LTQ3LjEtMTA2LTEwNi0xMDZIMjIydjMxMmgzMDRjNTguOSAwIDEwNi00Ny4xIDEwNi0xMDZWMjEyeiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg=="
 					alt="文件管理器">
 				<span>Explorer</span>
 			</div>
-			<div class="app-icon" onclick="openApp('settings')">
+			<div class="app-icon" ondblclick="openApp('settings')">
 				<img src="图片未设置" alt="设置">
 				<span>设置</span>
 			</div>
@@ -781,7 +780,7 @@
 		// 开始拖动应用图标
 		function startAppDrag(e) {
 			// 检查是否按下鼠标中键（button 属性值为 1 表示中键）
-			if (e.button !== 1) return;
+			if (e.button !== 0) return;
 			isAppDragging = true;
 			draggedApp = e.target.closest('.app-icon');
 			dragStartX = e.clientX - draggedApp.offsetLeft;
@@ -860,7 +859,7 @@
 					windowContent = `
                         <div class="notepad-tabs">
                             <div class="tab-bar">
-                                <button onclick="notepadNewTab()">+</button>
+                                <button onclick="notepadNewTab()" style="width: 30.8px; height: 30.8px;">+</button>
                                 <div class="tabs" id="notepad-tabs"></div>
                             </div>
                             <div class="tab-content" id="notepad-contents"></div>
