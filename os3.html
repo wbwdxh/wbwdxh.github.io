@@ -443,9 +443,10 @@
 			}
 
 			.window {
-				min-width: 280px !important;
-				width: 90% !important;
-				left: 5% !important;
+				min-width: 280px;
+				max-width: 90%;
+				width: auto;
+				left: 5%;
 			}
 
 			#start-menu {
@@ -636,8 +637,8 @@
 
 			// 键盘快捷键监听
 			document.addEventListener('keydown', function (e) {
-				// Alt+Tab切换窗口
-				if (e.altKey && e.key === 'Tab') {
+				// shift+Tab切换窗口
+				if (e.shiftKey && e.key === 'Tab') {
 					e.preventDefault();
 					if (windows.length > 1) {
 						const currentIndex = windows.findIndex(w => w.id === activeWindow?.id);
@@ -646,8 +647,8 @@
 					}
 				}
 
-				// Ctrl+N新建记事本
-				if (e.ctrlKey && e.key === 'n') {
+				// Alt+N新建记事本
+				if (e.altKey && e.key === 'n') {
 					e.preventDefault();
 					openApp('notepad');
 				}
@@ -658,8 +659,8 @@
 					if (activeWindow) closeWindow(activeWindow.id);
 				}
 
-				// Ctrl+Shift+D显示桌面
-				if (e.ctrlKey && e.shiftKey && e.key === 'd') {
+				// Ctrl+D显示桌面
+				if (e.ctrlKey && e.key === 'd') {
 					e.preventDefault();
 					windows.forEach(w => minimizeWindow(w.id));
 				}
