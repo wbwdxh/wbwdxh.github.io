@@ -171,10 +171,10 @@
 			flex-direction: column;
 			resize: none;
 			transition:
-				left 0.2s ease-out,
+				/*left 0.2s ease-out,
 				top 0.2s ease-out,
 				width 0.2s ease-out,
-				height 0.2s ease-out,
+				height 0.2s ease-out,*/
 				transform 0.3s ease-out,
 				opacity 0.3s ease-out;
 		}
@@ -438,7 +438,7 @@
 		@media (max-width: 768px) {
 			.app-icon {
 				width: 60px;
-				height: 60px;
+				height: 70px;
 				font-size: 12px;
 			}
 
@@ -474,6 +474,7 @@
 			.app-icon {
 				width: 50px;
 				margin: 5px;
+				font-size: 8px;
 			}
 
 			#app-grid {
@@ -539,11 +540,10 @@
 			<div class="app-icon" onclick="openApp('filemanager')">
 				<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNDE2IDIxMmMwLTU4LjktNDcuMS0xMDYtMTA2LTEwNkgxMDRDNDUuMSAxMDYgMCAxNTMuMSAwIDIxMnYyMDBjMCA1OC45IDQ1LjEgMTA2IDEwNCAxMDZoMzA2YzU4LjkgMCAxMDYtNDcuMSAxMDYtMTA2VjIxMnoiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii40Ii8+PHBhdGggZD0iTTQxNiAyMTJjMC01OC45LTQ3LjEtMTA2LTEwNi0xMDZIMjIydjMxMmgzMDRjNTguOSAwIDEwNi00Ny4xIDEwNi0xMDZWMjEyeiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg=="
 					alt="文件管理器">
-				<span>文件管理器</span>
+				<span>Explorer</span>
 			</div>
 			<div class="app-icon" onclick="openApp('settings')">
-				<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNDk0LjEgMzUxLjRMMzY1LjkgMjU2bDEyOC4yLTk1LjRjMTMuNy0xMC4yIDE2LjctMjkuMiA2LjUtNDIuOWwtLTkuOS0xMy4yYy0xMC4yLTEzLjctMjkuMi0xNi43LTQyLjktNi41TDMyMCAxOTIuN1Y1NmMwLTE1LjUtMTIuNS0yOC0yOC0yOGgtMTZjLTE1LjUgMC0yOCAxMi41LTI4IDI4djEzNi43TDE2Mi4yIDEwMC4xYy0xMy43LTEwLjItMzIuNy03LjItNDIuOSA2LjVsLTkuOSAxMy4yYy0xMC4yIDEzLjctNy4yIDMyLjcgNi41IDQyLjlMMTQ2LjEgMjU2IDE3LjkgMzUxLjRjLTEzLjcgMTAuMi0xNi43IDI5LjItNi41IDQyLjlsOS45IDEzLjJjMTAuMiAxMy43IDI5LjIgMTYuNyA0Mi45IDYuNUwxOTIgMzE5LjNWNDU2YzAgMTUuNSAxMi41IDI4IDI4IDI4aDE2YzE1LjUgMCAyOC0xMi41IDI4LTI4VjMxOS4zbDExNy43IDg4LjNjMTMuNyAxMC4yIDMyLjcgNy4yIDQyLjktNi41bDkuOS0xMy4yYzEwLjItMTMuNyA3LjItMzIuNy02LjUtNDIuOXoiIGZpbGw9IiNmZmYiLz48L3N2Zz4="
-					alt="设置">
+				<img src="图片未设置" alt="设置">
 				<span>设置</span>
 			</div>
 		</div>
@@ -568,11 +568,10 @@
 			<div class="app-icon" onclick="openApp('filemanager')">
 				<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNDE2IDIxMmMwLTU4LjktNDcuMS0xMDYtMTA2LTEwNkgxMDRDNDUuMSAxMDYgMCAxNTMuMSAwIDIxMnYyMDBjMCA1OC45IDQ1LjEgMTA2IDEwNCAxMDZoMzA2YzU4LjkgMCAxMDYtNDcuMSAxMDYtMTA2VjIxMnoiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii40Ii8+PHBhdGggZD0iTTQxNiAyMTJjMC01OC45LTQ3LjEtMTA2LTEwNi0xMDZIMjIydjMxMmgzMDRjNTguOSAwIDEwNi00Ny4xIDEwNi0xMDZWMjEyeiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg=="
 					alt="文件管理器">
-				<span>文件管理器</span>
+				<span>Explorer</span>
 			</div>
 			<div class="app-icon" onclick="openApp('settings')">
-				<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNDk0LjEgMzUxLjRMzY1LjkgMjU2bDEyOC4yLTk1LjRjMTMuNy0xMC4yIDE2LjctMjkuMiA2LjUtNDIuOWwtLTkuOS0xMy4yYy0xMC4yLTEzLjctMjkuMi0xNi43LTQyLjktNi41TDMyMCAxOTIuN1Y1NmMwLTE1LjUtMTIuNS0yOC0yOC0yOGgtMTZjLTE1LjUgMC0yOCAxMi41LTI4IDI4djEzNi43TDE2Mi4yIDEwMC4xYy0xMy43LTEwLjItMzIuNy03LjItNDIuOSA2LjVsLTkuOSAxMy4yYy0xMC4yIDEzLjctNy4yIDMyLjcgNi41IDQyLjlMMTQ2LjEgMjU2IDE3LjkgMzUxLjRjLTEzLjcgMTAuMi0xNi43IDI5LjItNi41IDQyLjlsOS45IDEzLjJjMTAuMiAxMy43IDI5LjIgMTYuNyA0Mi45IDYuNUwxOTIgMzE5LjNWNDU2YzAgMTUuNSAxMi41IDI4IDI4IDI4aDE2YzE1LjUgMCAyOC0xMi41IDI4LTI4VjMxOS4zbDExNy43IDg4LjNjMTMuNyAxMC4yIDMyLjcgNy4yIDQyLjktNi41bDkuOS0xMy4yYzEwLjItMTMuNyA3LjItMzIuNy02LjUtNDIuOXoiIGZpbGw9IiNmZmYiLz48L3N2Zz4="
-					alt="设置">
+				<img src="图片未设置" alt="设置">
 				<span>设置</span>
 			</div>
 		</div>
@@ -595,6 +594,7 @@
 		let isAppDragging = false;
 		let draggedApp = null;
 		let dragStartX, dragStartY;
+		let cnt = 0;
 
 		// 文件系统数据
 		let fileSystem = {
@@ -685,8 +685,8 @@
 				windowStates,
 				appIcons: Array.from(document.querySelectorAll('#desktop #app-grid .app-icon')).map(icon => ({
 					appName: icon.querySelector('span').textContent,
-					left: icon.offsetLeft,
-					top: icon.offsetTop
+					left: icon.style.left,
+					top: icon.style.top
 				})),
 				theme: document.body.className,
 				wallpaper: document.getElementById('wallpaper').className.replace('-wallpaper', ''),
@@ -766,8 +766,8 @@
 						);
 						if (icon && iconData.left && iconData.top) {
 							icon.style.position = 'absolute';
-							icon.style.left = `${iconData.left}px`;
-							icon.style.top = `${iconData.top}px`;
+							icon.style.left = `${iconData.left}`;
+							icon.style.top = `${iconData.top}`;
 						}
 					});
 				}
@@ -844,7 +844,7 @@
 			}
 
 			// 创建新窗口
-			const windowId = 'window-' + Date.now();
+			const windowId = 'window-' + Date.now() + '' + ++cnt;
 			const windowElement = document.createElement('div');
 			windowElement.className = 'window';
 			windowElement.id = windowId;
@@ -865,7 +865,7 @@
                             <div class="tab-content" id="notepad-contents"></div>
                         </div>
                     `;
-					notepadNewTab();
+					// notepadNewTab();
 					break;
 
 				case 'calculator':
@@ -924,7 +924,30 @@
                             <button onclick="changeTheme('')">默认主题</button>
                             <button onclick="changeTheme('dark-theme')">深色主题</button>
                             <button onclick="changeTheme('light-theme')">明亮主题</button>
-                        </div>
+							<br />
+							<button onclick="openApp('about')">关于 Web OS</button>
+						</div>
+                    `;
+					break;
+				case 'about':
+					windowTitle = '关于 Web OS';
+					windowContent = `
+                        <h2>Web OS</h2>
+                        <p>这是一个用单个HTML文件实现的简易网页操作系统。</p>
+                        <p>功能包括：</p>
+                        <ul>
+                            <li>桌面图标</li>
+                            <li>开始菜单</li>
+                            <li>多窗口系统</li>
+                            <li>任务栏</li>
+                            <li>记事本应用</li>
+                            <li>计算器应用</li>
+                            <li>窗口大小调整</li>
+                            <li>窗口最大化/还原</li>
+                        </ul>
+                        <p>拖动窗口标题栏可以移动窗口。</p>
+                        <p>拖动右下角可以调整窗口大小。</p>
+                        <p>点击最大化按钮可以使窗口全屏。</p>
                     `;
 					break;
 
@@ -1051,16 +1074,16 @@
 		// 开始拖动
 		function startDrag(e, windowId) {
 			const windowObj = windows.find(w => w.id === windowId);
-			if (!windowObj) return;
+			if (!windowObj || windowObj.maximized) return;
 
-			// 如果窗口是最大化的，先还原
-			if (windowObj.maximized) {
-				restoreWindowSize(windowId);
-				// 调整偏移量，使窗口跟随鼠标
-				dragOffsetX = e.clientX * (parseInt(windowObj.element.style.width) / window.innerWidth);
-				dragOffsetY = e.clientY * (parseInt(windowObj.element.style.height) / (window.innerHeight - 40));
-				return;
-			}
+			// // 如果窗口是最大化的，先还原
+			// if (windowObj.maximized) {
+			// 	restoreWindowSize(windowId);
+			// 	// 调整偏移量，使窗口跟随鼠标
+			// 	dragOffsetX = e.clientX * (parseInt(windowObj.element.style.width) / window.innerWidth);
+			// 	dragOffsetY = e.clientY * (parseInt(windowObj.element.style.height) / (window.innerHeight - 40));
+			// 	return;
+			// }
 
 			isDragging = true;
 			dragWindow = windowObj.element;
@@ -1089,13 +1112,13 @@
 
 				// 限制在视口内
 				const maxLeft = window.innerWidth - dragWindow.offsetWidth;
-				const maxTop = window.innerHeight - dragWindow.offsetHeight - 40; // 减去任务栏高度
+				const maxTop = window.innerHeight - dragWindow.offsetHeight; // 减去任务栏高度
 
 				left = Math.max(0, Math.min(left, maxLeft));
 				top = Math.max(0, Math.min(top, maxTop));
 
-				// 贴边检测
-				const snapThreshold = 20; // 贴边阈值
+				/*// 贴边检测
+				const snapThreshold = 0; // 贴边阈值
 				const winWidth = dragWindow.offsetWidth;
 				const winHeight = dragWindow.offsetHeight;
 
@@ -1132,7 +1155,7 @@
 				if (top <= snapThreshold) {
 					top = 0;
 					dragWindow.style.height = '100%';
-				}
+				}*/
 
 				dragWindow.style.left = `${left}px`;
 				dragWindow.style.top = `${top}px`;
@@ -1282,7 +1305,7 @@
 				windowObj.element.style.left = '0';
 				windowObj.element.style.top = '0';
 				windowObj.element.style.width = '100%';
-				windowObj.element.style.height = 'calc(100% - 40px)';
+				windowObj.element.style.height = '100%';
 
 				// 聚焦窗口
 				focusWindow(windowId);
@@ -1475,6 +1498,18 @@
 			wallpaper.className = type + '-wallpaper';
 			localStorage.setItem('currentWallpaper', type);
 		}
+
+		function clearClosedButNotRemoveWindows() {
+			document.querySelectorAll('.window').forEach(window => {
+				windowId = window.id;
+				const windowObj = windows.find(w => w.id === windowId);
+				if (!windowObj) {
+					window.remove();
+				}
+			});
+		}
+
+		setInterval(clearClosedButNotRemoveWindows, 5000);
 	</script>
 </body>
 
