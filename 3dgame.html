@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Three.js 山脉探索</title>
+	<style>
+		body {
+			margin: 0;
+			overflow: hidden;
+			background-color: #87CEEB;
+		}
+
+		canvas {
+			display: block;
+		}
+
+		#info {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			color: white;
+			font-family: Arial, sans-serif;
+			background-color: rgba(0, 0, 0, 0.5);
+			padding: 10px;
+			border-radius: 5px;
+			z-index: 100;
+		}
+
+		#minimap {
+			position: absolute;
+			bottom: 20px;
+			right: 20px;
+			width: 200px;
+			height: 200px;
+			background-color: rgba(0, 0, 0, 0.3);
+			border: 2px solid white;
+			z-index: 100;
+		}
+
+		#minimap canvas {
+			width: 100%;
+			height: 100%;
+		}
+
+		#view-switch {
+			position: absolute;
+			bottom: 20px;
+			left: 20px;
+			padding: 10px;
+			background-color: rgba(0, 0, 0, 0.5);
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			z-index: 100;
+		}
+
+		body {
+			margin: 0;
+			overflow: hidden;
+			background-color: #87CEEB;
+		}
+
+		canvas {
+			display: block;
+		}
+
+		#info {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			color: white;
+			font-family: Arial, sans-serif;
+			background-color: rgba(0, 0, 0, 0.5);
+			padding: 10px;
+			border-radius: 5px;
+			z-index: 100;
+		}
+
+		#time-display {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			color: white;
+			font-family: Arial, sans-serif;
+			background-color: rgba(0, 0, 0, 0.5);
+			padding: 10px;
+			border-radius: 5px;
+			z-index: 100;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="info">
+		Three.js 山脉探索<br>
+		WASD: 移动<br>
+		Space: 跳跃(陆地/水中)<br>
+		鼠标: 查看四周<br>
+		点击画面开始游戏<br>
+		F键切换视角<br>
+	</div>
+	<div id="minimap"></div>
+	<button id="view-switch">切换视角(F键)</button>
+	<div id="time-display">时间: 06:00</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/PointerLockControls.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/FirstPersonControls.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+
+	<script>
+		// 初始化场景、相机和渲染器
+		const scene = new THREE.Scene();
+		scene.background = new THREE.Color(0x87CEEB);
+
+		const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+		const renderer = new THREE.WebGLRenderer({ antialias: true });
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+		document.body.appendChild(renderer.domElement);
+
+		// 小地图设置
+		const minimap = document.getElementById('minimap');
+		const minimapRenderer = new THREE.WebGLRenderer({ antialias: true });
+		minimapRenderer.setSize(200, 200);
+		minimap.appendChild(minimapRenderer.domElement);
+
+		const minimapCamera = new THREE.OrthographicCamera(-100, 100, 100, -100, 1, 1000);
+		minimapCamera.position.set(0, 150, 0);
+		minimapCamera.lookAt(0, 0, 0);
+		minimapCamera.rotation.x = -Math.PI / 2;
+
+		// 太阳系统参数
+		let sunSystem = {
+			radius: 500, // 太阳运动半径
+			speed: 0.2, // 太阳运动速度
+			angle: 0,   // 当前角度
+			time: 6,    // 当前时间(小时)
+			cycleDuration: 0.05 // 一天周期(秒)
+		};
+
+		// 修改太阳光源设置
+		const sunLight = new THREE.DirectionalLight(0xffffff, 1.0);
+		scene.add(sunLight);
+
+		// 太阳视觉表示
+		const sunGeometry = new THREE.SphereGeometry(10, 32, 32);
+		const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+		const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
+		scene.add(sunMesh);
+
+		// 添加环境光
+		const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+		scene.add(ambientLight);
+
+		// 创建地形
+		const groundGeometry = new THREE.PlaneGeometry(200, 200, 100, 100);
+		groundGeometry.rotateX(-Math.PI / 2);
+
+		// 使用柏林噪声生成高度图
+		const simplex = new SimplexNoise();
+		const vertices = groundGeometry.attributes.position.array;
+
+		// 存储高度数据用于水域检测
+		const heightMap = [];
+		const size = 200;
+		const segments = 100;
+
+		for (let i = 0; i < vertices.length; i += 3) {
+			const x = vertices[i];
+			const z = vertices[i + 2];
+
+			let noise = 0;
+			noise += simplex.noise2D(x * 0.01, z * 0.01) * 15;
+			noise += simplex.noise2D(x * 0.02, z * 0.02) * 7;
+			noise += simplex.noise2D(x * 0.04, z * 0.04) * 3;
+
+			vertices[i + 1] = noise;
+
+			// 存储高度数据
+			const gridX = Math.floor((x + size / 2) / (size / segments));
+			const gridZ = Math.floor((z + size / 2) / (size / segments));
+			if (!heightMap[gridX]) heightMap[gridX] = [];
+			heightMap[gridX][gridZ] = noise;
+		}
+
+		groundGeometry.computeVertexNormals();
+
+		// 创建地形材质 - 根据高度混合泥土和雪
+		const groundMaterial = new THREE.MeshStandardMaterial({
+			vertexColors: true,
+			wireframe: false
+		});
+
+		// 为地形顶点添加颜色
+		const colors = [];
+		for (let i = 0; i < vertices.length; i += 3) {
+			const y = vertices[i + 1];
+
+			// 低海拔: 泥土色 (0x8B4513)
+			// 高海拔: 雪白色 (0xFFFFFF)
+			// 中间过渡
+			const snowHeight = 10; // 开始出现雪的高度
+			const fullSnowHeight = 15; // 完全雪覆盖的高度
+
+			let color;
+			if (y < snowHeight) {
+				color = new THREE.Color(0x8B4513); // 泥土色
+			} else if (y > fullSnowHeight) {
+				color = new THREE.Color(0xFFFFFF); // 雪白色
+			} else {
+				// 在雪高度和完全雪高度之间过渡
+				const t = (y - snowHeight) / (fullSnowHeight - snowHeight);
+				color = new THREE.Color(0x8B4513).lerp(new THREE.Color(0xFFFFFF), t);
+			}
+
+			colors.push(color.r, color.g, color.b);
+		}
+
+		groundGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+		const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
+		groundMesh.receiveShadow = true;
+		scene.add(groundMesh);
+
+		// 创建水域
+		const waterGeometry = new THREE.PlaneGeometry(210, 210);
+		waterGeometry.rotateX(-Math.PI / 2);
+		const waterMaterial = new THREE.MeshStandardMaterial({
+			color: 0x1a6bb0,
+			transparent: true,
+			opacity: 0.7,
+			metalness: 0.2,
+			roughness: 0.1
+		});
+		const waterMesh = new THREE.Mesh(waterGeometry, waterMaterial);
+		waterMesh.position.y = -2;
+		scene.add(waterMesh);
+
+		// 创建树木
+		function createTree(x, z) {
+			const height = 5 + Math.random() * 3;
+			const group = new THREE.Group();
+
+			// 树干
+			const trunkGeometry = new THREE.CylinderGeometry(0.3, 0.5, height * 0.4, 8);
+			const trunkMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513 });
+			const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+			trunk.position.y = height * 0.2;
+			trunk.castShadow = true;
+			group.add(trunk);
+
+			// 树冠
+			const leavesGeometry = new THREE.ConeGeometry(height * 0.6, height * 0.8, 8);
+			const leavesMaterial = new THREE.MeshStandardMaterial({ color: 0x228B22 });
+			const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+			leaves.position.y = height * 0.4 + height * 0.4;
+			leaves.castShadow = true;
+			group.add(leaves);
+
+			// 设置位置
+			const groundHeight = getGroundHeight(x, z);
+			group.position.set(x, groundHeight, z);
+
+			return group;
+		}
+
+		// 在地图上随机生成树木
+		for (let i = 0; i < 100; i++) {
+			const x = Math.random() * 180 - 90;
+			const z = Math.random() * 180 - 90;
+			const height = getGroundHeight(x, z);
+
+			// 只在适当高度和坡度的地方生成树
+			if (height > -1 && height < 8) { // 不在水中或雪山上生成树
+				const tree = createTree(x, z);
+				scene.add(tree);
+			}
+		}
+
+		// 创建球形玩家模型
+		const createPlayerModel = () => {
+			const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+			const sphereMaterial = new THREE.MeshStandardMaterial({
+				color: 0xff0000,
+				roughness: 0.5,
+				metalness: 0.1
+			});
+			const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+			sphere.castShadow = true;
+			return sphere;
+		};
+
+		const player = createPlayerModel();
+		const thirdPersonPlayer = createPlayerModel();
+		thirdPersonPlayer.visible = false;
+		scene.add(thirdPersonPlayer);
+
+		// 小地图玩家标记
+		const playerMarkerGeometry = new THREE.SphereGeometry(2, 16, 16);
+		const playerMarkerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+		const playerMarker = new THREE.Mesh(playerMarkerGeometry, playerMarkerMaterial);
+		playerMarker.position.y = 1;
+
+		// 玩家出生点
+		const spawnPoint = new THREE.Vector3(0, 20, 0);
+		player.position.copy(spawnPoint);
+		scene.add(player);
+
+		// 小地图场景
+		const minimapScene = new THREE.Scene();
+		minimapScene.background = new THREE.Color(0x333333);
+
+		// 克隆地形和水域到小地图
+		const minimapGround = groundMesh.clone();
+		minimapGround.material = new THREE.MeshBasicMaterial({
+			vertexColors: true,
+			wireframe: false,
+			transparent: true,
+			opacity: 0.8
+		});
+		minimapScene.add(minimapGround);
+
+		const minimapWater = waterMesh.clone();
+		minimapWater.material = new THREE.MeshBasicMaterial({
+			color: 0x1a6bb0,
+			transparent: true,
+			opacity: 0.5
+		});
+		minimapScene.add(minimapWater);
+
+		minimapScene.add(playerMarker);
+
+		// 玩家物理属性
+		const playerState = {
+			velocity: new THREE.Vector3(),
+			direction: new THREE.Vector3(),
+			moveSpeed: 5,
+			jumpForce: 8,
+			waterJumpForce: 4,
+			isOnGround: true,
+			gravity: 20,
+			waterGravity: 6,
+			inWater: false,
+			respawnTimer: 0,
+			lastGroundHeight: 0,
+			smoothY: spawnPoint.y,
+			groundCheckOffset: 0.2,
+			viewMode: 'first-person',
+			playerRadius: 0.5,
+			collisionOffset: 0.1,
+			lastPosition: new THREE.Vector3().copy(spawnPoint),
+			canJump: true // 高山跳跃控制
+		};
+
+		// 控制设置
+		let controls;
+		let firstPersonControls;
+		let thirdPersonControls;
+
+		function initControls() {
+			// 第一人称控制器
+			firstPersonControls = new THREE.PointerLockControls(camera, document.body);
+
+			// 第三人称控制器
+			thirdPersonControls = new THREE.FirstPersonControls(camera, document.body);
+			thirdPersonControls.lookSpeed = 0.1;
+			thirdPersonControls.movementSpeed = 0;
+			thirdPersonControls.noFly = true;
+			thirdPersonControls.lookVertical = true;
+
+			controls = firstPersonControls;
+		}
+
+		initControls();
+
+		// 切换视角
+		function switchViewMode() {
+			if (playerState.viewMode === 'first-person') {
+				playerState.viewMode = 'third-person';
+				firstPersonControls.unlock();
+				controls = thirdPersonControls;
+				player.visible = false;
+				thirdPersonPlayer.visible = true;
+
+				// 第三人称视角调整相机位置
+				camera.position.set(
+					player.position.x,
+					player.position.y + 2,
+					player.position.z + 5
+				);
+				camera.lookAt(player.position.x, player.position.y, player.position.z);
+			} else {
+				playerState.viewMode = 'first-person';
+				controls = firstPersonControls;
+				player.visible = true;
+				thirdPersonPlayer.visible = false;
+				if (firstPersonControls.isLocked) {
+					firstPersonControls.lock();
+				}
+			}
+			document.getElementById('view-switch').textContent =
+				playerState.viewMode === 'first-person' ? '第三人称视角(F键)' : '第一人称视角(F键)';
+		}
+
+		// 键盘控制
+		const keys = {
+			w: false,
+			a: false,
+			s: false,
+			d: false,
+			space: false,
+			f: false
+		};
+
+		document.addEventListener('keydown', (e) => {
+			switch (e.code) {
+				case 'KeyW': keys.w = true; break;
+				case 'KeyA': keys.a = true; break;
+				case 'KeyS': keys.s = true; break;
+				case 'KeyD': keys.d = true; break;
+				case 'Space': keys.space = true; break;
+				case 'KeyF':
+					if (!keys.f) {
+						keys.f = true;
+						switchViewMode();
+					}
+					break;
+			}
+		});
+
+		document.addEventListener('keyup', (e) => {
+			switch (e.code) {
+				case 'KeyW': keys.w = false; break;
+				case 'KeyA': keys.a = false; break;
+				case 'KeyS': keys.s = false; break;
+				case 'KeyD': keys.d = false; break;
+				case 'Space': keys.space = false; break;
+				case 'KeyF': keys.f = false; break;
+			}
+		});
+
+		// 按钮控制
+		document.getElementById('view-switch').addEventListener('click', switchViewMode);
+
+		document.addEventListener('click', () => {
+			if (playerState.viewMode === 'first-person' && !firstPersonControls.isLocked) {
+				firstPersonControls.lock();
+			}
+		});
+
+		// 检测玩家是否在地面上
+		function checkGroundCollision() {
+			const raycaster = new THREE.Raycaster(
+				new THREE.Vector3(player.position.x, player.position.y, player.position.z),
+				new THREE.Vector3(0, -1, 0),
+				0,
+				playerState.playerRadius + playerState.groundCheckOffset
+			);
+
+			const intersects = raycaster.intersectObject(groundMesh);
+			playerState.isOnGround = intersects.length > 0;
+
+			if (playerState.isOnGround) {
+				playerState.lastGroundHeight = intersects[0].point.y;
+			}
+
+			// 检测是否在水中
+			playerState.inWater = player.position.y < -1;
+		}
+
+		// 检测水平碰撞
+		function checkHorizontalCollision(newPosition) {
+			// 检查四个方向的射线
+			const directions = [
+				new THREE.Vector3(1, 0, 0),  // 右
+				new THREE.Vector3(-1, 0, 0), // 左
+				new THREE.Vector3(0, 0, 1),  // 前
+				new THREE.Vector3(0, 0, -1)  // 后
+			];
+
+			const collisionOffset = playerState.playerRadius + playerState.collisionOffset;
+			const rayOrigin = new THREE.Vector3(
+				player.position.x,
+				player.position.y,
+				player.position.z
+			);
+
+			for (const dir of directions) {
+				const raycaster = new THREE.Raycaster(
+					rayOrigin,
+					dir,
+					0,
+					collisionOffset
+				);
+
+				const intersects = raycaster.intersectObject(groundMesh);
+				if (intersects.length > 0) {
+					// 根据碰撞方向调整位置
+					if (dir.x > 0) newPosition.x = player.position.x - 0.005;
+					if (dir.x < 0) newPosition.x = player.position.x + 0.005;
+					if (dir.z > 0) newPosition.z = player.position.z - 0.005;
+					if (dir.z < 0) newPosition.z = player.position.z + 0.005;
+				}
+			}
+
+			return newPosition;
+		}
+
+		function updateSunPosition() {
+			// 计算太阳位置(圆形轨迹)
+			sunSystem.angle += (Math.PI * 2 / sunSystem.cycleDuration) * clock.getDelta();
+			sunSystem.time = (sunSystem.angle / (Math.PI * 2) * 24) % 24 + 6;
+
+			const x = Math.cos(sunSystem.angle) * sunSystem.radius;
+			const y = Math.sin(sunSystem.angle) * sunSystem.radius;
+			const z = 0;
+
+			// 更新太阳位置
+			sunLight.position.set(x, y, z);
+			sunMesh.position.copy(sunLight.position);
+
+			// 根据太阳高度调整光照强度
+			const sunHeightFactor = Math.max(0, y / sunSystem.radius);
+			sunLight.intensity = 1.0 * sunHeightFactor;
+
+			// 调整环境光强度
+			ambientLight.intensity = 0.3 + 0.2 * sunHeightFactor;
+
+			// 更新天空颜色
+			const skyColor = new THREE.Color(0x87CEEB).lerp(
+				new THREE.Color(0x000000),
+				Math.max(0, 1 - sunHeightFactor * 1.5)
+			);
+			scene.background = skyColor;
+
+			// 更新时间显示
+			document.getElementById('time-display').textContent =
+				`时间: ${Math.floor(sunSystem.time).toString().padStart(2, '0')}:${Math.floor((sunSystem.time % 1) * 60).toString().padStart(2, '0')}`;
+		}
+
+		// 重生函数
+		function respawnPlayer() {
+			// 找到安全的出生点
+			let safeSpawn = spawnPoint.clone();
+			let groundHeight = getGroundHeight(safeSpawn.x, safeSpawn.z);
+			let attempts = 0;
+
+			while (groundHeight > safeSpawn.y - playerState.playerRadius && attempts < 10) {
+				safeSpawn.y = groundHeight + playerState.playerRadius + 0.1;
+				attempts++;
+			}
+
+			player.position.copy(safeSpawn);
+			thirdPersonPlayer.position.copy(safeSpawn);
+			playerState.velocity.set(0, 0, 0);
+			playerState.isOnGround = true;
+			playerState.inWater = false;
+			playerState.respawnTimer = 0;
+			playerState.smoothY = safeSpawn.y;
+			playerState.lastPosition.copy(safeSpawn);
+			playerState.canJump = true;
+
+			// 重置相机位置
+			if (playerState.viewMode === 'third-person') {
+				camera.position.set(
+					safeSpawn.x,
+					safeSpawn.y + 2,
+					safeSpawn.z + 5
+				);
+				camera.lookAt(safeSpawn.x, safeSpawn.y, safeSpawn.z);
+			}
+		}
+
+		// 获取地面高度
+		function getGroundHeight(x, z) {
+			const gridX = Math.floor((x + size / 2) / (size / segments));
+			const gridZ = Math.floor((z + size / 2) / (size / segments));
+
+			if (gridX >= 0 && gridX < heightMap.length &&
+				gridZ >= 0 && gridZ < heightMap[0].length) {
+				return heightMap[gridX][gridZ];
+			}
+			return -100; // 虚空区域
+		}
+
+		// 窗口大小调整
+		window.addEventListener('resize', () => {
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+
+			if (thirdPersonControls) {
+				thirdPersonControls.handleResize();
+			}
+		});
+
+		// 动画循环
+		const clock = new THREE.Clock();
+
+		function animate() {
+			requestAnimationFrame(animate);
+
+			const delta = clock.getDelta();
+
+			// 更新太阳位置
+			updateSunPosition();
+
+			// 保存当前位置
+			playerState.lastPosition.copy(player.position);
+
+			// 玩家移动
+			playerState.velocity.x = 0;
+			playerState.velocity.z = 0;
+
+			if (playerState.viewMode === 'first-person' ? firstPersonControls.isLocked : true) {
+				const forward = new THREE.Vector3();
+				camera.getWorldDirection(forward);
+				forward.y = 0;
+				forward.normalize();
+
+				const right = new THREE.Vector3();
+				right.crossVectors(new THREE.Vector3(0, 1, 0), forward);
+
+				if (keys.w) {
+					playerState.velocity.add(forward.multiplyScalar(playerState.moveSpeed));
+				}
+				if (keys.s) {
+					playerState.velocity.add(forward.multiplyScalar(-playerState.moveSpeed));
+				}
+				if (keys.a) {
+					playerState.velocity.add(right.multiplyScalar(playerState.moveSpeed));
+				}
+				if (keys.d) {
+					playerState.velocity.add(right.multiplyScalar(-playerState.moveSpeed));
+				}
+
+				// 跳跃（陆地或水中）
+				if (keys.space && (playerState.isOnGround || playerState.inWater || true)) {
+					const jumpForce = playerState.inWater ? playerState.waterJumpForce : playerState.jumpForce;
+					playerState.velocity.y = jumpForce;
+					playerState.isOnGround = false;
+				}
+			}
+
+			// 应用重力
+			const gravity = playerState.inWater ? playerState.waterGravity : playerState.gravity;
+			playerState.velocity.y -= gravity * delta;
+
+			// 计算新位置
+			const newPosition = new THREE.Vector3(
+				player.position.x + playerState.velocity.x * delta,
+				player.position.y + playerState.velocity.y * delta,
+				player.position.z + playerState.velocity.z * delta
+			);
+
+			// 检查水平碰撞
+			const correctedPosition = checkHorizontalCollision(newPosition.clone());
+
+			// 应用新位置
+			player.position.copy(correctedPosition);
+			thirdPersonPlayer.position.copy(player.position);
+
+			// 检查地面碰撞
+			checkGroundCollision();
+
+			// 垂直移动处理（防止抖动和穿模）
+			if (playerState.isOnGround) {
+				// 在地面上时，平滑过渡到地面高度
+				playerState.smoothY = THREE.MathUtils.lerp(
+					playerState.smoothY,
+					playerState.lastGroundHeight + playerState.playerRadius,
+					0.2
+				);
+				player.position.y = playerState.smoothY;
+				thirdPersonPlayer.position.y = playerState.smoothY;
+
+				// 重置垂直速度
+				if (playerState.velocity.y < 0) {
+					playerState.velocity.y = 0;
+				}
+			} else {
+				// 在空中或水中时，直接应用垂直速度
+				playerState.smoothY = player.position.y;
+			}
+
+			// 检查是否掉入虚空
+			if (player.position.y < -20) {
+				playerState.respawnTimer += delta;
+				if (playerState.respawnTimer > 1) {
+					respawnPlayer();
+				}
+			} else {
+				playerState.respawnTimer = 0;
+			}
+
+			// 更新相机位置
+			if (playerState.viewMode === 'first-person') {
+				if (firstPersonControls.isLocked) {
+					firstPersonControls.getObject().position.x = player.position.x;
+					firstPersonControls.getObject().position.z = player.position.z;
+					firstPersonControls.getObject().position.y = player.position.y + playerState.playerRadius;
+				}
+			} else {
+				// 第三人称视角 - 相机跟随玩家
+				const targetPosition = new THREE.Vector3(
+					player.position.x,
+					player.position.y + 2,
+					player.position.z + 5
+				);
+
+				camera.position.lerp(targetPosition, 0.1);
+				camera.lookAt(player.position.x, player.position.y, player.position.z);
+			}
+
+			// 更新小地图
+			playerMarker.position.x = player.position.x;
+			playerMarker.position.z = player.position.z;
+
+			// 调整小地图相机高度以适应地形
+			const maxTerrainHeight = Math.max(...heightMap.flat()) + 20;
+			minimapCamera.position.y = Math.max(150, maxTerrainHeight);
+			minimapCamera.far = minimapCamera.position.y + 100;
+			minimapCamera.updateProjectionMatrix();
+
+			minimapRenderer.render(minimapScene, minimapCamera);
+
+			renderer.render(scene, camera);
+		}
+
+		// 初始重生确保安全位置
+		respawnPlayer();
+		animate();
+	</script>
+</body>
+
+</html>
