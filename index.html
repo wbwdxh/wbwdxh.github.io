@@ -1300,6 +1300,10 @@
 					--code-color: #ccc;
 				}
 
+				[data-theme="dark"] * {
+					color-scheme: dark !important;
+				}
+
 				body {
 					background-color: var(--bg-color);
 					color: var(--text-color);
@@ -1311,8 +1315,9 @@
 				}
 
 				header {
-					background-color: var(--header-bg);
-					border-bottom-color: var(--border-color);
+					background-color: var(--header-bg) !important;
+					border-bottom-color: var(--border-color) !important;
+					color: var(--text-color) !important;
 				}
 
 				a {
@@ -1345,6 +1350,10 @@
 
 				.codecopy-btn {
 					color: #666;
+				}
+
+				* {
+					transition: color .3s, background-color .3s;
 				}
 			</style>
 
