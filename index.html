@@ -143,8 +143,8 @@
 			height: 2em;
 			margin: 0;
 			border-radius: 5px;
-			/* background-color: rgba(221, 221, 221, .1); */
-			color: #999;
+			background-color: rgba(221, 221, 221, .1);
+			/* color: #999; */
 			color: #666;
 			border: 1px solid #2f2f2f00;
 			text-align: center;
@@ -1265,6 +1265,115 @@
 			<li style="height: 100%; margin-inline: 1em;">
 				<a href="/index.html?blog=about.md">关于</a>
 			</li>
+			<!-- In the header section, add this after the existing list items -->
+			<li style="height: 100%; margin-inline: 1em;">
+				<button id="dark-mode-toggle" style="background: none; border: none; cursor: pointer; font-size: 1em;">
+					🌙
+				</button>
+			</li>
+
+			<!-- Add this CSS in the head section -->
+			<style>
+				:root {
+					--bg-color: #fff;
+					--text-color: #333;
+					--main-bg: #fffafafa;
+					--header-bg: #fffc;
+					--border-color: #eee;
+					--link-color: #0077cc;
+					--link-hover-bg: rgba(13, 185, 215, .55);
+					--code-bg: #f6f8fa;
+					--code-shadow: 0 10px 30px 0px rgb(0 0 0 / 40%);
+					--code-color: #666;
+				}
+
+				[data-theme="dark"] {
+					--bg-color: #1a1a1a;
+					--text-color: #e0e0e0;
+					--main-bg: #222a;
+					--header-bg: #222c;
+					--border-color: #444;
+					--link-color: #58a6ff;
+					--link-hover-bg: rgba(13, 185, 215, .35);
+					--code-bg: #2d2d2d;
+					--code-shadow: 0 10px 30px 0px rgb(0 0 0 / 60%);
+					--code-color: #ccc;
+				}
+
+				body {
+					background-color: var(--bg-color);
+					color: var(--text-color);
+				}
+
+				main {
+					background: var(--main-bg);
+					color: var(--text-color);
+				}
+
+				header {
+					background-color: var(--header-bg);
+					border-bottom-color: var(--border-color);
+				}
+
+				a {
+					color: var(--link-color);
+				}
+
+				main a,
+				footer a,
+				.a a {
+					background-image: linear-gradient(to bottom, var(--link-hover-bg) 0%, var(--link-hover-bg) 100%);
+				}
+
+				.hljs {
+					background-color: var(--code-bg);
+					color: var(--code-color);
+					box-shadow: var(--code-shadow);
+				}
+
+				.btn1 {
+					background-color: var(--code-bg);
+				}
+
+				footer {
+					border-top-color: var(--border-color);
+				}
+
+				[data-theme="dark"] .codecopy-btn {
+					color: #999 !important;
+				}
+
+				.codecopy-btn {
+					color: #666;
+				}
+			</style>
+
+			<!-- Add this JavaScript before the closing body tag -->
+			<script>
+				// Check for saved theme preference or use system preference
+				const savedTheme = localStorage.getItem('theme');
+				const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+				// Set initial theme
+				if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+					document.documentElement.setAttribute('data-theme', 'dark');
+					document.getElementById('dark-mode-toggle').textContent = '☀️';
+				}
+
+				// Toggle theme
+				document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+					const currentTheme = document.documentElement.getAttribute('data-theme');
+					if (currentTheme === 'dark') {
+						document.documentElement.removeAttribute('data-theme');
+						localStorage.setItem('theme', 'light');
+						document.getElementById('dark-mode-toggle').textContent = '🌙';
+					} else {
+						document.documentElement.setAttribute('data-theme', 'dark');
+						localStorage.setItem('theme', 'dark');
+						document.getElementById('dark-mode-toggle').textContent = '☀️';
+					}
+				});
+			</script>
 		</ul>
 	</header>
 	<main id="blog-main" class="md-typeset"></main>
@@ -1322,7 +1431,7 @@
 		</div>
 	</main>
 	<footer>
-		<p>© 2025 wbw121124的博客| 使用 <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC
+		<p>© 2025 wbw121124的博客 | 使用 <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC
 				BY-SA 4.0</a> 许可协议</p>
 		<p>
 			友情链接：
